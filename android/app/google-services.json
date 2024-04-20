@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "922724723488",
+    "project_id": "jnvapp-ced04",
+    "storage_bucket": "jnvapp-ced04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922724723488:android:34c22185c07cfa285d0545",
+        "android_client_info": {
+          "package_name": "com.example.jnvapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYL-UVUwG5S34-IsRAT4UydSti1Nspd7M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
