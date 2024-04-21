@@ -7,6 +7,7 @@ import '../Sizeconfig/Size_Config.dart';
 import '../components/myButton.dart';
 import '../components/mydivider.dart';
 import 'otpPage.dart';
+
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
@@ -27,12 +28,12 @@ class _SignUpPageState extends State<SignUpPage> {
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Stack(children: [
-
           Container(
             height: SizeConfig.screenWidth * 0.7,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20))
-            ),
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(20),
+                    bottomLeft: Radius.circular(20))),
             child: Center(
               child: Transform.scale(
                 scale: 1.2, // Adjust the scale factor as needed
@@ -72,11 +73,11 @@ class _SignUpPageState extends State<SignUpPage> {
                             obscureText: false,
                             keyboardType: TextInputType.phone,
                             decoration: InputDecoration(
-                              focusedBorder:
-                                  OutlineInputBorder(borderSide: BorderSide.none),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none),
                               contentPadding: EdgeInsets.all(20),
-                              hintText: 'Phone Number',hintStyle: GoogleFonts.aladin(),
-
+                              hintText: 'Phone Number',
+                              hintStyle: GoogleFonts.aladin(),
                               fillColor: Color(0xFFF2F2F2),
                               filled: true,
                               focusColor: Color(0xffd8c8ea),
@@ -105,7 +106,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                 onTap: () async {
                                   final phone = _phoneController.text.trim();
                                   if (phone.isNotEmpty) {
-                                    await FirebaseAuth.instance.verifyPhoneNumber(
+                                    await FirebaseAuth.instance
+                                        .verifyPhoneNumber(
                                       phoneNumber: '+91$phone',
                                       verificationCompleted:
                                           (PhoneAuthCredential credential) {
@@ -148,7 +150,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                               );
 
                                               return SlideTransition(
-                                                position: animation.drive(tween),
+                                                position:
+                                                    animation.drive(tween),
                                                 child: child,
                                               );
                                             },
@@ -163,8 +166,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   }
                                 },
                                 text: 'Next',
-                                color:Color(0xFF888BF4)
-                            ),
+                                color: Color(0xFF888BF4)),
                           ),
                           SizedBox(
                             height: width * 0.05,
@@ -174,15 +176,41 @@ class _SignUpPageState extends State<SignUpPage> {
                             height: width * 0.08,
                           ),
                           //Signup button
-            Center(child: Text("OR LOG IN BY",style: GoogleFonts.aladin(fontSize: 17),),),
+                          Center(
+                            child: Text(
+                              "OR LOG IN BY",
+                              style: GoogleFonts.aladin(fontSize: 17),
+                            ),
+                          ),
                           SizedBox(
                             height: width * 0.04,
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              CircleAvatar(radius:25,child: Icon(AntDesign.google_circle_fill,        color:Color(0xFF888BF4),size: 35,))
-                          ],),
+                              CircleAvatar(
+                                  radius: 25,
+                                  child: Icon(
+                                    AntDesign.google_circle_fill,
+                                    color: Color(0xFF888BF4),
+                                    size: 35,
+                                  )),
+                              CircleAvatar(
+                                  radius: 25,
+                                  child: Icon(
+                                    AntDesign.facebook_fill,
+                                    color: Color(0xFF888BF4),
+                                    size: 35,
+                                  )),
+                              CircleAvatar(
+                                  radius: 25,
+                                  child: Icon(
+                                    Icons.email,
+                                    color: Color(0xFF888BF4),
+                                    size: 35,
+                                  ))
+                            ],
+                          ),
                           SizedBox(
                             height: width * 0.1,
                           ),
@@ -218,7 +246,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             },
                             child: Text("Terms and Conditions",
                                 style: GoogleFonts.aladin(
-                                  color:Color(0xFF888BF4),
+                                  color: Color(0xFF888BF4),
                                   fontWeight: FontWeight.w600,
                                   fontSize: width * 0.05,
                                 )),
@@ -234,7 +262,5 @@ class _SignUpPageState extends State<SignUpPage> {
         ]),
       ),
     );
-
   }
-
 }
