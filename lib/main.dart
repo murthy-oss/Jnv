@@ -11,12 +11,14 @@ import 'package:jnvapp/firebase_options.dart';
 import 'package:provider/provider.dart';
 
 import 'FetchDataProvider/fetchData.dart';
+import 'Screen/SetUpNavodhya/Navodhya.dart';
 
 
 
 
 //import 'package:inst_clone_1/auth/mainPage.dart';
-//import 'package:inst_clone_1/firebase_options.dart';
+//import 'package:inst_clone_1/firebase_opti
+// ons.dart';
 
 /*Future<User?> checkAuthenticationStatus() async {
   return FirebaseAuth.instance.authStateChanges().first;
@@ -77,7 +79,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       
     home: ScreenUtilInit(designSize: Size(width,height), 
-    child: /*(user!= null)?HomeScreen():*/ Onboarding()),
+    child: /*(user!= null)?HomeScreen():*/ SetUpNavodhya()),
     );
   }
 }

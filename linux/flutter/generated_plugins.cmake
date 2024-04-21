@@ -3,13 +3,10 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-<<<<<<< HEAD
-  flutter_secure_storage_linux
-=======
   file_selector_linux
+  flutter_secure_storage_linux
   smart_auth
   url_launcher_linux
->>>>>>> 7ba9c34ede9f3f120aa256d52456164cd860790b
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
