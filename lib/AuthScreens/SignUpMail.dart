@@ -4,18 +4,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import 'package:jnvapp/screens/HomePage.dart';
+import 'package:jnvapp/AuthScreens/HomePage.dart';
+import 'package:jnvapp/components/myButton.dart';
 import 'package:jnvapp/services/AuthFunctions.dart';
 
-class AuthenticationScreen extends StatefulWidget {
-  const AuthenticationScreen({Key? key}) : super(key: key);
+class SignUpMail extends StatefulWidget {
+  const SignUpMail({Key? key}) : super(key: key);
 
   @override
-  State<AuthenticationScreen> createState() => _AuthenticationScreenState();
+  State<SignUpMail> createState() => _SignUpMailState();
 }
 
-class _AuthenticationScreenState extends State<AuthenticationScreen>
+class _SignUpMailState extends State<SignUpMail>
     with SingleTickerProviderStateMixin {
   String email='';
   String password='';
@@ -54,9 +56,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
           preferredSize: Size.fromHeight(100.h),
           child: TabBar(
             controller: _tabController,
-            labelColor: Colors.black,
-            dividerColor: Colors.grey,
-            indicatorColor: Colors.black,
+            labelColor: Color(0xFF888BF4),
+            dividerColor: Color(0xFF888BF4),
+            indicatorColor: Color(0xFF888BF4),
             labelStyle: TextStyle(fontSize: 20.w, fontWeight: FontWeight.bold),
             unselectedLabelColor: Colors.grey,
             tabs: const [
@@ -73,9 +75,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
             'Create An Account' ,
             [
             
-            buildTextFormField('FullName', 'Enter FullName',
-             Icons.person,Username_focus),
-            SizedBox(height: 10.h,),
+            
+          
           //     buildTextFormField('Age', 'Enter Your Age',
            //  Icons.input,age_focus),
             SizedBox(height: 10.h,),
@@ -145,11 +146,10 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
               
                 width: double.infinity,
                 height: 50.h,
-                child: ElevatedButton(
-                    style: ButtonStyle(
-   backgroundColor: MaterialStateProperty.all<Color>(Colors.black), // Set your desired color
-  ),
-                  onPressed: () {
+                child: MyButton(
+                  text: buttonText,
+                  color: Color(0xFF888BF4),
+                    onTap: () {
                     // Handle SignUp or SignIn logic
                     //AlertDialog(title: Text("Sucessfully Sign Up"),);
                     if(_formKey.currentState!.validate()){
@@ -167,92 +167,10 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                     }
                    
                   },
-                  child: Text(buttonText,
-                  style: TextStyle(
-                    fontSize: 20.w,
-                    color:Colors.white,
-                  ),),
+                 
                 ),
               ),
-              SizedBox(height: 10.h),
-              Text('_________($extraText)___________',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold
-              ),),
-              SizedBox(height: 20.h),
-              GestureDetector(
-                onTap: (){
-                 
-                 AuthService.signInWithGoogle();
-                  
-                  checkUserSignInStatus();
-                },
-                child: Container(
-                  width: 150.w,
-                  height: 50.h,
-                          padding: EdgeInsets.only(right: 10.r),
-                          decoration: BoxDecoration(
-                            color: Colors.blueGrey,
-                            borderRadius: BorderRadius.circular(15.r),
-                         
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                            // Image.asset('assets/images/googleicon.png',
-                            //height: 20.h,),
-                              SizedBox(
-                                width: 5.0.w,
-                              ),
-                               Text('Google',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.sp
-                              ),)
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-             GestureDetector(
-                onTap: (){
-                 
-                 AuthService.signInWithFacebook();
-                  
-                  checkUserSignInStatus();
-                },
-                child: Container(
-                  width: 150.w,
-                  height: 50.h,
-                          padding: EdgeInsets.only(right: 10.r),
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(15.r),
-                         
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                            // Image.asset('assets/images/googleicon.png',
-                            //height: 20.h,),
-                              SizedBox(
-                                width: 5.0.w,
-                              ),
-                               Text('FaceBook',
-                              style: TextStyle(
-                                fontSize: 20.sp,
-                                color: Colors.white
-                              ),)
-                            ],
-                          ),
-                        ),
-                      ),
- 
+             
             ],
           ),
           
@@ -269,13 +187,12 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
         focusNode: focus_Node,
         
         obscureText: (key=='password' && !passwordVisible)?true:false,
-        
         decoration: InputDecoration(
           suffixIcon: key=='password'?IconButton(
                      icon: Icon(passwordVisible
                          ? Icons.visibility
                          : Icons.visibility_off),
-                     onPressed: () {
+                          onPressed: () {
                        setState(
                          () {
                            passwordVisible = !passwordVisible;
@@ -283,20 +200,20 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
                        );
                      },
                    ):null,
-                 hintText: hintText,
-          prefixIcon: Icon(prefixIcon,
-          color: focus_Node.hasFocus ?Colors.white : Colors.grey,),
-               
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.r),
-                  borderSide: BorderSide(color: Colors.grey, width: 2.w),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.r),
-                  borderSide: BorderSide(color: Colors.black, width: 2.w),
-                )),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none),
+                              contentPadding: EdgeInsets.all(20),
+                              hintText: hintText,
+                              hintStyle: GoogleFonts.aladin(),
+                              fillColor: Color(0xFFF2F2F2),
+                              filled: true,
+                              focusColor: Color(0xffd8c8ea),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                            ),
+        
         key: ValueKey(key),
         validator:(value){
           if(key=='FullName'){

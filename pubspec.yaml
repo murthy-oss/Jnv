@@ -39,14 +39,6 @@ dependencies:
   firebase_auth: ^4.17.8
   firebase_core: ^2.27.0
   telephony: ^0.2.0
-<<<<<<< HEAD
-  google_sign_in: ^6.2.1
-  flutter_facebook_auth: ^6.2.0
-  flutter_login_facebook: ^1.9.0
-  country_state_city: ^0.1.6
-  
-  
-=======
   firebase_storage: ^11.6.9
   cloud_firestore: ^4.15.8
   uuid: ^4.4.0
@@ -90,8 +82,10 @@ dependencies:
   flutter_slidable: ^3.1.0
   camera: ^0.10.5+9
   font_awesome_flutter: ^10.7.0
+  country_state_city: ^0.1.6
+  flutter_facebook_auth: ^6.2.0
+  us_states: ^1.2.0
 
->>>>>>> 7ba9c34ede9f3f120aa256d52456164cd860790b
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -115,14 +109,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-<<<<<<< HEAD
-assets:
-  - assets/images/googleicon.png
-=======
   assets:
    - Assets/images/
 
->>>>>>> 7ba9c34ede9f3f120aa256d52456164cd860790b
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

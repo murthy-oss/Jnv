@@ -177,7 +177,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-<<<<<<< HEAD
   country_state_city:
     dependency: "direct main"
     description:
@@ -186,7 +185,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.6"
-=======
   cross_file:
     dependency: transitive
     description:
@@ -203,7 +201,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
->>>>>>> 7ba9c34ede9f3f120aa256d52456164cd860790b
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -212,16 +209,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
-<<<<<<< HEAD
-  facebook_auth_desktop:
-    dependency: transitive
-    description:
-      name: facebook_auth_desktop
-      sha256: e6cc4d6f50a1d67d99e7dac7d77a40fe27122496e224cb708ae168d7d9aac0ac
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.3"
-=======
   dbus:
     dependency: transitive
     description:
@@ -238,7 +225,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
->>>>>>> 7ba9c34ede9f3f120aa256d52456164cd860790b
+  facebook_auth_desktop:
+    dependency: transitive
+    description:
+      name: facebook_auth_desktop
+      sha256: e6cc4d6f50a1d67d99e7dac7d77a40fe27122496e224cb708ae168d7d9aac0ac
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -255,8 +249,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-<<<<<<< HEAD
-=======
   file:
     dependency: transitive
     description:
@@ -297,7 +289,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.3+1"
->>>>>>> 7ba9c34ede9f3f120aa256d52456164cd860790b
   firebase_auth:
     dependency: "direct main"
     description:
@@ -407,32 +398,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-<<<<<<< HEAD
-  flutter_facebook_auth:
-    dependency: "direct main"
-    description:
-      name: flutter_facebook_auth
-      sha256: bc455122d3ea14fd0887b1a0f74d0ead845c04bfc2e68c64d9a701367d665724
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.2.0"
-  flutter_facebook_auth_platform_interface:
-    dependency: transitive
-    description:
-      name: flutter_facebook_auth_platform_interface
-      sha256: "86630c4dbba1c20fba26ea9e59ad0d48f5ff59e7373cacd36f916160186f9ce9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.0"
-  flutter_facebook_auth_web:
-    dependency: transitive
-    description:
-      name: flutter_facebook_auth_web
-      sha256: "22dca8091409309ad85b9f430fbd8f57b686276979da5195e7e97587352567ce"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.0"
-=======
   flutter_cache_manager:
     dependency: "direct main"
     description:
@@ -489,6 +454,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  flutter_facebook_auth:
+    dependency: "direct main"
+    description:
+      name: flutter_facebook_auth
+      sha256: bc455122d3ea14fd0887b1a0f74d0ead845c04bfc2e68c64d9a701367d665724
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.0"
+  flutter_facebook_auth_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_facebook_auth_platform_interface
+      sha256: "86630c4dbba1c20fba26ea9e59ad0d48f5ff59e7373cacd36f916160186f9ce9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.0"
+  flutter_facebook_auth_web:
+    dependency: transitive
+    description:
+      name: flutter_facebook_auth_web
+      sha256: "22dca8091409309ad85b9f430fbd8f57b686276979da5195e7e97587352567ce"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.0"
   flutter_faq:
     dependency: "direct main"
     description:
@@ -553,7 +542,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.0"
->>>>>>> 7ba9c34ede9f3f120aa256d52456164cd860790b
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -562,16 +550,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
-<<<<<<< HEAD
-  flutter_login_facebook:
-    dependency: "direct main"
-    description:
-      name: flutter_login_facebook
-      sha256: ad38ae738c6d6ff5f9cb5ef4025d90b03045cb8c4e976d470067df2490b5ca30
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.9.0"
-=======
   flutter_local_notifications:
     dependency: "direct main"
     description:
@@ -604,7 +582,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.19"
->>>>>>> 7ba9c34ede9f3f120aa256d52456164cd860790b
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -613,7 +590,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.9.0"
-<<<<<<< HEAD
   flutter_secure_storage:
     dependency: transitive
     description:
@@ -662,7 +638,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
-=======
   flutter_slidable:
     dependency: "direct main"
     description:
@@ -679,7 +654,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.10+1"
->>>>>>> 7ba9c34ede9f3f120aa256d52456164cd860790b
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -690,8 +664,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-<<<<<<< HEAD
-=======
   fluttertoast:
     dependency: "direct main"
     description:
@@ -724,7 +696,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.0"
->>>>>>> 7ba9c34ede9f3f120aa256d52456164cd860790b
   google_identity_services_web:
     dependency: transitive
     description:
@@ -893,14 +864,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  list_ext:
-    dependency: transitive
-    description:
-      name: list_ext
-      sha256: a38869a6911830f39ace7534972d01e573e17917955b26215e54d5797eb8d5cd
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.6"
   matcher:
     dependency: transitive
     description:
@@ -965,11 +928,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
-<<<<<<< HEAD
-  path_provider:
-    dependency: transitive
-    description:
-=======
   path_parsing:
     dependency: transitive
     description:
@@ -981,7 +939,6 @@ packages:
   path_provider:
     dependency: "direct main"
     description:
->>>>>>> 7ba9c34ede9f3f120aa256d52456164cd860790b
       name: path_provider
       sha256: c9e7d3a4cd1410877472158bee69963a4579f78b68c65a2b7d40d1a7a88bb161
       url: "https://pub.dev"
@@ -1027,8 +984,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.1"
-<<<<<<< HEAD
-=======
   permission_handler:
     dependency: "direct main"
     description:
@@ -1101,7 +1056,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
->>>>>>> 7ba9c34ede9f3f120aa256d52456164cd860790b
   platform:
     dependency: transitive
     description:
@@ -1118,16 +1072,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-<<<<<<< HEAD
-  quiver:
-    dependency: transitive
-    description:
-      name: quiver
-      sha256: b1c1ac5ce6688d77f65f3375a9abb9319b3cb32486bdc7a1e0fdf004d7ba4e47
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.1"
-=======
   profile_picture:
     dependency: "direct main"
     description:
@@ -1248,7 +1192,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.0"
->>>>>>> 7ba9c34ede9f3f120aa256d52456164cd860790b
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1454,6 +1397,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
+  us_states:
+    dependency: "direct main"
+    description:
+      name: us_states
+      sha256: "1abc927838eb3db1a7e3f8904400da7b62cd6cd6b21844b2b3f3dbbd1f299475"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   uuid:
     dependency: "direct main"
     description:
@@ -1542,10 +1493,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-<<<<<<< HEAD
-sdks:
-  dart: ">=3.2.3 <4.0.0"
-=======
   xml:
     dependency: transitive
     description:
@@ -1556,5 +1503,4 @@ sdks:
     version: "6.5.0"
 sdks:
   dart: ">=3.2.0 <4.0.0"
->>>>>>> 7ba9c34ede9f3f120aa256d52456164cd860790b
   flutter: ">=3.16.0"
