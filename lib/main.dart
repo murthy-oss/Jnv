@@ -4,9 +4,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
+<<<<<<< HEAD
 import 'package:jnvapp/screens/LoginPage.dart';
 import 'package:jnvapp/firebase_options.dart';
 import 'package:jnvapp/screens/patternPage.dart';
+=======
+import 'package:jnvapp/LoginPage.dart';
+import 'package:jnvapp/Screen/ONboardingScreens/Onboarding.dart';
+import 'package:jnvapp/firebase_options.dart';
+import 'package:provider/provider.dart';
+
+import 'FetchDataProvider/fetchData.dart';
+>>>>>>> 7ba9c34ede9f3f120aa256d52456164cd860790b
 
 
 
@@ -40,8 +49,13 @@ void main() async{
 );
 
   runApp(
-     
-     MyApp());
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserFetchController()),
+      ],
+      child:  MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -67,7 +81,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       
     home: ScreenUtilInit(designSize: Size(width,height), 
-    child: /*(user!= null)?HomeScreen():*/ LoginPage()),
+    child: /*(user!= null)?HomeScreen():*/ Onboarding()),
     );
   }
 }
