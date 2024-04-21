@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jnvapp/AuthFunctions.dart';
-import 'package:jnvapp/LoginPage.dart';
+import 'package:jnvapp/services/AuthFunctions.dart';
+import 'package:jnvapp/screens/LoginPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

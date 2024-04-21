@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jnvapp/AuthFunctions.dart';
-import 'package:jnvapp/HomePage.dart';
+import 'package:jnvapp/screens/SignUpPage.dart';
+import 'package:jnvapp/services/AuthFunctions.dart';
+import 'package:jnvapp/screens/HomePage.dart';
 
 import 'package:telephony/telephony.dart';
 
@@ -205,6 +206,11 @@ class _LoginPageState extends State<LoginPage>
                   ],
                 ),
               ),
+             ElevatedButton(onPressed: (){
+              Navigator.push(context, 
+              MaterialPageRoute(builder:
+               (context)=>AuthenticationScreen()));
+             }, child: Center(child: Text("Email Authentication")))
             ],
           ),
         ),

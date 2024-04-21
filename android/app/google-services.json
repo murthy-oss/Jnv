@@ -12,7 +12,20 @@
           "package_name": "com.example.jnvapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "922724723488-7irmoamo1f3acqugm3k2f77a4upcf041.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jnvapp",
+            "certificate_hash": "a7b4f61a89dee551afa75430c75bcdbb309ed5c9"
+          }
+        },
+        {
+          "client_id": "922724723488-u3mfo6u1g72qaumv1d1jiqmqni5ufknn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDYL-UVUwG5S34-IsRAT4UydSti1Nspd7M"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "922724723488-u3mfo6u1g72qaumv1d1jiqmqni5ufknn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
