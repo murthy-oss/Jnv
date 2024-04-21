@@ -66,8 +66,8 @@ class AuthService {
     var user = _firebaseAuth.currentUser;
     return user != null;
   }
-  
-  
+
+
 
 static Future Signup(String email,String password)async{
   try {
@@ -123,7 +123,7 @@ static Future<UserCredential> signInWithGoogle() async {
   // Once signed in, return the UserCredential
   print("/////////////$credential");
   return await FirebaseAuth.instance.signInWithCredential(credential);
-  
+
 }
 
 
