@@ -7,6 +7,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:jnvapp/LoginPage.dart';
 import 'package:jnvapp/Screen/ONboardingScreens/Onboarding.dart';
 import 'package:jnvapp/firebase_options.dart';
+import 'package:provider/provider.dart';
+
+import 'FetchDataProvider/fetchData.dart';
 
 
 
@@ -40,8 +43,13 @@ void main() async{
 );
 
   runApp(
-     
-     MyApp());
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserFetchController()),
+      ],
+      child:  MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {

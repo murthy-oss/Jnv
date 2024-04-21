@@ -217,7 +217,7 @@ class FireStoreMethods {
   }
 
   Future<void> createFollowersAndFollowingArrays(
-      String bio, String Linkedin) async {
+      ) async {
     String currentUserUid = FirebaseAuth.instance.currentUser!.uid;
 
     try {
@@ -226,11 +226,9 @@ class FireStoreMethods {
           .collection('users')
           .doc(currentUserUid)
           .set({
-        'LinkedIn': Linkedin,
         'showEmail': true,
         'showPhone': true,
         'showLinkedin': true,
-        'bio': bio,
         'followers': [], // Initialize with an empty array
       }, SetOptions(merge: true)); // Merge with existing document if it exists
 
@@ -345,7 +343,7 @@ class FireStoreMethods {
           .doc(userId)
           .set(user.toMap());
 
-      createFollowersAndFollowingArrays(bio, linkedinLink);
+      createFollowersAndFollowingArrays();
 
       // Navigator.pushReplacement(
       //   context,

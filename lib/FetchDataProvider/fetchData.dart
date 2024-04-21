@@ -21,8 +21,8 @@ class UserFetchController extends ChangeNotifier {
 
     FirebaseFirestore.instance
         .collection('users')
-        .where('phoneNumber',
-        isEqualTo: currentUser.phoneNumber) // Filter documents by phone number
+        .where('userId',
+        isEqualTo: currentUser.uid) // Filter documents by phone number
         .snapshots() // Listen for real-time updates to the filtered documents
         .listen((querySnapshot) {
       if (querySnapshot.docs.isNotEmpty) {

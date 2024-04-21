@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
+import '../Screen/onboardingProfile/onboardingProfilePage.dart';
 import '../components/myButton.dart';
 
 
