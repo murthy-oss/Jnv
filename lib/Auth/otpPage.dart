@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jnvapp/HomePage.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
+import '../FetchDataProvider/fetchData.dart';
 import '../components/myButton.dart';
 import 'OTP SUCESS.dart';
 
@@ -148,11 +151,11 @@ class _OTPScreenState extends State<OTPScreen> {
               await isPhoneNumberAlreadyRegistered(phoneNumber);
           if (isPhoneNumberRegistered) {
             // Phone number is registered, navigate to home page
-            // Provider.of<UserFetchController>(context, listen: false).fetchUserData();
-            // Navigator.pushReplacement(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => HomeScreen()),
-            // );
+            Provider.of<UserFetchController>(context, listen: false).fetchUserData();
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
           } else {
             // Phone number is not registered, navigate to setup profile page
             Navigator.pushReplacement(

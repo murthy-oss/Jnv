@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:jnvapp/LoginPage.dart';
+import 'package:jnvapp/Screen/ONboardingScreens/Onboarding.dart';
 import 'package:jnvapp/firebase_options.dart';
 
 
@@ -66,7 +67,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       
     home: ScreenUtilInit(designSize: Size(width,height), 
-    child: /*(user!= null)?HomeScreen():*/ LoginPage()),
+    child: /*(user!= null)?HomeScreen():*/ Onboarding()),
     );
   }
 }

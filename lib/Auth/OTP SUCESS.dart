@@ -15,7 +15,6 @@ class OTPSUCCESS extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPSUCCESS> {
-  final TextEditingController _pinPutController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -77,33 +76,33 @@ class _OTPScreenState extends State<OTPSUCCESS> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: MyButton(onTap: () {
-                // Navigator.pushReplacement(
-                //   context,
-                //   PageRouteBuilder(
-                //     transitionDuration: Duration(
-                //         milliseconds:
-                //         500), // Adjust duration as needed
-                //     pageBuilder:
-                //         (context, animation, secondaryAnimation) =>
-                //         SetUpProfile(),
-                //     transitionsBuilder: (context, animation,
-                //         secondaryAnimation, child) {
-                //       var begin = Offset(0.0, 1.0);
-                //       var end = Offset.zero;
-                //       var curve = Curves.ease;
-                //
-                //       var tween =
-                //       Tween(begin: begin, end: end).chain(
-                //         CurveTween(curve: curve),
-                //       );
-                //
-                //       return SlideTransition(
-                //         position: animation.drive(tween),
-                //         child: child,
-                //       );
-                //     },
-                //   ),
-                // );
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    transitionDuration: Duration(
+                        milliseconds:
+                        500), // Adjust duration as needed
+                    pageBuilder:
+                        (context, animation, secondaryAnimation) =>
+                        SetUpProfile(),
+                    transitionsBuilder: (context, animation,
+                        secondaryAnimation, child) {
+                      var begin = Offset(0.0, 1.0);
+                      var end = Offset.zero;
+                      var curve = Curves.ease;
+
+                      var tween =
+                      Tween(begin: begin, end: end).chain(
+                        CurveTween(curve: curve),
+                      );
+
+                      return SlideTransition(
+                        position: animation.drive(tween),
+                        child: child,
+                      );
+                    },
+                  ),
+                );
               }, text: 'Continue',    color:Color(0xFF888BF4)),
             ),
 
