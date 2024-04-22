@@ -3,22 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+<<<<<<< HEAD
 
 import 'package:jnvapp/AuthScreens/patternPage.dart';
 
+=======
+import 'package:jnvapp/screens/LoginPage.dart';
+import 'package:jnvapp/firebase_options.dart';
+import 'package:jnvapp/screens/patternPage.dart';
+>>>>>>> origin/main
 import 'package:jnvapp/Screen/ONboardingScreens/Onboarding.dart';
-import 'package:jnvapp/Screen/SetUpNavodhya/Navodhya.dart';
-import 'package:jnvapp/Screen/onboardingProfile/onboardingProfilePage.dart';
 import 'package:jnvapp/firebase_options.dart';
 import 'package:provider/provider.dart';
 
 import 'FetchDataProvider/fetchData.dart';
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
 
 
 
 //import 'package:inst_clone_1/auth/mainPage.dart';
-//import 'package:inst_clone_1/firebase_opti
-// ons.dart';
+//import 'package:inst_clone_1/firebase_options.dart';
 
 /*Future<User?> checkAuthenticationStatus() async {
   return FirebaseAuth.instance.authStateChanges().first;
@@ -79,7 +86,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       
     home: ScreenUtilInit(designSize: Size(width,height), 
-    child: /*(user!= null)?HomeScreen():*/ SetUpProfile()),
+    child: /*(user!= null)?HomeScreen():*/ Onboarding()),
     );
   }
 }
