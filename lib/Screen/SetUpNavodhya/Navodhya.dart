@@ -2,10 +2,10 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
+import '../../AuthScreens/HomePage.dart';
 import '../../Services/FireStoreMethod.dart';
 import '../../components/myButton.dart';
 import '../../components/myTextfield.dart';
-import '../../screens/HomePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SetUpNavodhya extends StatefulWidget {
@@ -20,16 +20,19 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
   String? _selectedGender;
-  String? _selectedOccupation; // Corrected variable name
+  String? _selectedOccupation;
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _aadhaarController = TextEditingController();
   final TextEditingController _maritalStatusController =
-      TextEditingController();
-  final TextEditingController _occupationController =
-      TextEditingController(); // Defined _occupationController
+  TextEditingController();
+  final TextEditingController _occupationController = TextEditingController();
+  final TextEditingController _stateController = TextEditingController();
+  final TextEditingController _districtController = TextEditingController();
+  final TextEditingController _schoolCampusController = TextEditingController();
+  final TextEditingController _entryYearController = TextEditingController();
+  final TextEditingController _entryClassController = TextEditingController();
 
   Uuid uuid = Uuid();
-
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
@@ -42,7 +45,7 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
     if (pickedDate != null) {
       setState(() {
         _dobController.text =
-            "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+        "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
       });
     }
   }
@@ -97,171 +100,65 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 25, bottom: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: _file != null
-                          ? MemoryImage(_file!)
-                              as ImageProvider // Cast MemoryImage to ImageProvider
-                          : AssetImage('Assets/images/Avatar.png')
-                              as ImageProvider, // Cast AssetImage to ImageProvider
-                      radius: 60,
-                    ),
-                    MyButton1(
-                      onTap: () async {
-                        await _selectImage(context);
-                      },
-                      text: "Upload Photo",
-                      color: Color(0xFF888BF4),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
+              SizedBox(height: 15),
               MyTextField(
-                controller: _nameController,
-                hint: "Name",
+                controller: _stateController,
+                hint: "Selection - State",
                 obscure: false,
                 selection: true,
-                preIcon: Icons.drive_file_rename_outline,
-                keyboardtype: TextInputType.name,
-                validator: (value) => _validateInput(value, fieldName: 'Name'),
-              ),
-              GestureDetector(
-                onTap: () async {
-                  await _selectDate(context);
-                },
-                child: AbsorbPointer(
-                  child: MyTextField(
-                    controller: _dobController,
-                    hint: "Date of Birth",
-                    obscure: false,
-                    selection: true,
-                    preIcon: Icons.calendar_today,
-                    keyboardtype: TextInputType.datetime,
-                    validator: (value) =>
-                        _validateInput(value, fieldName: 'Date of Birth'),
-                  ),
-                ),
-              ),
-              MyTextField(
-                controller: _emailController,
-                hint: "Email",
-                obscure: false,
-                selection: true,
-                preIcon: Icons.mail,
-                keyboardtype: TextInputType.emailAddress,
-                validator: (value) => _validateInput(value, fieldName: 'Email'),
-              ),
-              MyTextField(
-                controller: _mobileController,
-                hint: "Mobile",
-                obscure: false,
-                selection: true,
-                preIcon: Icons.phone,
-                keyboardtype: TextInputType.phone,
-                validator: (value) =>
-                    _validateInput(value, fieldName: 'Mobile'),
-              ),
-              MyTextField(
-                controller: _aadhaarController,
-                hint: "Aadhaar",
-                obscure: false,
-                selection: true,
-                preIcon: Icons.credit_card,
-                keyboardtype: TextInputType.number,
-                validator: (value) =>
-                    _validateInput(value, fieldName: 'Aadhaar'),
-              ),
-              MyTextField(
-                controller: _maritalStatusController,
-                hint: "Marital Status",
-                obscure: false,
-                selection: true,
-                preIcon: Icons.favorite,
+                preIcon: Icons.location_on,
                 keyboardtype: TextInputType.text,
                 validator: (value) =>
-                    _validateInput(value, fieldName: 'Marital Status'),
+                    _validateInput(value, fieldName: 'State'),
               ),
-              DropdownButtonFormField<String>(
-                value: _selectedGender,
-                items: ['Male', 'Female', 'Others'].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedGender = newValue;
-                  });
-                },
-                decoration: InputDecoration(
-                  hintText: 'Select Gender',
-                  prefixIcon: Icon(Icons.people),
-                ),
+              MyTextField(
+                controller: _districtController,
+                hint: "Selection - District",
+                obscure: false,
+                selection: true,
+                preIcon: Icons.location_city,
+                keyboardtype: TextInputType.text,
                 validator: (value) =>
-                    _validateInput(value, fieldName: 'Gender'),
+                    _validateInput(value, fieldName: 'District'),
               ),
-              SizedBox(height: 15),
-              DropdownButtonFormField<String>(
-                value: _selectedOccupation,
-                items: ['Student', 'Teacher'].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedOccupation = newValue;
-                  });
-                },
-                decoration: InputDecoration(
-                  hintText: 'Select Occupation',
-                  prefixIcon: Icon(Icons.work),
-                ),
+              MyTextField(
+                controller: _schoolCampusController,
+                hint: "Selection - School Campus",
+                obscure: false,
+                selection: true,
+                preIcon: Icons.school,
+                keyboardtype: TextInputType.text,
                 validator: (value) =>
-                    _validateInput(value, fieldName: 'Occupation'),
+                    _validateInput(value, fieldName: 'School Campus'),
+              ),
+              MyTextField(
+                controller: _entryYearController,
+                hint: "Entry Year",
+                obscure: false,
+                selection: true,
+                preIcon: Icons.date_range,
+                keyboardtype: TextInputType.number,
+                validator: (value) =>
+                    _validateInput(value, fieldName: 'Entry Year'),
+              ),
+              MyTextField(
+                controller: _entryClassController,
+                hint: "Entry Class",
+                obscure: false,
+                selection: true,
+                preIcon: Icons.class_,
+                keyboardtype: TextInputType.number,
+                validator: (value) =>
+                    _validateInput(value, fieldName: 'Entry Class'),
               ),
               SizedBox(height: 15),
               MyButton(
                 onTap: () {
                   String? nameError =
-                      _validateInput(_nameController.text, fieldName: 'Name');
+                  _validateInput(_nameController.text, fieldName: 'Name');
                   String? emailError =
-                      _validateInput(_emailController.text, fieldName: 'Email');
+                  _validateInput(_emailController.text, fieldName: 'Email');
                   if (nameError == null && emailError == null) {
-                    FireStoreMethods().createUser(
-                      userId: FirebaseAuth.instance.currentUser!.uid,
-                      name: _nameController.text.toLowerCase(),
-                      dateOfBirth: _dobController.text,
-                      gender: _selectedGender!,
-                      email: _emailController.text.trim(),
-                      phoneNumber: _mobileController.text,
-                      aadharCardNumber: _aadhaarController.text,
-                      maritalStatus: _maritalStatusController.text,
-                      occupation: _selectedOccupation!,
-                      section: '',
-                      state: '',
-                      district: '',
-                      schoolCampus: '',
-                      entryYear: '',
-                      entryClass: '',
-                      passOutYear: '',
-                      house: '',
-                      profilePicture: '',
-                      bio: '',
-                      achievements: '',
-                      instagramLink: '',
-                      linkedinLink: '',
-                      IsVerified: false,
-                      context: context,
-                    );
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

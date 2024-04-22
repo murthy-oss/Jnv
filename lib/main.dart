@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:jnvapp/screens/LoginPage.dart';
-import 'package:jnvapp/firebase_options.dart';
-import 'package:jnvapp/screens/patternPage.dart';
+
+import 'package:jnvapp/AuthScreens/patternPage.dart';
+
 import 'package:jnvapp/Screen/ONboardingScreens/Onboarding.dart';
+import 'package:jnvapp/Screen/SetUpNavodhya/Navodhya.dart';
+import 'package:jnvapp/Screen/onboardingProfile/onboardingProfilePage.dart';
 import 'package:jnvapp/firebase_options.dart';
 import 'package:provider/provider.dart';
 
 import 'FetchDataProvider/fetchData.dart';
-import 'Screen/SetUpNavodhya/Navodhya.dart';
-
 
 
 
@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       
     home: ScreenUtilInit(designSize: Size(width,height), 
-    child: /*(user!= null)?HomeScreen():*/ SetUpNavodhya()),
+    child: /*(user!= null)?HomeScreen():*/ SetUpProfile()),
     );
   }
 }

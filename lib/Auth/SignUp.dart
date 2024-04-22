@@ -2,6 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:jnvapp/AuthScreens/SignUpMail.dart';
+import 'package:jnvapp/services/AuthFunctions.dart';
+
 
 import '../Sizeconfig/Size_Config.dart';
 import '../components/myButton.dart';
@@ -188,27 +191,49 @@ class _SignUpPageState extends State<SignUpPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              CircleAvatar(
-                                  radius: 25,
-                                  child: Icon(
-                                    AntDesign.google_circle_fill,
-                                    color: Color(0xFF888BF4),
-                                    size: 35,
-                                  )),
-                              CircleAvatar(
-                                  radius: 25,
-                                  child: Icon(
-                                    AntDesign.facebook_fill,
-                                    color: Color(0xFF888BF4),
-                                    size: 35,
-                                  )),
-                              CircleAvatar(
-                                  radius: 25,
-                                  child: Icon(
-                                    Icons.email,
-                                    color: Color(0xFF888BF4),
-                                    size: 35,
-                                  ))
+                              GestureDetector(
+                                onTap: (){
+                                   AuthService.signInWithGoogle();
+                  
+                  
+                                },
+                                child: CircleAvatar(
+                                    radius: 25,
+                                    child: Icon(
+                                      AntDesign.google_circle_fill,
+                                      color: Color(0xFF888BF4),
+                                      size: 35,
+                                    )),
+                              ),
+                              GestureDetector(
+                                onTap: (){
+                                    AuthService.signInWithFacebook();
+                  
+                                },
+                                child: CircleAvatar(
+                                    radius: 25,
+                                    child: Icon(
+                                      AntDesign.facebook_fill,
+                                      color: Color(0xFF888BF4),
+                                      size: 35,
+                                    )),
+                              ),
+                              GestureDetector(
+                             onTap: (){
+                              Navigator.push(
+                            
+                             context, 
+                             MaterialPageRoute(
+                              builder: (context)=>SignUpMail()));
+                             },
+                                child: CircleAvatar(
+                                    radius: 25,
+                                    child: Icon(
+                                      Icons.email,
+                                      color: Color(0xFF888BF4),
+                                      size: 35,
+                                    )),
+                              )
                             ],
                           ),
                           SizedBox(

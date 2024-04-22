@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jnvapp/AuthScreens/HomePage.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -9,7 +10,6 @@ import '../../FetchDataProvider/fetchData.dart';
 import '../../Services/FireStoreMethod.dart';
 import '../../components/myButton.dart';
 import '../../components/myTextfield.dart';
-import '../../screens/HomePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../SetUpNavodhya/Navodhya.dart';

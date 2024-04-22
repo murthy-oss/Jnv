@@ -87,6 +87,7 @@ dependencies:
   font_awesome_flutter: ^10.7.0
 
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -113,6 +114,7 @@ flutter:
   assets:
    - Assets/images/
    - assets/images/googleicon.png
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
