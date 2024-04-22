@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:jnvapp/AuthScreens/HomePage.dart';
 import 'package:jnvapp/AuthScreens/SignUpMail.dart';
+import 'package:jnvapp/Screen/onboardingProfile/onboardingProfilePage.dart';
 import 'package:jnvapp/services/AuthFunctions.dart';
 
 
@@ -194,7 +196,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               GestureDetector(
                                 onTap: (){
                                    AuthService.signInWithGoogle();
-                  
+                                   checkUserSignInStatus();
                   
                                 },
                                 child: CircleAvatar(
@@ -208,7 +210,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               GestureDetector(
                                 onTap: (){
                                     AuthService.signInWithFacebook();
+                 checkUserSignInStatus();
                   
+
                                 },
                                 child: CircleAvatar(
                                     radius: 25,
@@ -288,4 +292,24 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
+  Future<void> checkUserSignInStatus() async {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  // Get the current user
+  User? user = auth.currentUser;
+
+  if (user != null) {
+    // The user is signed in
+    print('User is signed in: ${user.uid}');
+    Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) =>  SetUpProfile()),
+);
+
+  } else {
+    // The user is not signed in
+    print('User is not signed in');
+  }
+}
+
 }

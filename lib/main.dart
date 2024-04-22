@@ -3,24 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-<<<<<<< HEAD
 
-import 'package:jnvapp/AuthScreens/patternPage.dart';
-
-=======
-import 'package:jnvapp/screens/LoginPage.dart';
 import 'package:jnvapp/firebase_options.dart';
-import 'package:jnvapp/screens/patternPage.dart';
->>>>>>> origin/main
+
 import 'package:jnvapp/Screen/ONboardingScreens/Onboarding.dart';
 import 'package:jnvapp/firebase_options.dart';
 import 'package:provider/provider.dart';
 
 import 'FetchDataProvider/fetchData.dart';
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main
 
 
 
