@@ -297,6 +297,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   // Get the current user
   User? user = auth.currentUser;
+ 
 
   if (user != null) {
     // The user is signed in

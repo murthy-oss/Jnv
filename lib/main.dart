@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:jnvapp/AuthScreens/patternPage.dart';
 
 import 'package:jnvapp/firebase_options.dart';
 
@@ -76,7 +77,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       
     home: ScreenUtilInit(designSize: Size(width,height), 
-    child: /*(user!= null)?HomeScreen():*/ Onboarding()),
+    child: /*(user!= null)?HomeScreen():*/ PattrenGenerate()),
     );
   }
 }

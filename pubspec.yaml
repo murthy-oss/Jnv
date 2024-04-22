@@ -88,6 +88,7 @@ dependencies:
   country_state_city: ^0.1.6
   flutter_facebook_auth: ^6.2.0
   us_states: ^1.2.0
+  csv: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -115,6 +116,7 @@ flutter:
   assets:
    - Assets/images/
    - assets/images/googleicon.png
+   - assets/csv/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
