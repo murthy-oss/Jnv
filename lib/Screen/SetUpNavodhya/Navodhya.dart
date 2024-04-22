@@ -19,12 +19,6 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
-  String? _selectedGender;
-  String? _selectedOccupation;
-  final TextEditingController _mobileController = TextEditingController();
-  final TextEditingController _aadhaarController = TextEditingController();
-  final TextEditingController _maritalStatusController =
-  TextEditingController();
   final TextEditingController _occupationController = TextEditingController();
   final TextEditingController _stateController = TextEditingController();
   final TextEditingController _districtController = TextEditingController();
