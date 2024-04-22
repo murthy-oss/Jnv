@@ -74,7 +74,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       
     home: ScreenUtilInit(designSize: Size(width,height), 
-    child: /*(user!= null)?HomeScreen():*/ Onboarding()),
+    child: /*(user!= null)?HomeScreen():*/ PattrenGenerate()),
     );
   }
 }
