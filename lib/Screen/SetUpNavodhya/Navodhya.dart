@@ -1,12 +1,10 @@
-import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 import '../../AuthScreens/HomePage.dart';
 import '../../Services/FireStoreMethod.dart';
 import '../../components/myButton.dart';
 import '../../components/myTextfield.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class SetUpNavodhya extends StatefulWidget {
   const SetUpNavodhya({Key? key}) : super(key: key);
@@ -16,16 +14,15 @@ class SetUpNavodhya extends StatefulWidget {
 }
 
 class _SetUpProfileState extends State<SetUpNavodhya> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _dobController = TextEditingController();
-  final TextEditingController _occupationController = TextEditingController();
   final TextEditingController _stateController = TextEditingController();
+  final TextEditingController _passOutYearController = TextEditingController();
+  final TextEditingController _rollNumber = TextEditingController();
   final TextEditingController _districtController = TextEditingController();
   final TextEditingController _schoolCampusController = TextEditingController();
   final TextEditingController _entryYearController = TextEditingController();
   final TextEditingController _entryClassController = TextEditingController();
-
+  String _selectSection = '';
+  String _houseColorController = '';
   Uuid uuid = Uuid();
 
   Future<void> _selectDate(BuildContext context) async {
@@ -38,8 +35,8 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
 
     if (pickedDate != null) {
       setState(() {
-        _dobController.text =
-        "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+        _entryYearController.text =
+            "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
       });
     }
   }
@@ -47,15 +44,6 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
   String? _validateInput(String? value, {String? fieldName}) {
     if (value == null || value.isEmpty) {
       return 'This field is required';
-    }
-    if (fieldName == 'Email') {
-      if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-        return 'Please enter a valid email address';
-      }
-    } else if (fieldName == 'Gender') {
-      if (value != 'Male' && value != 'Female' && value != 'Others') {
-        return 'Please select a valid gender';
-      }
     }
     return null;
   }
@@ -102,8 +90,7 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
                 selection: true,
                 preIcon: Icons.location_on,
                 keyboardtype: TextInputType.text,
-                validator: (value) =>
-                    _validateInput(value, fieldName: 'State'),
+                validator: (value) => _validateInput(value, fieldName: 'State'),
               ),
               MyTextField(
                 controller: _districtController,
@@ -145,18 +132,73 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
                 validator: (value) =>
                     _validateInput(value, fieldName: 'Entry Class'),
               ),
+              GestureDetector(
+                onTap: () async {
+                  await _selectDate(context);
+                },
+                child: AbsorbPointer(
+                  child: MyTextField(
+                    controller: _passOutYearController,
+                    hint: "Date of Birth",
+                    obscure: false,
+                    selection: true,
+                    preIcon: Icons.calendar_today,
+                    keyboardtype: TextInputType.datetime,
+                    validator: (value) =>
+                        _validateInput(value, fieldName: 'Date of Birth'),
+                  ),
+                ),
+              ),
+              MyTextField(
+                controller: _rollNumber,
+                hint: "Roll Number",
+                obscure: false,
+                selection: true,
+                preIcon: Icons.class_,
+                keyboardtype: TextInputType.number,
+                validator: (value) =>
+                    _validateInput(value, fieldName: 'Entry Class'),
+              ),
+
+
               SizedBox(height: 15),
               MyButton(
                 onTap: () {
-                  String? nameError =
-                  _validateInput(_nameController.text, fieldName: 'Name');
-                  String? emailError =
-                  _validateInput(_emailController.text, fieldName: 'Email');
-                  if (nameError == null && emailError == null) {
+                  String? stateError =
+                      _validateInput(_stateController.text, fieldName: 'State');
+                  String? districtError = _validateInput(
+                      _districtController.text,
+                      fieldName: 'District');
+                  String? campusError = _validateInput(
+                      _schoolCampusController.text,
+                      fieldName: 'School Campus');
+                  String? yearError = _validateInput(_entryYearController.text,
+                      fieldName: 'Entry Year');
+                  String? classError = _validateInput(
+                      _entryClassController.text,
+                      fieldName: 'Entry Class');
+                  String? RollNumberError = _validateInput(_rollNumber.text,
+                      fieldName: 'House Color');
+                  if (stateError == null &&
+                      districtError == null &&
+                      campusError == null &&
+                      yearError == null &&
+                      classError == null &&
+                      RollNumberError == null) {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) {
+                          FireStoreMethods().NavodhyaData(
+                            _stateController.text.trim(),
+                            _districtController.text.trim(),
+                            _selectSection,
+                            _schoolCampusController.text.trim(),
+                            _passOutYearController.text.trim(),
+                            _entryClassController.text.trim(),
+                            _entryYearController.text,
+                            _houseColorController,
+                          );
                           return HomePage();
                         },
                       ),

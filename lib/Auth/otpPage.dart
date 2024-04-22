@@ -146,6 +146,7 @@ class _OTPScreenState extends State<OTPScreen> {
       User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         String? phoneNumber = user.phoneNumber;
+        print(phoneNumber);
         if (phoneNumber != null) {
           bool isPhoneNumberRegistered =
               await isPhoneNumberAlreadyRegistered(phoneNumber);
