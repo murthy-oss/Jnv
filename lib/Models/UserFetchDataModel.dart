@@ -18,10 +18,14 @@ class UserModel1 {
   String? house;
   String? profilePicture;
   String? bio;
+  String? NavodhyaId;
   String? achievements;
   String? instagramLink;
   String? linkedinLink;
   bool isVerified = false;
+  bool showEmail = false;
+  bool showPhone = false;
+  bool showLinkedin = false;
 
   UserModel1();
 
@@ -45,8 +49,12 @@ class UserModel1 {
         house = json['house'],
         profilePicture = json['profilePicture'],
         bio = json['bio'],
+        NavodhyaId = json['NavodhyaId'],
         achievements = json['achievements'],
         instagramLink = json['instagramLink'],
         linkedinLink = json['linkedinLink'],
-        isVerified = json['isVerified'] ?? false;
+        isVerified = json['isVerified'] ?? false,
+        showEmail = json['showEmail'] ?? false,
+        showPhone = json['showPhone'] ?? false,
+        showLinkedin = json['showLinkedin'] ?? false;
 }

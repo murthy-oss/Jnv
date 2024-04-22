@@ -335,7 +335,8 @@ class FireStoreMethods {
           bio: bio,
           achievements: achievements,
           instagramLink: instagramLink,
-          linkedinLink: linkedinLink);
+          linkedinLink: linkedinLink,
+          NavodhyaId: '');
 
       await FirebaseFirestore.instance
           .collection('users')
@@ -501,6 +502,7 @@ class FireStoreMethods {
     String entryClass,
     String entryYear,
     String house,
+      String NavodhyaId,
   ) async {
     try {
       final CurrentUserId = FirebaseAuth.instance.currentUser!.uid;
@@ -516,6 +518,7 @@ class FireStoreMethods {
         'house': house,
         'entryClass': entryClass,
         'entryYear': entryYear,
+        'NavodhyaId': NavodhyaId,
       });
 
       print('User data updated successfully');

@@ -73,7 +73,7 @@
     }
     
 void retrieveFirstColumnData(String searchData) async {
-  String data = await rootBundle.loadString('assets/csv/RTO.csv');
+  String data = await rootBundle.loadString('Assets/csv/RTO.csv');
   List<List<dynamic>> csvTable = CsvToListConverter().convert(data);
 
   // Iterate through each row in the CSV data
@@ -84,7 +84,7 @@ void retrieveFirstColumnData(String searchData) async {
       if (col == searchData) {
         // If searchData is found, print the data from the previous column (currentIndex - 1)
         if (currentIndex > 0) {
-          print("N"+row[currentIndex - 1]+passwdoutYear.text+Rollno.text);
+          print("N-"+row[currentIndex - 1]+passwdoutYear.text+Rollno.text);
          // print(currentIndex-1 );
         } else {
           print("No previous column exists.");

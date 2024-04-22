@@ -250,7 +250,7 @@ class _SetUpProfileState extends State<SetUpProfile> {
                       dateOfBirth: _dobController.text,
                       gender: _selectedGender!,
                       email: _emailController.text.trim(),
-                      phoneNumber: "91${_mobileController.text}",
+                      phoneNumber: "+91${_mobileController.text}",
                       aadharCardNumber: _aadhaarController.text,
                       maritalStatus: _maritalStatusController.text,
                       occupation: _selectedOccupation!,

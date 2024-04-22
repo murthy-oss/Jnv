@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
   final String userId;
+  final String NavodhyaId;
   final String name;
   final String dateOfBirth;
   final String gender;
@@ -27,6 +28,7 @@ class UserModel {
 
   UserModel( {
     required this.IsVerified,
+    required this.NavodhyaId,
     required this.userId,
     required this.name,
     required this.dateOfBirth,
@@ -77,6 +79,7 @@ class UserModel {
       instagramLink: data['instagramLink'] ?? '',
       linkedinLink: data['linkedinLink'] ?? '',
       IsVerified: false,
+      NavodhyaId: data['NavodhyaId'],
     );
   }
 
