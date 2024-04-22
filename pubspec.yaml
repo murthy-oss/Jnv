@@ -39,9 +39,9 @@ dependencies:
   firebase_auth: ^4.17.8
   firebase_core: ^2.27.0
   telephony: ^0.2.0
-  
+  flutter_facebook_auth: ^6.2.0
   flutter_login_facebook: ^1.9.0
-  
+  country_state_city: ^0.1.6
   firebase_storage: ^11.6.9
   cloud_firestore: ^4.15.8
   uuid: ^4.4.0
@@ -85,10 +85,8 @@ dependencies:
   flutter_slidable: ^3.1.0
   camera: ^0.10.5+9
   font_awesome_flutter: ^10.7.0
-  country_state_city: ^0.1.6
-  flutter_facebook_auth: ^6.2.0
-  us_states: ^1.2.0
-  csv: ^6.0.0
+
+
 
 dev_dependencies:
   flutter_test:
@@ -115,7 +113,12 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - Assets/images/
+<<<<<<< HEAD
    - assets/csv/
+=======
+   - assets/images/googleicon.png
+
+>>>>>>> 9d54238eebbf29c6502265dfe9fc7ac4aa722282
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

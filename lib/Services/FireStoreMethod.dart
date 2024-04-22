@@ -216,8 +216,7 @@ class FireStoreMethods {
     }
   }
 
-  Future<void> createFollowersAndFollowingArrays(
-      ) async {
+  Future<void> createFollowersAndFollowingArrays() async {
     String currentUserUid = FirebaseAuth.instance.currentUser!.uid;
 
     try {
@@ -490,6 +489,40 @@ class FireStoreMethods {
       return 'success';
     } catch (e) {
       return 'Error deleting comment: $e';
+    }
+  }
+
+  Future<void> NavodhyaData(
+    String State,
+    String district,
+    String section,
+    String schoolCampus,
+    String passOutYear,
+    String entryClass,
+    String entryYear,
+    String house,
+  ) async {
+    try {
+      final CurrentUserId = FirebaseAuth.instance.currentUser!.uid;
+
+      DocumentReference userDocRef =
+          FirebaseFirestore.instance.collection('users').doc(CurrentUserId);
+      await userDocRef.update({
+        'state': State,
+        'district': district,
+        'section': section,
+        'schoolCampus': schoolCampus,
+        'passOutYear': passOutYear,
+        'house': house,
+        'entryClass': entryClass,
+        'entryYear': entryYear,
+      });
+
+      print('User data updated successfully');
+
+    } catch (e) {
+      print('Error updating user data: $e');
+      throw e; // Propagate the error for handling at a higher level if needed
     }
   }
 }

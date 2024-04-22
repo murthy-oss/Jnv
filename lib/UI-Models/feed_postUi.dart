@@ -11,7 +11,7 @@ import '../Widgets/TextLinkWidget.dart';
 import '../Widgets/shimmerWidget.dart';
 import '../components/myButton.dart';
 import '../other/report.dart';
-import 'likegetx.dart';
+import '../Models/likegetx.dart';
 
 class PostCard extends StatelessWidget {
   final String username;

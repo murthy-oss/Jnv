@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jnvapp/AuthScreens/HomePage.dart';
-
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 import '../FetchDataProvider/fetchData.dart';
@@ -147,6 +146,7 @@ class _OTPScreenState extends State<OTPScreen> {
       User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         String? phoneNumber = user.phoneNumber;
+        print(phoneNumber);
         if (phoneNumber != null) {
           bool isPhoneNumberRegistered =
               await isPhoneNumberAlreadyRegistered(phoneNumber);
