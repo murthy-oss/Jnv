@@ -28,7 +28,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
   TimeOfDay? _selectedTime;
   String _selectedEventType = 'Physical Event';
   Uuid uuid = Uuid();
-  final UserID = FirebaseAuth.instance.currentUser!.phoneNumber;
+  final UserID = FirebaseAuth.instance.currentUser!.uid;
 
   // Function to select date
   Future<void> _selectDate(BuildContext context) async {

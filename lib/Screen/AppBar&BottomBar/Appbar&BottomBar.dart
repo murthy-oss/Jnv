@@ -4,17 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:jnvapp/Tabs/JobTab/JobTab.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../FetchDataProvider/fetchData.dart';
+import '../../Tabs/Add Post/adddPost.dart';
+import '../../Tabs/ChatTab/chatPage.dart';
 import '../../Tabs/EventTab/EventTab.dart';
 import '../../Tabs/FeedPaGE/FeedPage.dart';
-import '../../Tabs/SearchTab/SearchTab.dart';
 import '../../Widgets/Drawer/drawer.dart';
-import '../Add Post/adddPost.dart';
-import '../Chatting/chatPage.dart';
+
 import '../Notifications/Notificationsd.dart';
+import '../SearchPage/SearchTab.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -25,7 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   final List<Widget> _pages = [
     HomeTab(),
-    AddPostScreen(uid: FirebaseAuth.instance.currentUser!.uid,),
+    SearchPage(),
+    AddPostScreen(),
+JobTab(),
     EventTab(),
   ];
 
@@ -97,24 +101,6 @@ class _HomeScreenState extends State<HomeScreen> {
               }
             },
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              child: IconButton(
-                icon:  FaIcon(Bootstrap.search,size:MediaQuery.of(context).size.width*0.04),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return SearchPage();
-                      },
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
 
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -154,11 +140,18 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Home',
           ),
           const BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.search),
+            label: 'Search',
+          ),
+          const BottomNavigationBarItem(
             icon: FaIcon(Bootstrap.camera),
             label: 'Post',
           ),
 
           const BottomNavigationBarItem(
+            icon: FaIcon(LineAwesome.people_carry_solid),
+            label: 'Jobs',
+          ),   const BottomNavigationBarItem(
             icon: FaIcon(Clarity.event_outline_badged),
             label: 'Events',
           ),

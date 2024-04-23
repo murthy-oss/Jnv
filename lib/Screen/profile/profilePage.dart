@@ -101,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     CircleAvatar(
                       radius: 64,
                       backgroundImage: CachedNetworkImageProvider(
-                        userData['profilePhotoUrl'] ?? '',
+                        userData['profilePicture'] ?? '',
                       ),
                     ),
                     SizedBox(height: 16),
@@ -123,14 +123,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     GestureDetector(
                         onTap: () => Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
-                                return FollowFollowing1(uid: userData['uuid']);
+                                return FollowFollowing1(uid: userData['userId']);
                               },
                             )),
                         child: buildStatColumn(followers, "Followers")),
                     GestureDetector(
                         onTap: () => Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
-                                return FollowFollowing(uid: userData['uuid']);
+                                return FollowFollowing(uid: userData['userId']);
                               },
                             )),
                         child: buildStatColumn(following, "Following")),
@@ -162,7 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             function: () async {
                               FireStoreMethods().unfollowUser(
                                 FirebaseAuth.instance.currentUser!.uid,
-                                userData['uuid'],
+                                userData['userId'],
                               );
                             },
                           )
@@ -174,7 +174,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             function: () async {
                               FireStoreMethods().followUser(
                                 FirebaseAuth.instance.currentUser!.uid,
-                                userData['uuid'],
+                                userData['userId'],
                               );
                             },
                           ),
@@ -223,7 +223,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                             LinkText1(
                               description:
-                                  "${userData['LinkedIn'] ?? 'LinkedIn :'}",
+                                  "${userData['linkedinLink'] ?? 'LinkedIn :'}",
                               IsShowingDes: true,
                             ),
                           ],
@@ -232,7 +232,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                         if(userData['showPhone']==true)  Row(
                           children: [
-                            Icon(FontAwesomeIcons.linkedin,
+                            Icon(FontAwesomeIcons.phone,
                                 color: Colors.blue),
                             SizedBox(width: 5),
                             LinkText1(
@@ -253,7 +253,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection('posts')
-                      .where('uid', isEqualTo: userData['uuid'])
+                      .where('uid', isEqualTo: userData['userId'])
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -360,9 +360,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void createChatRoom() {
     String currentUserUid = FirebaseAuth.instance.currentUser!.uid;
-    String targetUserUid = userData['uuid'];
+    String targetUserUid = userData['userId'];
     String targetUserName = userData['name'] ?? '';
-    String targetUserProfile = userData['profilePhotoUrl'] ?? '';
+    String targetUserProfile = userData['profilePicture'] ?? '';
 
     // Create a unique chat room ID based on user UIDs
     String chatRoomId = currentUserUid.hashCode <= targetUserUid.hashCode

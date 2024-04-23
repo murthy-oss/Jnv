@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -50,7 +51,7 @@ class Notifications extends StatelessWidget {
 
   Widget _buildShimmerList() {
     return ListView.builder(
-      itemCount: 5, // Number of shimmer placeholders
+      itemCount: 10, // Number of shimmer placeholders
       itemBuilder: (context, index) {
         return Shimmer.fromColors(
           baseColor: Colors.grey[300]!,
@@ -58,10 +59,10 @@ class Notifications extends StatelessWidget {
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: Colors.grey[300],
-              radius: 20,
+              radius: 20.r,
             ),
             title: Container(
-              height: 20,
+              height: 20.r,
               color: Colors.grey[300],
             ),
           ),
@@ -85,7 +86,7 @@ class Notifications extends StatelessWidget {
           return Text('Error fetching user data');
         } else {
           final userSnapshot = snapshot.data!;
-          final userProfilePicture = userSnapshot['profilePhotoUrl'];
+          final userProfilePicture = userSnapshot['profilePicture'];
           return GestureDetector(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(uid: UserId),));
@@ -96,13 +97,27 @@ class Notifications extends StatelessWidget {
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(userProfilePicture),
                   ),
-                  title: Text(
-                   "@${notification['notification']}",
-                    style: GoogleFonts.nunitoSans(
-                      fontSize: MediaQuery.of(context).size.width*0.04,
+                 title: Row(
+                   children: [
+                     Text(
+                      "@${notification['notification'].toString().split(' ')[0]}", // Get the first part before the first space
+                      style: GoogleFonts.nunitoSans(
+                        color: Colors.blue,
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
                       fontWeight: FontWeight.bold,
-                    ),
-                  ) ,subtitle : Text(
+                      ),
+                      ),
+                     SizedBox(width: 5.w,),
+                      Text(
+                       "@${notification['notification'].toString().split(' ').skip(1).join(' ')}", // Join parts starting from the second part
+                       style: GoogleFonts.nunitoSans(
+                         fontSize: MediaQuery.of(context).size.width * 0.04,
+                         fontWeight: FontWeight.bold,
+                       ),
+                     ),
+
+                   ],
+                 ), subtitle : Text(
                    formattedDate,
                     style: GoogleFonts.nunitoSans(
                       fontSize: MediaQuery.of(context).size.width*0.03,
@@ -126,10 +141,10 @@ class Notifications extends StatelessWidget {
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: Colors.grey[300],
-          radius: 20,
+          radius: 20.r,
         ),
         title: Container(
-          height: 20,
+          height: 20.r,
           color: Colors.grey[300],
         ),
       ),

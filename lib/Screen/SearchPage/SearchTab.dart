@@ -11,17 +11,9 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF888BF4),
-        title: Text(
-          "Search",
-          style: GoogleFonts.aladin(
-            fontSize: MediaQuery.of(context).size.width * 0.06,
-          ),
-        ),
-      ),
+
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(15 ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -69,7 +61,7 @@ class SearchPage extends StatelessWidget {
                         child: ListTile(
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return ProfileScreen(uid: _controller.searchResults[index]['uuid']);
+                              return ProfileScreen(uid: _controller.searchResults[index]['userId']);
                             },));
                           },
                           title: Row(
@@ -77,10 +69,11 @@ class SearchPage extends StatelessWidget {
                               CircleAvatar(
                                 radius: 25,
                                 backgroundImage: CachedNetworkImageProvider(
-                                  _controller.searchResults[index]['profilePhotoUrl'],
+                                  _controller.searchResults[index]['profilePicture'],
                                 ),
                               ),
                               SizedBox(width: 10),
+
                               Expanded(
                                 child: Text(
                                   _controller.searchResults[index]['name'],

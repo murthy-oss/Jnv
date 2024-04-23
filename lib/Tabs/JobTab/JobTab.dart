@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../Screen/event_Screen/CreateEvent.dart';
-import '../../Screen/event_Screen/Joined_Event.dart';
-import '../../Screen/event_Screen/myEvents.dart';
-import '../../UI-Models/EventmodelUI.dart';
-import '../../Widgets/searchbar.dart';
 
-class EventTab extends StatelessWidget {
+import '../../Screen/job_Screen/CreateJob.dart';
+import '../../Screen/job_Screen/appliedJob.dart';
+import '../../Screen/job_Screen/postedjob.dart';
+import '../../UI-Models/JobPostModel.dart';
+
+
+class JobTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +19,7 @@ class EventTab extends StatelessWidget {
           Navigator.push(
             context,
             PageRouteBuilder(
-              transitionDuration: Duration(milliseconds: 200),
+              transitionDuration: Duration(milliseconds: 500),
               pageBuilder: (BuildContext context, Animation<double> animation,
                   Animation<double> secondaryAnimation) {
                 return SlideTransition(
@@ -27,7 +27,7 @@ class EventTab extends StatelessWidget {
                     begin: Offset(1.0, 0.0), // Slide from right to left
                     end: Offset.zero,
                   ).animate(animation),
-                  child: CreateEventPage(),
+                  child: JobPostingPage(),
                 );
               },
             ),
@@ -39,7 +39,7 @@ class EventTab extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12.0),
+        padding: const EdgeInsets.symmetric(vertical: 15.0),
         child: Column(
           children: [
             Row(
@@ -58,7 +58,7 @@ class EventTab extends StatelessWidget {
                               begin: Offset(1.0, 0.0), // Slide from right to left
                               end: Offset.zero,
                             ).animate(animation),
-                            child: MyParticipatedEventsPage(),
+                            child: AppliedJobsPage(),
                           );
                         },
                       ),
@@ -69,9 +69,9 @@ class EventTab extends StatelessWidget {
                     height: MediaQuery.of(context).size.width * 0.13,
                     child: Center(
                         child: Text(
-                          'Participated Events',
+                          'Applied Jobs',
                           style: GoogleFonts.poppins(
-                              fontSize:  MediaQuery.of(context).size.width * 0.03, fontWeight: FontWeight.w500),
+                              fontSize: 15, fontWeight: FontWeight.w500),
                         )),
                     decoration: BoxDecoration(
                         color: Color(0xFF888BF4),
@@ -89,7 +89,7 @@ class EventTab extends StatelessWidget {
                           begin: Offset(1.0, 0.0), // Slide from right to left
                           end: Offset.zero,
                         ).animate(animation),
-                        child: My_events(),
+                        child: PostedJobsPage(),
                       );
                     },
                   ),
@@ -99,9 +99,9 @@ class EventTab extends StatelessWidget {
                     height: MediaQuery.of(context).size.width * 0.13,
                     child: Center(
                         child: Text(
-                          'Created Events',
+                          'Posted Jobs',
                           style: GoogleFonts.poppins(
-                              fontSize:  MediaQuery.of(context).size.width * 0.03, fontWeight: FontWeight.w500),
+                              fontSize: 15, fontWeight: FontWeight.w500),
                         )),
                     decoration: BoxDecoration(
                         color: Color(0xFF888BF4),
@@ -114,37 +114,43 @@ class EventTab extends StatelessWidget {
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                 stream:
-                    FirebaseFirestore.instance.collection('events').snapshots(),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  }
-
+                FirebaseFirestore.instance.collection('jobs').snapshots(),
+                builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
                   }
-
-                  List<QueryDocumentSnapshot> eventDocs = snapshot.data!.docs;
+                  if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  }
+                  final jobDocs = snapshot.data!.docs;
                   return ListView.builder(
-                    itemCount: eventDocs.length,
+                    itemCount: jobDocs.length,
                     itemBuilder: (context, index) {
-                      var eventData =
-                          eventDocs[index].data() as Map<String, dynamic>;
-                      if (eventData['EventStatus'] == 'Accepted') {
-                        return EventUICard(
-                          eventName: eventData['eventName'],
-                          location: eventData['location'],
-                          eventTime: eventData['time'],
-                          description: eventData['description'],
-                          imageUrl: eventData['imageUrl'],
-                          eventType: eventData['eventType'],
-                          eventID: eventData['eventID'],
-                          userId: eventData['userUid'],
-                          eventDate: eventData['datePublished'],
-                          EventStatus: eventData['EventStatus'],
+                      final jobData =
+                      jobDocs[index].data() as Map<String, dynamic>;
+
+                      if (jobData['jobStatus'] == 'Accepted') {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: JobUICard(
+                            jobTitle: jobData['jobTitle'],
+                            description: jobData['description'],
+                            location: jobData['location'],
+                            salary: jobData['salary'],
+                            experience: jobData['experience'],
+                            companyName: jobData['companyName'],
+                            jobPosted: jobData['jobPosted'],
+                            skillRequired: jobData['skillsRequired'],
+                            aboutJob: jobData['aboutJob'],
+                            aboutCompany: jobData['aboutCompany'],
+                            whoCanApply: jobData['eligibility'],
+                            numberOfOpenings: jobData['openings'],
+                            JobID: jobData['JobId'],
+                            JobStatus: jobData['jobStatus'],
+                          ),
                         );
                       } else {
-                       return Container();
+                        return Container();
                       }
                     },
                   );

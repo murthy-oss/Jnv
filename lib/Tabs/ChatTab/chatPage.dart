@@ -4,7 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-import '../chats/chat_screen.dart';
+import '../../Screen/chats/chat_screen.dart';
+
 import 'getx_chatsearch.dart'; // Import the SearchTabController
 
 class RecentChatsPage extends StatefulWidget {
@@ -18,7 +19,7 @@ class _RecentChatsPageState extends State<RecentChatsPage> {
   late String currentUserUid;
   final SearchChat searchController = Get.put(SearchChat()); // Instantiate the SearchTabController
   bool showSearchResults = false; // Track whether to show search results or not
-
+String id='';
   @override
   void initState() {
     super.initState();
@@ -71,42 +72,45 @@ class _RecentChatsPageState extends State<RecentChatsPage> {
                   child: Column(
                     children: searchController.searchResults.map((doc) {
                       String userName = doc['name'] ?? 'Unknown';
-                      String UserProfile = doc['profilePhotoUrl'] ?? 'Unknown';
+                      String UserProfile = doc['profilePicture'] ?? 'Unknown';
 
-                      return Card(
-                        color: Colors.grey[200],
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 30,
-                                backgroundColor: Colors.grey[200],
-                                backgroundImage: CachedNetworkImageProvider(UserProfile ?? ''),
-                              ),
-                              SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      userName ?? '',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(height: 4),
-                                    Text(
-                                      'Tap to chat',
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                  ],
+                      return GestureDetector(
+                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen(chatRoomId: id, UserName: doc['name'], ProfilePicture: doc['profilePicture'], UId: doc['userId']),)),
+                        child: Card(
+                          color: Colors.grey[200],
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Colors.grey[200],
+                                  backgroundImage: CachedNetworkImageProvider(UserProfile ?? ''),
                                 ),
-                              ),
-                              Icon(Icons.chevron_right),
-                            ],
+                                SizedBox(width: 16),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        userName ?? '',
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Text(
+                                        'Tap to chat',
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Icon(Icons.chevron_right),
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -119,7 +123,7 @@ class _RecentChatsPageState extends State<RecentChatsPage> {
                   itemBuilder: (context, index) {
                     DocumentSnapshot room = filteredChatRooms[index];
                     String otherUserUid = (room['users'] as List).firstWhere((uid) => uid != currentUserUid);
-
+id=room.id;
                     return UserTile(
                       uid: otherUserUid,
                       onTap: () {
@@ -130,8 +134,8 @@ class _RecentChatsPageState extends State<RecentChatsPage> {
                             .then((userData) {
                           if (userData.exists) {
                             String userName = userData['name'] ?? 'Unknown';
-                            String profilePicture = userData['profilePhotoUrl'] ?? '';
-                            String UID = userData['uuid'] ?? '';
+                            String profilePicture = userData['profilePicture'] ?? '';
+                            String UID = userData['userId'] ?? '';
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -199,7 +203,7 @@ class UserTile extends StatelessWidget {
                     CircleAvatar(
                       radius: 30,
                       backgroundColor: Colors.grey[200],
-                      backgroundImage: CachedNetworkImageProvider(userData['profilePhotoUrl'] ?? ''),
+                      backgroundImage: CachedNetworkImageProvider(userData['profilePicture'] ?? ''),
                     ),
                     SizedBox(width: 16),
                     Expanded(

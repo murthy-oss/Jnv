@@ -20,16 +20,16 @@ query=query.toLowerCase();
       // Search for events
       QuerySnapshot eventsSnapshot = await FirebaseFirestore.instance
           .collection('events')
-          .where('title', isGreaterThanOrEqualTo: query)
-          .where('title', isLessThanOrEqualTo: query + '\uf8ff')
+          .where('eventName', isGreaterThanOrEqualTo: query)
+          .where('eventName', isLessThanOrEqualTo: query + '\uf8ff')
           .get();
       results.addAll(eventsSnapshot.docs);
 
       // Search for jobs
       QuerySnapshot jobsSnapshot = await FirebaseFirestore.instance
           .collection('jobs')
-          .where('title', isGreaterThanOrEqualTo: query)
-          .where('title', isLessThanOrEqualTo: query + '\uf8ff')
+          .where('jobTitle', isGreaterThanOrEqualTo: query)
+          .where('jobTitle', isLessThanOrEqualTo: query + '\uf8ff')
           .get();
       results.addAll(jobsSnapshot.docs);
 

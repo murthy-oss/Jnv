@@ -23,7 +23,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   late TextEditingController _emailController;
   late TextEditingController _linkController;
   late TextEditingController _bioController;
-  DateTime? _selectedDate;
+  String? _selectedDate;
   File? _image;
   late UserModel1 _myUser;
   final _formKey = GlobalKey<FormState>();
@@ -44,7 +44,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _emailController.text = _myUser.email ?? '';
     _bioController.text = _myUser.bio ?? '';
     _linkController.text = _myUser.linkedinLink ?? '';
-    _selectedDate = _myUser.dateOfBirth as DateTime?;
+    _selectedDate = _myUser.dateOfBirth;
     _image = _myUser.profilePicture != null ? File(_myUser.profilePicture!) : null;
     _hideEmail = _myUser.showEmail;
     _hidePhone = _myUser.showPhone;
@@ -70,20 +70,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    final pickedDate = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-
-    if (pickedDate != null && pickedDate != _selectedDate) {
-      setState(() {
-        _selectedDate = pickedDate;
-      });
-    }
-  }
 
   String? _validateBio(String? value) {
     if (value == null || value.isEmpty) {
@@ -188,7 +174,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               SizedBox(height: 20),
               GestureDetector(
-                onTap: () => _selectDate(context),
+                // onTap: () => _selectDate(context),
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
@@ -199,7 +185,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        _selectedDate != null ? 'Date of Birth: ${DateFormat('yyyy-MM-dd').format(_selectedDate!)}' : 'Select Date of Birth',
+                        _selectedDate != null ? 'DOB: ${_selectedDate}' : 'Select Date of Birth',
                         style: TextStyle(fontSize: 16),
                       ),
                       Icon(Icons.calendar_today),
@@ -256,11 +242,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
               MyButton1(onTap: () async {
                 if (_formKey.currentState!.validate()) {
                   try {
-                    final currentUserPhoneNumber = FirebaseAuth.instance.currentUser!.phoneNumber;
+                    final currentUserrUid = FirebaseAuth.instance.currentUser!.uid;
                     final usersCollection = FirebaseFirestore.instance.collection('users');
-
+print(currentUserrUid);
                     QuerySnapshot querySnapshot =
-                        await usersCollection.where('phoneNumber', isEqualTo: currentUserPhoneNumber).get();
+                        await usersCollection.where('userId', isEqualTo: currentUserrUid).get();
 
                     if (querySnapshot.size == 1) {
                       String documentId = querySnapshot.docs[0].id;
@@ -268,17 +254,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       await usersCollection.doc(documentId).update({
                         'name': _nameController.text,
                         'email': _emailController.text,
-                        'dateOfBirth': _selectedDate,
+
                         'bio': _bioController.text,
-                        'LinkedIn': _linkController.text,
+                        'linkedinLink': _linkController.text,
                         'showEmail': _hideEmail,
                         'showPhone': _hidePhone,
                         'showLinkedin': _hideLinkedIn,
                       });
 
                       if (_image != null) {
-                        String profileImageUrl = await _uploadProfileImage(currentUserPhoneNumber!, _image!);
-                        await usersCollection.doc(documentId).update({'profilePhotoUrl': profileImageUrl});
+                        String profileImageUrl = await _uploadProfileImage(currentUserrUid, _image!);
+                        await usersCollection.doc(documentId).update({'profilePicture': profileImageUrl});
                       }
 
                       final userFetchController = Provider.of<UserFetchController>(context, listen: false);
@@ -286,7 +272,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                       Navigator.pop(context);
                     } else {
-                      print('User document not found for phone number: $currentUserPhoneNumber');
+                      print('User document not found for phone number: $currentUserrUid');
                     }
                   } catch (e) {
                     print('Error updating user profile: $e');
