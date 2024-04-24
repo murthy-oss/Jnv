@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:jnvapp/AuthScreens/HomePage.dart';
+import 'package:jnvapp/Screen/SetUpNavodhya/Navodhya.dart';
+
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 import '../FetchDataProvider/fetchData.dart';
@@ -155,7 +156,7 @@ class _OTPScreenState extends State<OTPScreen> {
             Provider.of<UserFetchController>(context, listen: false).fetchUserData();
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => SetUpNavodhya()),
             );
           } else {
             // Phone number is not registered, navigate to setup profile page

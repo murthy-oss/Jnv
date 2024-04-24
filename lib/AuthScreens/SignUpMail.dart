@@ -5,8 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jnvapp/Screen/SetUpNavodhya/Navodhya.dart';
+import 'package:jnvapp/Screen/onboardingProfile/onboardingProfilePage.dart';
 
-import 'package:jnvapp/AuthScreens/HomePage.dart';
+
 import 'package:jnvapp/components/MyToast.dart';
 import 'package:jnvapp/components/myButton.dart';
 import 'package:jnvapp/services/AuthFunctions.dart';
@@ -276,7 +278,7 @@ Future<void> checkUserSignInStatus() async {
     print('User is signed in: ${user.uid}');
     Navigator.push(
   context,
-  MaterialPageRoute(builder: (context) =>  HomePage()),
+  MaterialPageRoute(builder: (context) =>  SetUpProfile()),
 );
 
   } else {

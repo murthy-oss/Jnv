@@ -7,7 +7,7 @@ import 'package:jnvapp/Screen/AppBar&BottomBar/Appbar&BottomBar.dart';
 import 'package:jnvapp/Widgets/PatternGenerate.dart';
 import 'package:jnvapp/components/MyToast.dart';
 import 'package:uuid/uuid.dart';
-import '../../AuthScreens/HomePage.dart';
+
 import '../../Services/FireStoreMethod.dart';
 import '../../components/myButton.dart';
 import '../../components/myTextfield.dart';
