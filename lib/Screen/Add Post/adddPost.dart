@@ -71,6 +71,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
       });
     }
   }
+ 
 
   Widget _buildCameraPreview() {
     return FutureBuilder<void>(
