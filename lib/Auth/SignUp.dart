@@ -5,6 +5,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:jnvapp/AuthScreens/HomePage.dart';
 import 'package:jnvapp/AuthScreens/SignUpMail.dart';
 import 'package:jnvapp/Screen/onboardingProfile/onboardingProfilePage.dart';
+import 'package:jnvapp/components/MyToast.dart';
 import 'package:jnvapp/services/AuthFunctions.dart';
 
 
@@ -297,7 +298,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   // Get the current user
   User? user = auth.currentUser;
- 
+
 
   if (user != null) {
     // The user is signed in

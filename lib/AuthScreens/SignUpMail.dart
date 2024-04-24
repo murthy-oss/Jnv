@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:jnvapp/AuthScreens/HomePage.dart';
+import 'package:jnvapp/components/MyToast.dart';
 import 'package:jnvapp/components/myButton.dart';
 import 'package:jnvapp/services/AuthFunctions.dart';
 
@@ -150,6 +151,8 @@ class _SignUpMailState extends State<SignUpMail>
                   text: buttonText,
                   color: Color(0xFF888BF4),
                     onTap: () {
+                             ToastUtil.showToastMessage("Successful login");
+
                     // Handle SignUp or SignIn logic
                     //AlertDialog(title: Text("Sucessfully Sign Up"),);
                     if(_formKey.currentState!.validate()){
