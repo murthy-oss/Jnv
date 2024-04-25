@@ -79,7 +79,7 @@ class _JoinEventState extends State<JoinEvent> {
         DocumentSnapshot eventDoc = eventSnapshot.docs.first;
         List<dynamic> participants = eventDoc['participants'];
         setState(() {
-          _userJoinedEvent = participants.any((participant) => participant['UserId'] == _currentUser!.phoneNumber);
+          _userJoinedEvent = participants.any((participant) => participant['UserId'] == _currentUser!.uid);
         });
       }
     } catch (e) {
@@ -97,7 +97,7 @@ class _JoinEventState extends State<JoinEvent> {
       if (eventSnapshot.docs.isNotEmpty) {
         DocumentSnapshot eventDoc = eventSnapshot.docs.first;
         List<dynamic> participants = eventDoc['participants'];
-        participants.removeWhere((participant) => participant['UserId'] == _currentUser!.phoneNumber);
+        participants.removeWhere((participant) => participant['UserId'] == _currentUser!.uid);
         await eventDoc.reference.update({'participants': participants});
         showSnackBar(context, "You have left the event");
         setState(() {
@@ -112,7 +112,7 @@ class _JoinEventState extends State<JoinEvent> {
 
   @override
   Widget build(BuildContext context) {
-    bool createdByCurrentUser = _currentUser != null && _currentUser!.phoneNumber == widget.userId;
+    bool createdByCurrentUser = _currentUser != null && _currentUser!.uid == widget.userId;
 print(widget.userId);
 print(_currentUser!.phoneNumber);
     return Scaffold(
@@ -193,7 +193,7 @@ print(_currentUser!.phoneNumber);
                     Column(
                       children: [
                         Text(
-                          createdByCurrentUser ? "1" : (_userJoinedEvent ? "Leave Event" : "Join Event"),
+                          createdByCurrentUser ? "" : (_userJoinedEvent ? "Leave Event" : "Join Event"),
                         ),
                         if (createdByCurrentUser)
                           MyButton(

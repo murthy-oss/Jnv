@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -46,12 +48,11 @@ class _OTPScreenState extends State<OTPSUCCESS> {
                 ),
               ),
               child: Center(
-                child: Transform.scale(
-                  scale: 0.6, // Adjust the scale factor as needed
-                  child: Image.asset(
-                    "Assets/images/verification3.png",
-                    fit: BoxFit.contain,
-                  ),
+                child: SvgPicture.asset(
+                  width:150.w,
+                  "Assets/images/Successmark.svg",
+                  
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
@@ -61,7 +62,11 @@ class _OTPScreenState extends State<OTPSUCCESS> {
                 child: Text(
                   "Success!",
                   style:
-                  GoogleFonts.roboto(fontSize: 22, fontWeight: FontWeight.bold),
+                  TextStyle(
+                      fontFamily: 'InterRegular',
+                      color: Color.fromARGB(255, 65, 65, 65),
+                      fontSize: 22.sp,
+                      fontWeight: FontWeight.w700),
                 ),
               ),
             ),Padding(
@@ -70,12 +75,16 @@ class _OTPScreenState extends State<OTPSUCCESS> {
                 child: Text(
                   "Congratulations! You have been \n   successfully authenticated!",
                   style:
-                  GoogleFonts.roboto(fontSize: 22, fontWeight: FontWeight.w700,color: Colors.grey),
+                   TextStyle(
+                      fontFamily: 'InterRegular',
+                      color: Colors.grey,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w700),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding:  EdgeInsets.symmetric(horizontal: 14.h,vertical: 10.h),
               child: MyButton(onTap: () {
                 Navigator.pushReplacement(
                   context,
@@ -104,7 +113,7 @@ class _OTPScreenState extends State<OTPSUCCESS> {
                     },
                   ),
                 );
-              }, text: 'Continue',    color:Color(0xFF888BF4)),
+              }, text: 'Continue',    color:Colors.black),
             ),
 
 

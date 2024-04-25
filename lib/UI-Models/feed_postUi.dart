@@ -5,7 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:share/share.dart';
-import '../Screen/Comment.dart';
+import 'Comment.dart';
 import '../Services/FireStoreMethod.dart';
 import '../Widgets/TextLinkWidget.dart';
 import '../Widgets/shimmerWidget.dart';
@@ -13,7 +13,7 @@ import '../components/myButton.dart';
 import '../other/report.dart';
 import '../Models/likegetx.dart';
 
-class PostCard extends StatelessWidget {
+class PostCard extends StatefulWidget {
   final String username;
   final List<dynamic> likes;
   final Timestamp time;
@@ -37,36 +37,54 @@ class PostCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    final postController = Get.put(PostController());
-    TextEditingController descriptionController =
-    TextEditingController(text: description);
+  _PostCardState createState() => _PostCardState();
+}
 
+class _PostCardState extends State<PostCard> {
+  final currentUser = FirebaseAuth.instance.currentUser;
+  final postController = Get.put(PostController());
+  late TextEditingController descriptionController;
 
-    void _openImageFullScreen(BuildContext context, String imageUrl) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-            child: Container(
-              width: double.infinity,
+  @override
+  void initState() {
+    super.initState();
+    descriptionController = TextEditingController(text: widget.description);
+  }
 
-              child: CachedNetworkImage(
-                imageUrl: imageUrl,
-                fit: BoxFit.contain, // Adjust image size to fit the dialog
-              ),
+  @override
+  void dispose() {
+    descriptionController.dispose();
+    super.dispose();
+  }
+
+  void _openImageFullScreen(BuildContext context, String imageUrl) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Container(
+            width: double.infinity,
+            child: CachedNetworkImage(
+              imageUrl: imageUrl,
+              fit: BoxFit.contain, // Adjust image size to fit the dialog
             ),
-          );
-        },
-      );
-    }
+          ),
+        );
+      },
+    );
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    CollectionReference commentsRef = FirebaseFirestore.instance
+        .collection('posts')
+        .doc(widget.postId)
+        .collection('comments');
 
     return StreamBuilder<DocumentSnapshot>(
       stream: FirebaseFirestore.instance
           .collection('posts')
-          .doc(postId)
+          .doc(widget.postId)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -79,11 +97,8 @@ class PostCard extends StatelessWidget {
 
         var postData = snapshot.data!.data() as Map<String, dynamic>;
         List<dynamic> postLikes = postData['likes'];
-        bool isLiked = postLikes.contains(currentUser!.phoneNumber.toString());
-        CollectionReference commentsRef = FirebaseFirestore.instance
-            .collection('posts')
-            .doc(postId)
-            .collection('comments');
+        bool isLiked =
+        postLikes.contains(currentUser!.phoneNumber.toString());
 
         return GetBuilder<PostController>(
           builder: (controller) {
@@ -102,8 +117,8 @@ class PostCard extends StatelessWidget {
                           children: <Widget>[
                             CircleAvatar(
                               radius: 20.0,
-                              backgroundImage: CachedNetworkImageProvider(
-                                  profilePicture),
+                              backgroundImage:
+                              CachedNetworkImageProvider(widget.profilePicture),
                             ),
                             SizedBox(width: 10.0),
                             GestureDetector(
@@ -112,12 +127,12 @@ class PostCard extends StatelessWidget {
                                 //   context,
                                 //   MaterialPageRoute(
                                 //     builder: (context) =>
-                                //         ProfileScreen(uid: uid),
+                                //         ProfileScreen(uid: widget.uid),
                                 //   ),
                                 // );
                               },
                               child: Text(
-                                username,
+                                widget.username,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16.0,
@@ -130,7 +145,7 @@ class PostCard extends StatelessWidget {
                         DropdownButton<String>(
                           icon: Icon(Icons.more_vert),
                           items: currentUser != null &&
-                              currentUser.uid == uid
+                              currentUser!.uid == widget.uid
                               ? <DropdownMenuItem<String>>[
                             DropdownMenuItem(
                                 value: 'Delete', child: Text('Delete')),
@@ -141,13 +156,22 @@ class PostCard extends StatelessWidget {
                             DropdownMenuItem(
                                 value: 'Report', child: Text('Report')),
                           ],
-                          onChanged: (String? newValue) {
+                          onChanged: (String? newValue) async {
                             if (newValue == 'Delete') {
-                         FireStoreMethods().deletePost(postId);
+                              await FireStoreMethods().deletePost(widget.postId);
                             } else if (newValue == 'Report') {
-                     Navigator.push(context, MaterialPageRoute(builder: (context) => ReportPostScreen(uid: uid, postId: postId),));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ReportPostScreen(
+                                    uid: widget.uid,
+                                    postId: widget.postId,
+                                  ),
+                                ),
+                              );
                             } else if (newValue == 'Edit') {
-                              postController.toggleEditing(postId, true);
+                              postController.toggleEditing(
+                                  widget.postId, true);
                             }
                           },
                         ),
@@ -158,16 +182,18 @@ class PostCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: LayoutBuilder(
-                    builder: (BuildContext context, BoxConstraints constraints) {
+                    builder:
+                        (BuildContext context, BoxConstraints constraints) {
                       return GestureDetector(
-                        onLongPress: () => _openImageFullScreen(context,image),
+                        onLongPress: () =>
+                            _openImageFullScreen(context, widget.image),
                         child: Container(
                           width: MediaQuery.of(context).size.width,
-                          height: constraints
-                              .maxWidth*1.2, // Set height equal to the image's width
+                          height: constraints.maxWidth *
+                              1.2, // Set height equal to the image's width
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: CachedNetworkImageProvider(image),
+                              image: CachedNetworkImageProvider(widget.image),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -218,12 +244,12 @@ class PostCard extends StatelessWidget {
                                 postController.setLiking(true);
 
                                 await FireStoreMethods().likePost(
-                                  postId,
-                                  FirebaseAuth
-                                      .instance.currentUser!.phoneNumber
+                                  widget.postId,
+                                  FirebaseAuth.instance.currentUser!
+                                      .phoneNumber
                                       .toString(),
                                   postLikes,
-                                  uid
+                                  widget.uid,
                                 );
 
                                 postController.setLiking(false);
@@ -238,9 +264,9 @@ class PostCard extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => CommentsScreen(
-                                          postId: postId,
-                                          image: image,
-                                          TargetUserId: uid,
+                                          postId: widget.postId,
+                                          image: widget.image,
+                                          TargetUserId: widget.uid,
                                         ),
                                       ),
                                     );
@@ -277,12 +303,12 @@ class PostCard extends StatelessWidget {
                               ],
                             ),
                             Padding(
-                              padding:
-                              const EdgeInsets.only(bottom: 18.0, left: 15),
+                              padding: const EdgeInsets.only(
+                                  bottom: 18.0, left: 15),
                               child: IconButton(
                                 onPressed: () {
                                   Share.share(
-                                      'Check out this cool app!/username=$username');
+                                      'Check out this cool app!/username=${widget.username}');
                                 },
                                 icon: FaIcon(FontAwesomeIcons.share,
                                     color: Color(0xFF888BF4)),
@@ -299,36 +325,40 @@ class PostCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      postController.isEditing(postId)
+                      postController.isEditing(widget.postId)
                           ? Column(
                         children: [
                           TextField(
-                            controller:descriptionController,
-
+                            controller: descriptionController,
                             decoration: InputDecoration(
                               hintText: 'Edit Description',
                             ),
                           ),
                           MyButton1(
                             onTap: () {
-                              postController.updateDescription(postId, descriptionController.text);
+                              postController.updateDescription(
+                                  widget.postId,
+                                  descriptionController.text);
                             },
                             text: "Save",
                             color: Colors.blue,
                           )
                         ],
                       )
-                          : LinkText(description: description, IsShowingDes: postController
-                                .isShowingDescription(postId),),
-                      if (description.length > 50)
+                          : LinkText(
+                        description: widget.description,
+                        IsShowingDes: postController.isShowingDescription(widget.postId),
+                      ),
+                      if (widget.description.length > 50)
                         TextButton(
                           onPressed: () {
                             postController.showDescription(
-                                postId,
-                                !postController.isShowingDescription(postId));
+                                widget.postId,
+                                !postController
+                                    .isShowingDescription(widget.postId));
                           },
                           child: Text(
-                            postController.isShowingDescription(postId)
+                            postController.isShowingDescription(widget.postId)
                                 ? 'Show less'
                                 : 'Show more',
                             style: TextStyle(

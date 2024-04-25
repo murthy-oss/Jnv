@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:jnvapp/Screen/SetUpNavodhya/Navodhya.dart';
 
+import 'package:jnvapp/Screen/AppBar&BottomBar/Appbar&BottomBar.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
+import 'package:velocity_x/velocity_x.dart';
 import '../FetchDataProvider/fetchData.dart';
 import '../components/myButton.dart';
 import 'OTP SUCESS.dart';
@@ -29,32 +32,30 @@ class _OTPScreenState extends State<OTPScreen> {
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height / 2.2, // Adjusted height
-              width: MediaQuery.of(context).size.width, // Adjusted height
-
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
-              ),
-              child: Center(
-                child: Image.asset(
-                 "Assets/images/verification2.png",
-                  fit: BoxFit.fill, // Maintain aspect ratio while covering the container
-                ),
+            SizedBox(
+              height: 16.h,
+            ),
+            Center(
+              child: Image.asset(
+                //height:200.h,
+               "Assets/images/image 5.png",
+              fit: BoxFit.fill, // Maintain aspect ratio while covering the container
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: Text(
-                  "OTP Verification",
+                  "OTP Verificaton",
                   style:
-                      GoogleFonts.roboto(fontSize: 22, fontWeight: FontWeight.bold),
+    TextStyle(
+                      fontFamily: 'InterRegular',
+                      color: Colors.black,
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.w700),
+                  
                 ),
               ),
             ),  Padding(
@@ -64,11 +65,21 @@ class _OTPScreenState extends State<OTPScreen> {
                   Text(
                     "Enter The OTP sent to ",
                     style:
-                        GoogleFonts.poppins(fontSize: MediaQuery.of(context).size.width*0.04, fontWeight: FontWeight.w400),
+                        TextStyle(
+                      fontFamily: 'InterRegular',
+                      color: Color.fromARGB(255, 65, 65, 65),
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w700),
+                  
                   ),Text(
                     "+91${widget.phone} ",
                     style:
-                        GoogleFonts.poppins(fontSize: MediaQuery.of(context).size.width*0.05, fontWeight: FontWeight.bold),
+                        TextStyle(
+                      fontFamily: 'InterRegular',
+                      color: Color.fromARGB(255, 65, 65, 65),
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w700),
+                  
                   ),
                 ],
               ),
@@ -94,30 +105,36 @@ class _OTPScreenState extends State<OTPScreen> {
                   Text(
                     "Didn't you recived the OTP?   ",
                     style:
-                    GoogleFonts.poppins(fontSize: MediaQuery.of(context).size.width*0.035, fontWeight: FontWeight.w400,color: Colors.grey),
+                   TextStyle(
+                      fontFamily: 'InterRegular',
+                      color: Color.fromARGB(255, 65, 65, 65),
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w700),
+                  
                   ),
                   TextButton(
                     onPressed: () {  _resendOTP();},
                     child: Text(
                     "Resend OTP",
                     style:
-                    GoogleFonts.poppins(fontSize: MediaQuery.of(context).size.width*0.04, fontWeight: FontWeight.bold, color:Color(0xFF888BF4) ),
+                    TextStyle(
+                      fontFamily: 'InterRegular',
+                      color: Color.fromARGB(255, 244, 66, 66),
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w700),
                   ),
                   )
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: _verifyOTP,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: MyButton(
-                      onTap: () => _verifyOTP(),
-                      text: "Verify",
-                      color:Color(0xFF888BF4)),
-                ),
+            ElevatedButton(
+              onPressed: _verifyOTP,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: MyButton(
+                    onTap: () => _verifyOTP(),
+                    text: "Verify",
+                    color:Color.fromARGB(255, 244, 66, 66),),
               ),
             ),
           ],
@@ -156,7 +173,7 @@ class _OTPScreenState extends State<OTPScreen> {
             Provider.of<UserFetchController>(context, listen: false).fetchUserData();
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => SetUpNavodhya()),
+              MaterialPageRoute(builder: (context) => HomeScreen()),
             );
           } else {
             // Phone number is not registered, navigate to setup profile page

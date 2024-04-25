@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
+import '../Screen/job_Screen/JobDetails.dart';
 import '../components/myButton.dart';
 
 class JobUICard extends StatefulWidget {
@@ -153,9 +154,9 @@ class _JobTabState extends State<JobUICard> {
                   flex: 3,
                   child: MyButton1(
                     onTap: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      //   return JobDetailScreen(jobId: widget.JobID);
-                      // }));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return JobDetailScreen(jobId: widget.JobID);
+                      }));
                     },
                     text: "View Details",
                     color: Color(0xFF888BF4),

@@ -30,10 +30,10 @@ class _EventsPageState extends State<My_events> {
   void _fetchUserEvents() {
     _userEventsStream = FirebaseFirestore.instance
         .collection('events')
-        .where('userUid', isEqualTo: _currentUser!.phoneNumber)
+        .where('userUid', isEqualTo: _currentUser!.uid)
         .snapshots();
 
-    print('Current User ID: ${_currentUser!.phoneNumber}');
+    print('Current User ID: ${_currentUser!.uid}');
   }
 
   @override

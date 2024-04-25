@@ -50,7 +50,7 @@ dependencies:
   get: ^4.6.6
   fluttertoast: ^8.2.4
   google_sign_in: ^6.2.1
-  flutter_svg: ^2.0.9
+  flutter_svg: ^2.0.10+1
   provider:
   omni_datetime_picker: ^1.0.9
   icons_plus: ^5.0.0
@@ -86,17 +86,11 @@ dependencies:
   camera: ^0.10.5+9
   font_awesome_flutter: ^10.7.0
   csv: ^6.0.0
-
+  insta_assets_picker: ^2.3.0
   csc_picker: ^0.2.7
-  full_picker: ^1.3.6
-  audioplayers: ^5.2.1
-  video_player: ^2.8.5
-  mime: ^1.0.5
-  webview_flutter: ^4.5.0
-  file_picker: 
-  open_file: ^3.3.2
+  wechat_assets_picker: ^9.0.3
+  image_crop: ^0.4.1
   file_picker_pro: ^1.4.0
- 
 
 
 
@@ -146,6 +140,9 @@ flutter:
     - family: Billabong
       fonts:
         - asset: Assets/Billabong.ttf
+    - family: InterRegular
+      fonts:
+        - asset: Assets/Inter-Regular.ttf
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

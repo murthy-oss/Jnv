@@ -45,7 +45,7 @@ class FollowFollowing extends StatelessWidget {
           following.forEach((element) {
             if (element is Map<String, dynamic> && element.containsKey('name')) {
               String name = element['name'] as String? ?? 'Unknown';
-              String img = element['profilePhotoUrl'] as String? ?? 'Unknown';
+              String img = element['profilePicture'] as String? ?? 'Unknown';
               String uid = element['uid'] as String? ?? 'Unknown';
               followingNames.add(name);
               followingUid.add(uid);
@@ -126,7 +126,7 @@ class FollowFollowing1 extends StatelessWidget {
           following.forEach((element) {
             if (element is Map<String, dynamic> && element.containsKey('name')) {
               String name = element['name'] as String? ?? 'Unknown';
-              String img = element['profilePhotoUrl'] as String? ?? 'Unknown';
+              String img = element['profilePicture'] as String? ?? 'Unknown';
               String uid = element['uid'] as String? ?? 'Unknown';
               followingNames.add(name);
               followingUid.add(uid);

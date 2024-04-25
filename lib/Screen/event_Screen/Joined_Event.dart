@@ -30,7 +30,7 @@ class _MyParticipatedEventsPageState extends State<MyParticipatedEventsPage> {
   }
 
   void _fetchParticipatedEvents() {
-    print('Fetching participated events for user: ${_currentUser!.phoneNumber}');
+    print('Fetching participated events for user: ${_currentUser!.uid}');
     _participatedEventsStream = FirebaseFirestore.instance
         .collection('events')
         .snapshots();
@@ -59,7 +59,7 @@ class _MyParticipatedEventsPageState extends State<MyParticipatedEventsPage> {
             if (data != null && data is Map<String, dynamic>) {
               var participants = data['participants'] as List<dynamic>?; // Cast to List<dynamic> or specific type
               if (participants != null) {
-                return participants.any((participant) => participant is Map<String, dynamic> && participant['UserId'] == _currentUser!.phoneNumber);
+                return participants.any((participant) => participant is Map<String, dynamic> && participant['UserId'] == _currentUser!.uid);
               }
             }
             return false;

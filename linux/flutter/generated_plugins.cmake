@@ -3,12 +3,10 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  audioplayers_linux
   file_picker_pro
   file_selector_linux
   flutter_secure_storage_linux
   open_share_plus
-  record_linux
   smart_auth
   url_launcher_linux
 )

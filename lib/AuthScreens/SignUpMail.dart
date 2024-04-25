@@ -33,17 +33,19 @@ class _SignUpMailState extends State<SignUpMail>
   FocusNode Username_focus = FocusNode();
   FocusNode age_focus = FocusNode();
   FocusNode email_focus_signup = FocusNode();
+  FocusNode name = FocusNode();
   FocusNode Password_focus_signup = FocusNode();
   FocusNode email_focus_signin = FocusNode();
   FocusNode Password_focus_signin = FocusNode();
   bool passwordVisible=false;
+  bool IsColor=false;
   @override
   void initState() {
     super.initState();
+     IsColor=false;
     _tabController = TabController(length: 2, vsync: this);
      
   }
-
 
 
   
@@ -84,6 +86,10 @@ class _SignUpMailState extends State<SignUpMail>
            //  Icons.input,age_focus),
             SizedBox(height: 10.h,),
                
+            buildTextFormField('name', 'Full Name', Icons.person,
+            name),
+            SizedBox(height: 10.h,),
+               
             buildTextFormField('email', 'Enter Email', Icons.mail,
             email_focus_signup),
             SizedBox(height: 10.h,),
@@ -91,7 +97,8 @@ class _SignUpMailState extends State<SignUpMail>
             Password_focus_signup),
             
           ], 'SignUp', 'Already have an Account? Login','Or Sign Up with',
-          _signInFormKey),
+          _signInFormKey,
+          IsColor),
 
           buildForm(
             'Welcome Back!',
@@ -103,7 +110,8 @@ class _SignUpMailState extends State<SignUpMail>
             Password_focus_signin),
             
           ], 'SignIn', "Don't have an Account? SignUp",'Or Sign In with',
-          _signUpFormKey),
+          _signUpFormKey,
+          IsColor),
         ],
       ),
     
@@ -111,18 +119,18 @@ class _SignUpMailState extends State<SignUpMail>
   }
 
   Widget buildForm(String titleText,List<Widget> formFields, String buttonText, 
-  String switchText,String extraText, GlobalKey<FormState> _formKey) {
+  String switchText,String extraText, GlobalKey<FormState> _formKey, bool isColor) {
     return SingleChildScrollView(
       child: Form(
         key: _formKey,
         child: Container(
-          margin: EdgeInsets.all(20.w),
+          margin: EdgeInsets.all(14.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(titleText,style: TextStyle(
                 fontSize: 25.w,
-                color: Colors.white,
+                color:Colors.black,
                 fontWeight: FontWeight.bold,
               ),),
               SizedBox(
@@ -149,11 +157,14 @@ class _SignUpMailState extends State<SignUpMail>
               
                 width: double.infinity,
                 height: 50.h,
-                child: MyButton(
+                child: MyButton3(
+                  textcolor: !IsColor?Color.fromARGB(255, 244, 66, 66): Colors.white,
                   text: buttonText,
-                  color: Color(0xFF888BF4),
+                  color: IsColor?Color.fromARGB(255, 244, 66, 66): Colors.white,
                     onTap: () {
-                             ToastUtil.showToastMessage("Successful login");
+                    
+                      
+                            
 
                     // Handle SignUp or SignIn logic
                     //AlertDialog(title: Text("Sucessfully Sign Up"),);
@@ -162,9 +173,27 @@ class _SignUpMailState extends State<SignUpMail>
                       if(buttonText=="SignUp"){
                         
                         AuthService.Signup(email, password);
+                         ToastUtil.showToastMessage("Successful SignUp");
+                           setState(() {
+                        IsColor=!IsColor;
+                       // IsColor=false;
+                      });
+                      Future.delayed(Duration(milliseconds: 250), () {
+ setState(() {
+    IsColor = false;
+ });});
                       }
                       else if(buttonText=="SignIn"){
                         AuthService.Signin(email,password);
+                        ToastUtil.showToastMessage("Successful SignUp");
+                           setState(() {
+                        IsColor=!IsColor;
+                       // IsColor=false;
+                      });
+                      Future.delayed(Duration(milliseconds: 300), () {
+ setState(() {
+    IsColor = false;
+ });});
                         checkUserSignInStatus();
                         
                       }
@@ -187,6 +216,8 @@ class _SignUpMailState extends State<SignUpMail>
 
   Widget buildTextFormField(String key, String hintText, IconData prefixIcon, FocusNode focus_Node) {
     return Container(
+      width: 358.w,
+      
       decoration: const BoxDecoration(),
       child: TextFormField(
         focusNode: focus_Node,
@@ -205,23 +236,29 @@ class _SignUpMailState extends State<SignUpMail>
                        );
                      },
                    ):null,
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none),
-                              contentPadding: EdgeInsets.all(20),
-                              hintText: hintText,
-                              hintStyle: GoogleFonts.aladin(),
-                              fillColor: Color(0xFFF2F2F2),
-                              filled: true,
-                              focusColor: Color(0xffd8c8ea),
                               border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(15.0),
+                                 borderSide: BorderSide(
+                                color: Color.fromARGB(255, 173, 179,
+                                    189), // Specify the border color here
+                                // width: 2.0, // Specify the border width here
                               ),
+                              borderRadius: BorderRadius.circular(8.0.r),),
+                              contentPadding: EdgeInsets.all(10.w),
+                              hintText: hintText,
+                              hintStyle:TextStyle(
+                                fontFamily: 'InterRegular',
+                                color: Color.fromARGB(255, 173, 179, 189),
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w400),
+                              //fillColor: Color(0xFFF2F2F2),
+                              //filled: true,
+                              //focusColor: Color(0xffd8c8ea),
+                              
                             ),
         
         key: ValueKey(key),
         validator:(value){
-          if(key=='FullName'){
+          if(key=='name'){
             if(value.toString().length<3){
               return 'Usename is so small';
             }
@@ -244,12 +281,21 @@ class _SignUpMailState extends State<SignUpMail>
             if((value.toString().length<6)){
               return 'password is small';
             }
+          }
+            else{
+              return null;
+            }
+            if(key=='name'){
+               if((value.toString().length<3)){
+              return 'Name Must Contain more than 3 letter';
+            }
+            }
             else{
               return null;
             }
             
           }
-        } ,
+         ,
         onSaved: (value){
           setState(() {
             if(key=='FullName'){

@@ -3,7 +3,6 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  audioplayers_windows
   cloud_firestore
   file_picker_pro
   file_selector_windows
@@ -13,7 +12,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   flutter_secure_storage_windows
   open_share_plus
   permission_handler_windows
-  record_windows
   share_plus
   smart_auth
   url_launcher_windows

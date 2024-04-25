@@ -1,25 +1,25 @@
 class UnbordingContent {
   String image;
   String title;
-  String discription;
+ 
 
-  UnbordingContent({required this.image, required this.title, required this.discription});
+  UnbordingContent({required this.image, required this.title});
 }
 
 List<UnbordingContent> contents = [
   UnbordingContent(
-      title: 'OneLink',
-      image: 'Assets/images/lomo.png',
-      discription: "Welcomne to TS bridge EDU Your Hub For Seamless Connections "
+      title: "Welcome to JNV Diaries Your\n Hub For Seamless Connections. We\n are glad you’re here",
+      image: 'Assets/images/onboard1.svg',
+     
   ),
   UnbordingContent(
-      title: 'OneLink',
-      image: 'Assets/images/lomo.png',
-      discription: "Simplify your Idea with Us "
+      title: ' simplify your great ideas on JNV Diaries',
+      image: 'Assets/images/onboard2.svg',
+     
   ),
   UnbordingContent(
-      title: 'OneLink',
-      image: 'Assets/images/lomo.png',
-      discription: "We help you from \n 0-1 "
+      title: 'Let’s help you get from where you\n are to where you want to be',
+      image: 'Assets/images/onboard3.svg',
+     
   ),
 ];

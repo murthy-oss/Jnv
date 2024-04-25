@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../Screen/event_Screen/Join Event.dart';
 import '../components/myButton.dart';
 
 class EventUICard extends StatefulWidget {
@@ -115,23 +116,23 @@ class _EventUICardState extends State<EventUICard> {
                     flex: 3,
                     child: MyButton1(
                       onTap: () {
-                        // Navigator.push(
-                          // context,
-                          // MaterialPageRoute(
-                          //   builder: (context) {
-                          //     return JoinEvent(
-                          //       eventName: widget.eventName,
-                          //       location: widget.location,
-                          //       time: widget.eventTime,
-                          //       description: widget.description,
-                          //       imageUrl: widget.imageUrl,
-                          //       eventType: widget.eventType,
-                          //       eventId: widget.eventID,
-                          //       userId: widget.userId,
-                          //     );
-                          //   },
-                          // ),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return JoinEvent(
+                                eventName: widget.eventName,
+                                location: widget.location,
+                                time: widget.eventTime,
+                                description: widget.description,
+                                imageUrl: widget.imageUrl,
+                                eventType: widget.eventType,
+                                eventId: widget.eventID,
+                                userId: widget.userId,
+                              );
+                            },
+                          ),
+                        );
                       },
                       text: "View Details",
                       color:Color(0xFF888BF4),

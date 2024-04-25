@@ -43,7 +43,7 @@ class _EventFormState extends State<EventForm> {
           'occupation': _occupationController.text,
           'gender': _genderController.text,
           'education': _educationController.text,
-          'UserId':FirebaseAuth.instance.currentUser!.phoneNumber.toString()
+          'UserId':FirebaseAuth.instance.currentUser!.uid.toString()
         };
 
         // Add participant data to the event document

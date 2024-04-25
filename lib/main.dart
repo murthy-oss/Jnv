@@ -1,19 +1,25 @@
+
 import 'dart:io';
 
-import 'package:audioplayers/audioplayers.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:firebase_core/firebase_core.dart';
-import 'package:jnvapp/AuthScreens/takingaudiovideo.dart';
-import 'package:jnvapp/Screen/AppBar&BottomBar/Appbar&BottomBar.dart';
+import 'package:jnvapp/Auth/OTP%20SUCESS.dart';
+import 'package:jnvapp/Auth/otpPage.dart';
 
+import 'package:jnvapp/Screen/Add%20Post/adddPost.dart';
+import 'package:jnvapp/Screen/AppBar&BottomBar/Appbar&BottomBar.dart';
+import 'package:jnvapp/Screen/SetUpNavodhya/Navodhya.dart';
 import 'package:jnvapp/firebase_options.dart';
 import 'package:jnvapp/Screen/ONboardingScreens/Onboarding.dart';
-
+import 'package:jnvapp/firebase_options.dart';
 import 'package:provider/provider.dart';
-
+import 'package:video_player/video_player.dart';
 import 'FetchDataProvider/fetchData.dart';
+
+
 
 //import 'package:inst_clone_1/auth/mainPage.dart';
 //import 'package:inst_clone_1/firebase_options.dart';
@@ -22,9 +28,9 @@ import 'FetchDataProvider/fetchData.dart';
   return FirebaseAuth.instance.authStateChanges().first;
 }*/
 
-void main() async {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  /* try {
+ /* try {
  
 
     await Firebase.initializeApp(
@@ -40,9 +46,9 @@ void main() async {
       await Firebase.initializeApp();
     }
   }*/
-  await Firebase.initializeApp(
+ await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
+);
 
   runApp(
     MultiProvider(
@@ -53,67 +59,40 @@ void main() async {
     ),
   );
 }
-
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  MyApp({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
+
 
 class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) {
-    //FirebaseAuth auth = FirebaseAuth.instance;
-    double width = MediaQuery.sizeOf(context).width;
-    double height = MediaQuery.sizeOf(context).height;
-    print(width);
-    print(height);
-    // Get the current user
-    //User? user = auth.currentUser;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ScreenUtilInit(
-          designSize: Size(411.428, 866.2),
-          child: /*(user!= null)?HomeScreen():*/ Onboarding()),
-    );
-  }
-}
-
-/*
-class AudioPlayerWidget extends StatefulWidget {
-  final String audioFilePath;
-
-  AudioPlayerWidget(this.audioFilePath);
-
-  @override
-  _AudioPlayerWidgetState createState() => _AudioPlayerWidgetState();
-}
-
-class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
-  late AudioPlayer _audioPlayer;
-
-  @override
-  void initState() {
-    super.initState();
-    _audioPlayer = AudioPlayer();
-    _audioPlayer.setUrl(widget.audioFilePath);
-  }
+  
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        _audioPlayer.play();
-      },
-      child: Text('Play Audio'),
-    );
-  }
+  //FirebaseAuth auth = FirebaseAuth.instance;
+  double width=MediaQuery.sizeOf(context).width;
+  double height=MediaQuery.sizeOf(context).height;
+  print(width);
+  print(height);
+  // Get the current user
+  //User? user = auth.currentUser;
+  return ScreenUtilInit(designSize: Size(width,height), 
+minTextAdapt: true,
+splitScreenMode: true,
+builder: (context, child) => MaterialApp(
+  debugShowCheckedModeBanner: false,
+  home: child,
 
-  @override
-  void dispose() {
-    _audioPlayer.dispose();
-    super.dispose();
+  
+),
+
+    child: /*(user!= null)?HomeScreen():*/Onboarding(),
+  );
+    
   }
 }
-*/
+
+
