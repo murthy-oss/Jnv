@@ -106,9 +106,9 @@ class _SignUpMailState extends State<SignUpMail>
             padding:  EdgeInsets.symmetric(horizontal: 14.w),
             child: Column( 
               children: [
-              _tabController.index==1?
-              Image.asset('Assets/images/signuppng.png'):
-              Image.asset('Assets/images/signup1.png'),
+              
+              SvgPicture.asset('assets/images/signinimg.svg'),
+              //Image.asset('assets/images/signup1.png'),
 
                 
                 TabBar(
@@ -169,8 +169,11 @@ class _SignUpMailState extends State<SignUpMail>
                 ),
               ),
                Padding(
-                 padding:  EdgeInsets.symmetric(horizontal: 4.w,vertical: 5.h),
+                 padding:  EdgeInsets.symmetric(horizontal: 1.w,vertical: 5.h),
                  child: Container(
+                //  width: 370.w,
+                  //height: 40.h,
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
                   decoration: BoxDecoration(
                     border:Border.all(
                       
@@ -186,7 +189,10 @@ class _SignUpMailState extends State<SignUpMail>
                     items: ['Male', 'Female', 'Others'].map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(value,
+                        style: TextStyle(
+                          color: Colors.black
+                        ),),
                       );
                     }).toList(),
                     onChanged: (String? newValue) {
@@ -196,7 +202,12 @@ class _SignUpMailState extends State<SignUpMail>
                     },
                     decoration: InputDecoration(
                       hintText: 'Select Gender',
-                      prefixIcon: Icon(Icons.people),
+                      hintStyle: TextStyle(
+                                  fontFamily: 'InterRegular',
+                                  color: Color.fromARGB(255, 173, 179, 189),
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w400),
+                     // prefixIcon: Icon(Icons.people),
                     ),
                     validator: (value) => _validateInput(value, fieldName: 'Gender'),
                                  ),
@@ -238,7 +249,7 @@ class _SignUpMailState extends State<SignUpMail>
             [
             buildTextFormField('email', 'Enter Email', Icons.mail,
             email_focus_signin),
-            SizedBox(height: 10.h,),
+            SizedBox(height: 5.h,),
             buildTextFormField('password', 'Enter password', Icons.lock,
             Password_focus_signin),
             
@@ -291,6 +302,7 @@ class _SignUpMailState extends State<SignUpMail>
                   text: buttonText,
                   color: (buttonText=="SignUp")?IsColor?Color.fromARGB(255, 244, 66, 66): Colors.white:!IsColor?Color.fromARGB(255, 244, 66, 66): Colors.white,
                     onTap: () {
+                      print(_tabController.index);
                     
                       String? nameError =
                   _validateInput(_nameController.text, fieldName: 'Name');
@@ -399,7 +411,7 @@ class _SignUpMailState extends State<SignUpMail>
       padding:  EdgeInsets.symmetric(vertical: 8.h),
       child: Container(
         width: 358.w,
-        
+       // height:40.h ,
         decoration: const BoxDecoration(),
         child: TextFormField(
           focusNode: focus_Node,

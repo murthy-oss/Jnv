@@ -274,7 +274,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   width:(s=='Login With Google')? 10.w:0.w,
                 ),
                 (s=='Login With Google')?
-                SvgPicture.asset('Assets/images/google.svg',
+                SvgPicture.asset('assets/images/google.svg',
                 fit: BoxFit.fill,
                 )
                 :

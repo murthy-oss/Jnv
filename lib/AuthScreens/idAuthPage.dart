@@ -23,9 +23,12 @@ class _IdAuthPagStateState extends State<IdAuthPagState> {
       body: Padding(
         padding:  EdgeInsets.symmetric(horizontal: 14.w),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [ 
-            SvgPicture.asset('assets/images/idAuth.svg'),
+            Padding(
+              padding:  EdgeInsets.symmetric(vertical: 36.h),
+              child: Image.asset('assets/images/idAuthpng.png'),
+            ),
             MyTextField(
                   controller: _idcontroller,
                   hint: "Id",
@@ -49,17 +52,22 @@ class _IdAuthPagStateState extends State<IdAuthPagState> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [ 
-                      Text("Forgot Password?",
-                      style: TextStyle(
-                                  fontFamily: 'InterRegular',
-                                  color: Color.fromARGB(255, 244, 66, 66),
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w700),)
+                      TextButton(
+                        onPressed: (){
+
+                        },
+                        child: Text("Forgot Password?",
+                        style: TextStyle(
+                                    fontFamily: 'InterRegular',
+                                    color: Color.fromARGB(255, 244, 66, 66),
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w700),),
+                      )
                     ],
                   ),
                 ),
                   Padding(
-                    padding:  EdgeInsets.symmetric(horizontal: 5.w),
+                    padding:  EdgeInsets.symmetric(horizontal: 5.w,vertical: 36.h),
                     child: MyButton3(
                       textcolor: Colors.white,
                       text: 'Login',

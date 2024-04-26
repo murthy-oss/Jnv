@@ -46,7 +46,8 @@ class _MyTextFieldState extends State<MyTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.sizeOf(context).width * 0.9,
+      width: 358.w,
+    // height: 55.h,
       child: Padding(
         padding:  EdgeInsets.symmetric(vertical: 8.h),
         child: AutofillGroup(
