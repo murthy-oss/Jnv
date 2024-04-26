@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyTextField extends StatefulWidget {
@@ -8,7 +7,6 @@ class MyTextField extends StatefulWidget {
   final bool selection;
   final FocusNode? focusNode;
   final TextEditingController controller;
-
   final IconData? suffixIcon; // Make suffixIcon optional
   final autofillhints;
   final FormFieldValidator<String>? validator; // Add validator
@@ -21,7 +19,6 @@ class MyTextField extends StatefulWidget {
     required this.obscure,
     required this.selection,
     this.focusNode,
-     
     this.suffixIcon,
     this.autofillhints,
     this.validator,
@@ -46,10 +43,9 @@ class _MyTextFieldState extends State<MyTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 358.w,
-    // height: 55.h,
+      width: MediaQuery.sizeOf(context).width * 0.9,
       child: Padding(
-        padding:  EdgeInsets.symmetric(vertical: 8.h),
+        padding: const EdgeInsets.only(bottom: 5),
         child: AutofillGroup(
           child: TextFormField(
               validator: widget.validator, // Set the validator
@@ -58,15 +54,9 @@ class _MyTextFieldState extends State<MyTextField> {
               obscureText: _obscureText,
               keyboardType: widget.keyboardtype,
               decoration: InputDecoration(
-                //focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
-                contentPadding: EdgeInsets.all(10.w),
+                focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
+                contentPadding: EdgeInsets.all(20),
                 hintText: widget.hint,
-             hintStyle:   TextStyle(
-                                fontFamily: 'InterRegular',
-                                color: Color.fromARGB(255, 173, 179, 189),
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w400),
-                //prefixIcon: Icon(widget.preIcon),
                 suffixIcon: widget.suffixIcon != null
                     ? GestureDetector(
                         onTap: () {
@@ -82,15 +72,13 @@ class _MyTextFieldState extends State<MyTextField> {
                         ),
                       )
                     : null,
-               
-               
-                              border: OutlineInputBorder(
-                                 borderSide: BorderSide(
-                                color: Color.fromARGB(255, 173, 179,
-                                    189), // Specify the border color here
-                                // width: 2.0, // Specify the border width here
-                              ),
-                              borderRadius: BorderRadius.circular(8.0.r),),
+                fillColor: widget.fillcolor ?? Color(0xFFF2F2F2),
+                filled: true,
+                focusColor: Color(0xffd8c8ea),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
               ),
               controller: widget.controller,
               style: GoogleFonts.poppins(

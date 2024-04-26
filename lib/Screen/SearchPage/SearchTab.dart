@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,14 +14,14 @@ class SearchPage extends StatelessWidget {
     return Scaffold(
 
       body: Padding(
-        padding: const EdgeInsets.all(15 ),
+        padding: const EdgeInsets.all(12 ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
-                color: Colors.blue[50],
+              border: Border.all(width: 1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: TextField(
@@ -29,7 +30,7 @@ class SearchPage extends StatelessWidget {
                   _controller.performSearch(value.toLowerCase());
                 },
                 decoration: InputDecoration(
-                  hintText: 'Search...',
+                  hintText: 'Search',
                   suffixIcon: IconButton(
                     icon: Icon(Icons.search),
                     onPressed: () {
@@ -68,18 +69,18 @@ class SearchPage extends StatelessWidget {
                             children: [
                               CircleAvatar(
                                 radius: 25,
-                                backgroundImage: CachedNetworkImageProvider(
-                                  _controller.searchResults[index]['profilePicture'],
-                                ),
+                                backgroundImage: _controller.searchResults[index]['profilePicture'] != null
+                                    ? CachedNetworkImageProvider(_controller.searchResults[index]['profilePicture']) // Assuming profilePicture is of type String
+                                    : AssetImage('Assets/images/Avatar.png') as ImageProvider<Object>? ,
                               ),
-                              SizedBox(width: 10),
+                              SizedBox(width: 10.w),
 
                               Expanded(
                                 child: Text(
                                   _controller.searchResults[index]['name'],
-                                  style: TextStyle(
+                                  style: GoogleFonts.inter(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16,
+                                    fontSize: 16.sp,
                                   ),
                                 ),
                               ),

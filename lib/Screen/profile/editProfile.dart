@@ -1,12 +1,18 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:jnvapp/components/myTextfield.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 
 import '../../FetchDataProvider/fetchData.dart';
 import '../../Models/UserFetchDataModel.dart';
@@ -38,14 +44,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _emailController = TextEditingController();
     _bioController = TextEditingController();
     _linkController = TextEditingController();
-    final userFetchController = Provider.of<UserFetchController>(context, listen: false);
+    final userFetchController =
+        Provider.of<UserFetchController>(context, listen: false);
     _myUser = userFetchController.myUser;
     _nameController.text = _myUser.name ?? '';
     _emailController.text = _myUser.email ?? '';
     _bioController.text = _myUser.bio ?? '';
     _linkController.text = _myUser.linkedinLink ?? '';
     _selectedDate = _myUser.dateOfBirth;
-    _image = _myUser.profilePicture != null ? File(_myUser.profilePicture!) : null;
+    _image =
+        _myUser.profilePicture != null ? File(_myUser.profilePicture!) : null;
     _hideEmail = _myUser.showEmail;
     _hidePhone = _myUser.showPhone;
     _hideLinkedIn = _myUser.showLinkedin;
@@ -69,7 +77,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
       });
     }
   }
-
 
   String? _validateBio(String? value) {
     if (value == null || value.isEmpty) {
@@ -96,7 +103,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   Future<String> _uploadProfileImage(String userId, File imageFile) async {
     try {
-      Reference ref = FirebaseStorage.instance.ref().child('profile_images').child('$userId.jpg');
+      Reference ref = FirebaseStorage.instance
+          .ref()
+          .child('profile_images')
+          .child('$userId.jpg');
       UploadTask uploadTask = ref.putFile(imageFile);
       TaskSnapshot taskSnapshot = await uploadTask;
       return await taskSnapshot.ref.getDownloadURL();
@@ -109,42 +119,64 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue, // LinkedIn-style color
+      appBar: AppBar(foregroundColor: Colors.white,
+        backgroundColor: Colors.redAccent, // LinkedIn-style color
         title: Text(
           "Edit Profile",
-          style: TextStyle(
+          style: GoogleFonts.inter(color: Colors.white,
             fontSize: MediaQuery.of(context).size.width * 0.05,
             fontWeight: FontWeight.bold,
           ),
         ),
+        actions: [
+          IconButton(onPressed: () {
+            Share.share('J.N.V');
+          }, icon: FaIcon(Icons.share,color:Colors.white))
+        ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Center(
-                child: GestureDetector(
-                  onTap: _selectImage,
-                  child: CircleAvatar(
-                    radius: 70,
-                    backgroundColor: Colors.grey[200],
-                    backgroundImage: CachedNetworkImageProvider(_myUser.profilePicture ?? ''),
+                child: Container(
+                  height: 200.h,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: 0,
+                        child: Container(
+                          width: 500,
+                          height: 100,
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                      Center(
+                        child: Positioned(
+                          left: 135,
+                          top: 25,
+                          child: GestureDetector(
+                            onTap: _selectImage,
+                            child: CircleAvatar(
+                              radius: 70,
+                              backgroundColor: Colors.grey[200],
+                              backgroundImage: _myUser.profilePicture != ''
+                                  ? CachedNetworkImageProvider(
+                                      _myUser.profilePicture ?? '')
+                                  : AssetImage('Assets/images/Avatar.png')
+                                      as ImageProvider<Object>,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: _nameController,
-                decoration: InputDecoration(
-                  labelText: 'Name',
-                  border: OutlineInputBorder(),
-                ),
-                validator: _validateName,
-              ),
+              SizedBox(height: 20.h),
+// MyTextField(controller: _nameController, hint: 'name', preIcon: Clarity.namespace_outline_badged, keyboardtype: TextInputType.name, label: 'Name', obscure: false,),
               SizedBox(height: 20),
               TextFormField(
                 controller: _emailController,
@@ -185,7 +217,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        _selectedDate != null ? 'DOB: ${_selectedDate}' : 'Select Date of Birth',
+                        _selectedDate != null
+                            ? 'DOB: ${_selectedDate}'
+                            : 'Select Date of Birth',
                         style: TextStyle(fontSize: 16),
                       ),
                       Icon(Icons.calendar_today),
@@ -207,7 +241,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           });
                         },
                       ),
-                      Text(_hideEmail ? 'Show Email' : 'Hide Email', style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.03)),
+                      Text(_hideEmail ? 'Show Email' : 'Hide Email',
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.03)),
                     ],
                   ),
                   Row(
@@ -220,7 +257,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           });
                         },
                       ),
-                      Text(_hidePhone ? 'Show Phone' : 'Hide Phone', style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.03)),
+                      Text(_hidePhone ? 'Show Phone' : 'Hide Phone',
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.03)),
                     ],
                   ),
                   Row(
@@ -233,54 +273,66 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           });
                         },
                       ),
-                      Text(_hideLinkedIn ? 'Show LinkedIn' : 'Hide LinkedIn', style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.03)),
+                      Text(_hideLinkedIn ? 'Show LinkedIn' : 'Hide LinkedIn',
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.03)),
                     ],
                   ),
                 ],
               ),
               SizedBox(height: 20),
-              MyButton1(onTap: () async {
-                if (_formKey.currentState!.validate()) {
-                  try {
-                    final currentUserrUid = FirebaseAuth.instance.currentUser!.uid;
-                    final usersCollection = FirebaseFirestore.instance.collection('users');
-print(currentUserrUid);
-                    QuerySnapshot querySnapshot =
-                        await usersCollection.where('userId', isEqualTo: currentUserrUid).get();
+              MyButton1(
+                  onTap: () async {
+                    if (_formKey.currentState!.validate()) {
+                      try {
+                        final currentUserrUid =
+                            FirebaseAuth.instance.currentUser!.uid;
+                        final usersCollection =
+                            FirebaseFirestore.instance.collection('users');
+                        print(currentUserrUid);
+                        QuerySnapshot querySnapshot = await usersCollection
+                            .where('userId', isEqualTo: currentUserrUid)
+                            .get();
 
-                    if (querySnapshot.size == 1) {
-                      String documentId = querySnapshot.docs[0].id;
+                        if (querySnapshot.size == 1) {
+                          String documentId = querySnapshot.docs[0].id;
 
-                      await usersCollection.doc(documentId).update({
-                        'name': _nameController.text,
-                        'email': _emailController.text,
+                          await usersCollection.doc(documentId).update({
+                            'name': _nameController.text,
+                            'email': _emailController.text,
+                            'bio': _bioController.text,
+                            'linkedinLink': _linkController.text,
+                            'showEmail': _hideEmail,
+                            'showPhone': _hidePhone,
+                            'showLinkedin': _hideLinkedIn,
+                          });
 
-                        'bio': _bioController.text,
-                        'linkedinLink': _linkController.text,
-                        'showEmail': _hideEmail,
-                        'showPhone': _hidePhone,
-                        'showLinkedin': _hideLinkedIn,
-                      });
+                          if (_image != null) {
+                            String profileImageUrl = await _uploadProfileImage(
+                                currentUserrUid, _image!);
+                            await usersCollection
+                                .doc(documentId)
+                                .update({'profilePicture': profileImageUrl});
+                          }
 
-                      if (_image != null) {
-                        String profileImageUrl = await _uploadProfileImage(currentUserrUid, _image!);
-                        await usersCollection.doc(documentId).update({'profilePicture': profileImageUrl});
+                          final userFetchController =
+                              Provider.of<UserFetchController>(context,
+                                  listen: false);
+                          userFetchController.fetchUserData();
+
+                          Navigator.pop(context);
+                        } else {
+                          print(
+                              'User document not found for phone number: $currentUserrUid');
+                        }
+                      } catch (e) {
+                        print('Error updating user profile: $e');
                       }
-
-                      final userFetchController = Provider.of<UserFetchController>(context, listen: false);
-                      userFetchController.fetchUserData();
-
-                      Navigator.pop(context);
-                    } else {
-                      print('User document not found for phone number: $currentUserrUid');
                     }
-                  } catch (e) {
-                    print('Error updating user profile: $e');
-                  }
-                }
-              }, text: 'Save Changes', color: Colors.blue)
-
-
+                  },
+                  text: 'Save Changes',
+                  color: Colors.blue)
             ],
           ),
         ),
