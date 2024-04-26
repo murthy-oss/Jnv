@@ -35,200 +35,175 @@ class _SignUpPageState extends State<SignUpPage> {
     SizeConfig().init(context);
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 110.h,
-                ),
-                Center(
-                    child: Text(
-                  "Welcome Back",
-                  style: TextStyle(
-                      fontFamily: 'InterRegular',
-                      color: Color.fromARGB(255, 27, 28, 30),
-                      fontSize: 26.sp,
-                      letterSpacing: 0.3.sp,
-                      fontWeight: FontWeight.bold),
-                )),
-                SizedBox(
-                  height: 16.h,
-                ),
-                Center(
-                    child: Column(
-                  children: [
-                    Text(
-                      "Log in to account using email or",
-                      style: TextStyle(
-                          fontFamily: 'InterRegular',
-                          color: Color.fromARGB(255, 169, 162, 163),
-                          fontSize: 16.sp,
-                          letterSpacing: 0.3.sp,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    Text(
-                      "social networks",
-                      style: TextStyle(
-                          fontFamily: 'InterRegular',
-                          color: Color.fromARGB(255, 169, 162, 163),
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ],
-                )),
-                Form(
-                  key: formkey,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 110.h,
+              ),
+              Center(
+                  child: Text(
+                "Welcome Back",
+                style: TextStyle(
+                    fontFamily: 'InterRegular',
+                    color: Color.fromARGB(255, 27, 28, 30),
+                    fontSize: 26.sp,
+                    letterSpacing: 0.3.sp,
+                    fontWeight: FontWeight.bold),
+              )),
+              SizedBox(
+                height: 16.h,
+              ),
+              Center(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 51.h, bottom: 16.h,left: 14.w,right: 14.w),
-                        child: TextFiledUiMethod('Phone Number'),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          //Sign in Button
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 14.w),
-                            child: MyButton(
-                                onTap: () async {
-                                  final phone = _phoneController.text.trim();
-                                  if (phone.isNotEmpty) {
-                                    await FirebaseAuth.instance.verifyPhoneNumber(
-                                      phoneNumber: '+91$phone',
-                                      verificationCompleted:
-                                          (PhoneAuthCredential credential) {
-                                        // Auto verification
-                                      },
-                                      verificationFailed:
-                                          (FirebaseAuthException e) {
-                                        print('Verification Failed: ${e.message}');
-                                      },
-                                      codeSent: (String verificationId,
-                                          int? resendToken) {
-                                        setState(() {
-                                          _verificationId = verificationId;
-                                        });
-                                        Navigator.push(
-                                          context,
-                                          PageRouteBuilder(
-                                            transitionDuration: Duration(
-                                                milliseconds:
-                                                    500), // Adjust duration as needed
-                                            pageBuilder: (context, animation,
-                                                    secondaryAnimation) =>
-                                                OTPScreen(
-                                              phone: phone,
-                                              verificationId: verificationId,
-                                            ),
-                                            transitionsBuilder: (context, animation,
-                                                secondaryAnimation, child) {
-                                              var begin = Offset(0.0, 1.0);
-                                              var end = Offset.zero;
-                                              var curve = Curves.ease;
-                          
-                                              var tween =
-                                                  Tween(begin: begin, end: end)
-                                                      .chain(
-                                                CurveTween(curve: curve),
-                                              );
-                          
-                                              return SlideTransition(
-                                                position: animation.drive(tween),
-                                                child: child,
-                                              );
-                                            },
-                                          ),
-                                        );
-                                      },
-                                      codeAutoRetrievalTimeout:
-                                          (String verificationId) {
-                                        // Auto retrieval timeout
-                                      },
-                                    );
-                                  }
-                                },
-                                text: 'OTP',
-                                color: Color.fromARGB(255, 244, 66, 66)),
-                          ),
-                          SizedBox(
-                            height: 24.h,
-                          ),
-                          myDivider(),
-                          SizedBox(
-                            height: width * 0.08,
-                          ),
-                          //Signup button
-                            authbuttons("Login With ID", AntDesign.idcard_outline  ),
-                          SizedBox(
-                            height: 14.h,
-                          ),
-                          authbuttons("Login With Email", AntDesign.mail_fill ),
-                          SizedBox(
-                            height: 14.h,
-                          ),
-                          authbuttons(
-                              "Login With Google", AntDesign.google_outline ),
-                        
-                        ],
-                      )
-                    ],
+                children: [
+                  Text(
+                    "Log in to account using email or",
+                    style: TextStyle(
+                        fontFamily: 'InterRegular',
+                        color: Color.fromARGB(255, 169, 162, 163),
+                        fontSize: 16.sp,
+                        letterSpacing: 0.3.sp,
+                        fontWeight: FontWeight.w400),
                   ),
+                  Text(
+                    "social networks",
+                    style: TextStyle(
+                        fontFamily: 'InterRegular',
+                        color: Color.fromARGB(255, 169, 162, 163),
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ],
+              )),
+              Form(
+                key: formkey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 51.h, bottom: 16.h,left: 14.w,right: 14.w),
+                      child: TextFiledUiMethod('Phone Number'),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        //Sign in Button
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 14.w),
+                          child: MyButton(
+                              onTap: () async {
+                                final phone = _phoneController.text.trim();
+                                if (phone.isNotEmpty) {
+                                  await FirebaseAuth.instance.verifyPhoneNumber(
+                                    phoneNumber: '+91$phone',
+                                    verificationCompleted:
+                                        (PhoneAuthCredential credential) {
+                                      // Auto verification
+                                    },
+                                    verificationFailed:
+                                        (FirebaseAuthException e) {
+                                      print('Verification Failed: ${e.message}');
+                                    },
+                                    codeSent: (String verificationId,
+                                        int? resendToken) {
+                                      setState(() {
+                                        _verificationId = verificationId;
+                                      });
+                                      Navigator.push(
+                                        context,
+                                        PageRouteBuilder(
+                                          transitionDuration: Duration(
+                                              milliseconds:
+                                                  500), // Adjust duration as needed
+                                          pageBuilder: (context, animation,
+                                                  secondaryAnimation) =>
+                                              OTPScreen(
+                                            phone: phone,
+                                            verificationId: verificationId,
+                                          ),
+                                          transitionsBuilder: (context, animation,
+                                              secondaryAnimation, child) {
+                                            var begin = Offset(0.0, 1.0);
+                                            var end = Offset.zero;
+                                            var curve = Curves.ease;
+                        
+                                            var tween =
+                                                Tween(begin: begin, end: end)
+                                                    .chain(
+                                              CurveTween(curve: curve),
+                                            );
+                        
+                                            return SlideTransition(
+                                              position: animation.drive(tween),
+                                              child: child,
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    codeAutoRetrievalTimeout:
+                                        (String verificationId) {
+                                      // Auto retrieval timeout
+                                    },
+                                  );
+                                }
+                              },
+                              text: 'OTP',
+                              color: Color.fromARGB(255, 244, 66, 66)),
+                        ),
+                        SizedBox(
+                          height: 24.h,
+                        ),
+                        myDivider(),
+                        SizedBox(
+                          height: width * 0.08,
+                        ),
+                        //Signup button
+                          authbuttons("Login With ID", AntDesign.idcard_outline  ),
+                        SizedBox(
+                          height: 14.h,
+                        ),
+                        authbuttons("Login With Email", AntDesign.mail_fill ),
+                        SizedBox(
+                          height: 14.h,
+                        ),
+                        authbuttons(
+                            "Login With Google", AntDesign.google_outline ),
+                      
+                      ],
+                    )
+                  ],
                 ),
-                150.verticalSpace
+              ),
+              //150.verticalSpace
+            ],
+          ),
+          Padding(
+            padding:  EdgeInsets.symmetric(vertical: 20.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Don’t have an account?",
+                  style: TextStyle(fontWeight: FontWeight.w400,   fontFamily:
+                     'InterRegular',fontSize: 16.sp, color: const Color.fromARGB(255, 27, 28, 30),letterSpacing: 0.3.sp)),
+                GestureDetector(
+                  onTap: (){
+                     Navigator.push(
+                context, MaterialPageRoute(builder: (context) => SignUpMail()));
+                  },
+                  child: Text("Register",
+                      style: TextStyle(fontWeight: FontWeight.w400,   fontFamily:
+                       'InterRegular',fontSize: 16.sp, color: const Color.fromARGB(255, 244, 66, 66),letterSpacing: 0.3.sp)),
+                ),
               ],
             ),
-            TextButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   PageRouteBuilder(
-                          //     transitionDuration: Duration(
-                          //         milliseconds:
-                          //             500), // Adjust duration as needed
-                          //     pageBuilder:
-                          //         (context, animation, secondaryAnimation) =>
-                          //             TermsAndConditionsPage(),
-                          //     transitionsBuilder: (context, animation,
-                          //         secondaryAnimation, child) {
-                          //       var begin = Offset(0.0, 1.0);
-                          //       var end = Offset.zero;
-                          //       var curve = Curves.ease;
-                          //
-                          //       var tween =
-                          //           Tween(begin: begin, end: end).chain(
-                          //         CurveTween(curve: curve),
-                          //       );
-                          //
-                          //       return SlideTransition(
-                          //         position: animation.drive(tween),
-                          //         child: child,
-                          //       );
-                          //     },
-                          //   ),
-                          // );
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Don’t have an account?",
-                              style: TextStyle(fontWeight: FontWeight.w400,   fontFamily:
-                                 'InterRegular',fontSize: 16.sp, color: const Color.fromARGB(255, 27, 28, 30),letterSpacing: 0.3.sp)),
-                            Text("Register",
-                                style: TextStyle(fontWeight: FontWeight.w400,   fontFamily:
-                                 'InterRegular',fontSize: 16.sp, color: const Color.fromARGB(255, 244, 66, 66),letterSpacing: 0.3.sp)),
-                          ],
-                        ),
-                      ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

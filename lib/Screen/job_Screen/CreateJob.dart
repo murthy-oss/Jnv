@@ -57,7 +57,7 @@ class _JobPostingPageState extends State<JobPostingPage> {
                 hint: 'Job Title',
                 obscure: false,
                 selection: false,
-                preIcon: Bootstrap.journal_bookmark,
+                ////preIcon: Bootstrap.journal_bookmark,
                 keyboardtype: TextInputType.text,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -71,7 +71,7 @@ class _JobPostingPageState extends State<JobPostingPage> {
                 hint: 'Description',
                 obscure: false,
                 selection: false,
-                preIcon: Icons.bolt,
+                ////preIcon: Icons.bolt,
                 keyboardtype: TextInputType.multiline,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -85,7 +85,7 @@ class _JobPostingPageState extends State<JobPostingPage> {
                 hint: 'Location',
                 obscure: false,
                 selection: false,
-                preIcon: Icons.abc,
+                ////preIcon: Icons.abc,
                 keyboardtype: TextInputType.text,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -99,7 +99,7 @@ class _JobPostingPageState extends State<JobPostingPage> {
                 hint: 'Salary',
                 obscure: false,
                 selection: false,
-                preIcon: Icons.abc,
+                ////preIcon: Icons.abc,
                 keyboardtype: TextInputType.text,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -113,7 +113,7 @@ class _JobPostingPageState extends State<JobPostingPage> {
                 hint: 'Experience Required',
                 obscure: false,
                 selection: false,
-                preIcon: Icons.abc,
+                //preIcon: Icons.abc,
                 keyboardtype: TextInputType.text,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -127,7 +127,7 @@ class _JobPostingPageState extends State<JobPostingPage> {
                 hint: 'Company Name',
                 obscure: false,
                 selection: false,
-                preIcon: Clarity.namespace_line,
+                //preIcon: Clarity.namespace_line,
                 keyboardtype: TextInputType.text,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -141,7 +141,7 @@ class _JobPostingPageState extends State<JobPostingPage> {
                 hint: 'Skills Required',
                 obscure: false,
                 selection: false,
-                preIcon: Icons.skip_next,
+                //preIcon: Icons.skip_next,
                 keyboardtype: TextInputType.text,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -162,14 +162,14 @@ class _JobPostingPageState extends State<JobPostingPage> {
                   }
                   return null;
                 },
-                preIcon: Icons.align_vertical_bottom_outlined,
+                //preIcon: Icons.align_vertical_bottom_outlined,
               ),
               MyTextField(
                 controller: _aboutCompanyController,
                 hint: 'About the Company',
                 obscure: false,
                 selection: false,
-                preIcon: Icons.compost,
+                //preIcon: Icons.compost,
                 keyboardtype: TextInputType.multiline,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -183,7 +183,7 @@ class _JobPostingPageState extends State<JobPostingPage> {
                 hint: 'Eligibility',
                 obscure: false,
                 selection: false,
-                preIcon: Icons.elderly,
+                //preIcon: Icons.elderly,
                 keyboardtype: TextInputType.multiline,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -197,7 +197,7 @@ class _JobPostingPageState extends State<JobPostingPage> {
                 hint: 'Number of Openings',
                 obscure: false,
                 selection: false,
-                preIcon: Icons.open_in_browser,
+                //preIcon: Icons.open_in_browser,
                 keyboardtype: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {

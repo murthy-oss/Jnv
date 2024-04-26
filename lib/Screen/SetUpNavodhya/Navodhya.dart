@@ -147,7 +147,7 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
                 hint: "Selection - School Campus",
                 obscure: false,
                 selection: true,
-                preIcon: Icons.school,
+                ////preIcon: Icons.school,
                 keyboardtype: TextInputType.text,
                 validator: (value) =>
                     _validateInput(value, fieldName: 'School Campus'),
@@ -162,7 +162,7 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
                     hint: "Entry Year",
                     obscure: false,
                     selection: true,
-                    preIcon: Icons.calendar_today,
+                    //////preIcon: Icons.calendar_today,
                     keyboardtype: TextInputType.datetime,
                     validator: (value) =>
                         _validateInput(value, fieldName: 'Entry Year'),
@@ -174,7 +174,7 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
                 hint: "Entry Class",
                 obscure: false,
                 selection: true,
-                preIcon: Icons.class_,
+                ////preIcon: Icons.class_,
                 keyboardtype: TextInputType.number,
                 validator: (value) =>
                     _validateInput(value, fieldName: 'Entry Class'),
@@ -189,7 +189,7 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
                     hint: "Pass Out Year",
                     obscure: false,
                     selection: true,
-                    preIcon: Icons.calendar_today,
+                    ////preIcon: Icons.calendar_today,
                     keyboardtype: TextInputType.datetime,
                     validator: (value) =>
                         _validateInput(value, fieldName: 'Pass Out Year'),
@@ -201,7 +201,7 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
                 hint: "Roll Number",
                 obscure: false,
                 selection: true,
-                preIcon: Icons.class_,
+                ////preIcon: Icons.class_,
                 keyboardtype: TextInputType.number,
                 validator: (value) =>
                     _validateInput(value, fieldName: 'Roll Number'),
@@ -211,7 +211,7 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
                 hint: "House",
                 obscure: false,
                 selection: true,
-                preIcon: Icons.class_,
+                ////preIcon: Icons.class_,
                 keyboardtype: TextInputType.name,
               ),
               MyTextField(
@@ -219,7 +219,7 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
                 hint: "Section",
                 obscure: false,
                 selection: true,
-                preIcon: Icons.class_,
+                ////preIcon: Icons.class_,
                 keyboardtype: TextInputType.name,
               ),
               SizedBox(height: 15),
