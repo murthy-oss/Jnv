@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,8 +21,8 @@ class LinkText extends StatelessWidget {
         text: '',
         style: GoogleFonts.roboto(
           fontWeight: FontWeight.w700,
-          fontSize: 14,
-          color: Colors.black,
+          fontSize: 14.sp,
+          color: Colors.grey[600],
         ),
         children: _buildTextSpans(description),
       ),

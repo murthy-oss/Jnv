@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -15,6 +16,7 @@ import '../../Tabs/EventTab/EventTab.dart';
 import '../../Tabs/FeedPaGE/FeedPage.dart';
 import '../../Widgets/Drawer/drawer.dart';
 
+import '../Add Post/adddPost.dart';
 import '../Notifications/Notificationsd.dart';
 import '../SearchPage/SearchTab.dart';
 
@@ -28,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _pages = [
     HomeTab(),
     SearchPage(),
-    AddPostScreen(),
+    AddPostScreen(uid:FirebaseAuth.instance.currentUser!.uid),
 JobTab(),
     EventTab(),
   ];
@@ -55,46 +57,41 @@ JobTab(),
     return Scaffold(
       drawer: CustomDrawer(),
       appBar: AppBar(
-        leading: Builder(
+        leading:Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: CircleAvatar(
-                radius: 17,
-                backgroundImage: myUser != null && myUser.profilePicture != null
-                    ? CachedNetworkImageProvider(myUser.profilePicture!)
-                    : AssetImage('Assets/images/Avatar.png') as ImageProvider<Object>?,
-              ),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            );
-          },
+                  icon: CircleAvatar(
+                    radius: 20.r,
+                    backgroundImage: myUser != null && myUser.profilePicture != ''
+                        ? CachedNetworkImageProvider(myUser.profilePicture!)
+                        : AssetImage('Assets/images/Avatar.png') as ImageProvider<Object>?,
+                  ),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                );
+          }
         ),
-        title:  Text("Ts Bridge Edu",style: GoogleFonts.aladin(fontSize: 15),),
+    title:  Text("J.N.V",style: GoogleFonts.inter(fontSize: 16.sp,fontWeight: FontWeight.w700),),
         actions: [
           Consumer<UserFetchController>(
             builder: (context, userController, _) {
               if (userController.isDataFetched) {
                 // User data is fetched, you can access it here
                 var myUser = userController.myUser;
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CircleAvatar(
-                    child: IconButton(
-                      icon:  FaIcon(Bootstrap.chat_dots,size: MediaQuery.of(context).size.width*0.04),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return  RecentChatsPage();
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                return IconButton(
+                  icon:  FaIcon(Bootstrap.chat,color: Colors.black,size: 20.r),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return  RecentChatsPage();
+                        },
+                      ),
+                    );
+                  },
                 );
               } else {
                 return Container();
@@ -102,23 +99,18 @@ JobTab(),
             },
           ),
 
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              child: IconButton(
-                icon:  FaIcon(FontAwesomeIcons.bell,size:MediaQuery.of(context).size.width*0.04,),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const Notifications();
-                      },
-                    ),
-                  );
-                },
-              ),
-            ),
+          IconButton(
+            icon:  FaIcon(FontAwesomeIcons.bell,color: Colors.black,size:20.r,),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const Notifications();
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -128,15 +120,15 @@ JobTab(),
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         backgroundColor: Colors.white,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Color(0xFFF44242),
         unselectedItemColor: Colors.black,
         showSelectedLabels: true,
-        showUnselectedLabels: true,
+showUnselectedLabels: false,
         iconSize: 20,
         elevation: 1,
         items: [
           const BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.home),
+            icon: FaIcon(AntDesign.home_outline),
             label: 'Home',
           ),
           const BottomNavigationBarItem(
@@ -144,12 +136,12 @@ JobTab(),
             label: 'Search',
           ),
           const BottomNavigationBarItem(
-            icon: FaIcon(Bootstrap.camera),
+            icon: FaIcon(Icons.add_circle_outline,),
             label: 'Post',
           ),
 
           const BottomNavigationBarItem(
-            icon: FaIcon(LineAwesome.people_carry_solid),
+            icon: FaIcon(Bootstrap.people),
             label: 'Jobs',
           ),   const BottomNavigationBarItem(
             icon: FaIcon(Clarity.event_outline_badged),

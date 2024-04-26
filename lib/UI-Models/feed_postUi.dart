@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:share/share.dart';
+import '../Screen/profile/profilePage.dart';
 import 'Comment.dart';
 import '../Services/FireStoreMethod.dart';
 import '../Widgets/TextLinkWidget.dart';
@@ -97,68 +101,76 @@ class _PostCardState extends State<PostCard> {
 
         var postData = snapshot.data!.data() as Map<String, dynamic>;
         List<dynamic> postLikes = postData['likes'];
-        bool isLiked =
-        postLikes.contains(currentUser!.phoneNumber.toString());
+        bool isLiked = postLikes.contains(currentUser!.phoneNumber.toString());
 
         return GetBuilder<PostController>(
           builder: (controller) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 10.0),
-                  child: Container(
-                    color: Colors.grey[200],
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Row(
                           children: <Widget>[
                             CircleAvatar(
-                              radius: 20.0,
-                              backgroundImage:
-                              CachedNetworkImageProvider(widget.profilePicture),
+                              radius: 21.r,
+                              backgroundColor: Colors.black,
+                              child: CircleAvatar(
+                                radius: 20.0.r,
+                                backgroundImage: CachedNetworkImageProvider(
+                                    widget.profilePicture),
+                              ),
                             ),
                             SizedBox(width: 10.0),
                             GestureDetector(
                               onTap: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) =>
-                                //         ProfileScreen(uid: widget.uid),
-                                //   ),
-                                // );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ProfileScreen(uid: widget.uid),
+                                  ),
+                                );
                               },
                               child: Text(
                                 widget.username,
-                                style: TextStyle(
+                                style: GoogleFonts.inter(
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 16.0,
-                                  color: Color(0xFF888BF4),
+                                  fontSize: 14.0,
+                                  color: Colors.black54,
                                 ),
                               ),
                             ),
                           ],
                         ),
                         DropdownButton<String>(
-                          icon: Icon(Icons.more_vert),
+                          icon: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.more_horiz,
+                              color: Colors.black,
+                            ),
+                          ),
                           items: currentUser != null &&
-                              currentUser!.uid == widget.uid
+                                  currentUser!.uid == widget.uid
                               ? <DropdownMenuItem<String>>[
-                            DropdownMenuItem(
-                                value: 'Delete', child: Text('Delete')),
-                            DropdownMenuItem(
-                                value: 'Edit', child: Text('Edit')),
-                          ]
+                                  DropdownMenuItem(
+                                      value: 'Delete', child: Text('Delete')),
+                                  DropdownMenuItem(
+                                      value: 'Edit', child: Text('Edit')),
+                                ]
                               : <DropdownMenuItem<String>>[
-                            DropdownMenuItem(
-                                value: 'Report', child: Text('Report')),
-                          ],
+                                  DropdownMenuItem(
+                                      value: 'Report', child: Text('Report')),
+                                ],
                           onChanged: (String? newValue) async {
                             if (newValue == 'Delete') {
-                              await FireStoreMethods().deletePost(widget.postId);
+                              await FireStoreMethods()
+                                  .deletePost(widget.postId);
                             } else if (newValue == 'Report') {
                               Navigator.push(
                                 context,
@@ -170,8 +182,7 @@ class _PostCardState extends State<PostCard> {
                                 ),
                               );
                             } else if (newValue == 'Edit') {
-                              postController.toggleEditing(
-                                  widget.postId, true);
+                              postController.toggleEditing(widget.postId, true);
                             }
                           },
                         ),
@@ -179,33 +190,28 @@ class _PostCardState extends State<PostCard> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: LayoutBuilder(
-                    builder:
-                        (BuildContext context, BoxConstraints constraints) {
-                      return GestureDetector(
-                        onLongPress: () =>
-                            _openImageFullScreen(context, widget.image),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: constraints.maxWidth *
-                              1.2, // Set height equal to the image's width
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: CachedNetworkImageProvider(widget.image),
-                              fit: BoxFit.cover,
-                            ),
+                LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                    return GestureDetector(
+                      onLongPress: () =>
+                          _openImageFullScreen(context, widget.image),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: constraints.maxWidth *
+                            1.2, // Set height equal to the image's width
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: CachedNetworkImageProvider(widget.image),
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
                 Obx(() {
                   return Container(
                     width: MediaQuery.of(context).size.width,
-                    color: Colors.grey[200],
                     child: Row(
                       children: <Widget>[
                         Row(
@@ -213,49 +219,49 @@ class _PostCardState extends State<PostCard> {
                             postController.isLiking
                                 ? CircularProgressIndicator()
                                 : IconButton(
-                              icon: Column(
-                                children: [
-                                  Icon(
-                                    isLiked
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                    color: Color(0xFF888BF4),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 15.0, vertical: 1.0),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Text(
-                                          '${postLikes.length} ',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 14.0,
-                                            color: Color(0xFF888BF4),
+                                    icon: Column(
+                                      children: [
+                                        Icon(
+                                          isLiked
+                                              ? Icons.favorite
+                                              : Icons.favorite_border,
+                                          color: isLiked ? Colors.red : Colors.black,
+                                          size: 30,
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 15.0, vertical: 1.0),
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '${postLikes.length} ',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 14.0.sp,
+                                                    color: Colors.black),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
                                     ),
+                                    onPressed: () async {
+                                      if (postController.isLiking) return;
+                                      postController.setLiking(true);
+
+                                      await FireStoreMethods().likePost(
+                                        widget.postId,
+                                        FirebaseAuth
+                                            .instance.currentUser!.phoneNumber
+                                            .toString(),
+                                        postLikes,
+                                        widget.uid,
+                                      );
+
+                                      postController.setLiking(false);
+                                    },
                                   ),
-                                ],
-                              ),
-                              onPressed: () async {
-                                if (postController.isLiking) return;
-                                postController.setLiking(true);
-
-                                await FireStoreMethods().likePost(
-                                  widget.postId,
-                                  FirebaseAuth.instance.currentUser!
-                                      .phoneNumber
-                                      .toString(),
-                                  postLikes,
-                                  widget.uid,
-                                );
-
-                                postController.setLiking(false);
-                              },
-                            ),
-                            SizedBox(width: 12.0),
+                            SizedBox(width: 12.0.w),
                             Column(
                               children: [
                                 GestureDetector(
@@ -271,8 +277,8 @@ class _PostCardState extends State<PostCard> {
                                       ),
                                     );
                                   },
-                                  child: Icon(Icons.comment_outlined,
-                                      color: Color(0xFF888BF4)),
+                                  child: FaIcon(FontAwesomeIcons.comment,
+                                      color: Colors.black),
                                 ),
                                 StreamBuilder<QuerySnapshot>(
                                   stream: commentsRef.snapshots(),
@@ -294,8 +300,8 @@ class _PostCardState extends State<PostCard> {
                                       '$numComments',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 14.0,
-                                        color: Color(0xFF888BF4),
+                                        fontSize: 14.sp,
+                                        color: Colors.black,
                                       ),
                                     );
                                   },
@@ -303,15 +309,15 @@ class _PostCardState extends State<PostCard> {
                               ],
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(
-                                  bottom: 18.0, left: 15),
+                              padding:
+                                  const EdgeInsets.only(bottom: 18.0, left: 15),
                               child: IconButton(
                                 onPressed: () {
                                   Share.share(
                                       'Check out this cool app!/username=${widget.username}');
                                 },
-                                icon: FaIcon(FontAwesomeIcons.share,
-                                    color: Color(0xFF888BF4)),
+                                icon: FaIcon(Bootstrap.upload,
+                                    color: Colors.black),
                               ),
                             )
                           ],
@@ -327,28 +333,34 @@ class _PostCardState extends State<PostCard> {
                     children: [
                       postController.isEditing(widget.postId)
                           ? Column(
-                        children: [
-                          TextField(
-                            controller: descriptionController,
-                            decoration: InputDecoration(
-                              hintText: 'Edit Description',
+                              children: [
+                                TextField(
+                                  controller: descriptionController,
+                                  decoration: InputDecoration(
+                                    hintText: 'Edit Description',
+                                  ),
+                                ),
+                                MyButton1(
+                                  onTap: () {
+                                    postController.updateDescription(
+                                        widget.postId,
+                                        descriptionController.text);
+                                  },
+                                  text: "Save",
+                                  color: Colors.blue,
+                                )
+                              ],
+                            )
+                          : Row(
+                              children: [
+                                Text(widget.username,style: GoogleFonts.inter(fontWeight: FontWeight.bold,fontSize: 16.sp)),SizedBox(width: 8.w,),
+                                LinkText(
+                                  description: widget.description,
+                                  IsShowingDes: postController
+                                      .isShowingDescription(widget.postId),
+                                ),
+                              ],
                             ),
-                          ),
-                          MyButton1(
-                            onTap: () {
-                              postController.updateDescription(
-                                  widget.postId,
-                                  descriptionController.text);
-                            },
-                            text: "Save",
-                            color: Colors.blue,
-                          )
-                        ],
-                      )
-                          : LinkText(
-                        description: widget.description,
-                        IsShowingDes: postController.isShowingDescription(widget.postId),
-                      ),
                       if (widget.description.length > 50)
                         TextButton(
                           onPressed: () {
@@ -360,9 +372,9 @@ class _PostCardState extends State<PostCard> {
                           child: Text(
                             postController.isShowingDescription(widget.postId)
                                 ? 'Show less'
-                                : 'Show more',
+                                : ' more',
                             style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.grey[200],
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -370,7 +382,7 @@ class _PostCardState extends State<PostCard> {
                     ],
                   ),
                 ),
-                Divider(),
+               SizedBox(height: 5.h,)
               ],
             );
           },

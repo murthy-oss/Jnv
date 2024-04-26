@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:icons_plus/icons_plus.dart';
+import 'package:share/share.dart';
 
 import '../../Services/FireStoreMethod.dart';
 import '../../UI-Models/feed_postUi.dart';
@@ -74,21 +77,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          if (FirebaseAuth.instance.currentUser!.uid == userData['uuid'])
+          if (FirebaseAuth.instance.currentUser!.uid == userData['userId'])
             IconButton(
                 onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => EditProfilePage(),
                     )),
-                icon: FaIcon(Icons.settings))
+                icon: FaIcon(Bootstrap.gear))
         ],
-        backgroundColor: Color(0xFF888BF4),
         title: Text(
-          "@${userData['name'] ?? ''}",
-          style: GoogleFonts.aladin(color: Colors.black),
+          "J.N.V",
+          style: GoogleFonts.inter(color: Colors.black),
         ),
-        centerTitle: false,
+        centerTitle: true,
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
@@ -98,149 +100,122 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 // Profile Picture and Name Section
                 Column(
                   children: [
-                    CircleAvatar(
-                      radius: 64,
-                      backgroundImage: CachedNetworkImageProvider(
-                        userData['profilePicture'] ?? '',
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    Text(
-                      "@${userData['name'] ?? ''}",
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 24),
-
-                // Stats and Follow/Following Section
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    buildStatColumn(postLen, "Posts"),
-                    GestureDetector(
-                        onTap: () => Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return FollowFollowing1(uid: userData['userId']);
-                              },
-                            )),
-                        child: buildStatColumn(followers, "Followers")),
-                    GestureDetector(
-                        onTap: () => Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return FollowFollowing(uid: userData['userId']);
-                              },
-                            )),
-                        child: buildStatColumn(following, "Following")),
-                  ],
-                ),
-
-                SizedBox(height: 24),
-                FirebaseAuth.instance.currentUser!.uid == widget.uid
-                    ? FollowButton(
-                        text: 'Edit Profile',
-                        backgroundColor: Color(0xFF888BF4),
-                        textColor: primaryColor,
-                        borderColor: Colors.grey,
-                        function: () async {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditProfilePage(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          children: [
+                            CircleAvatar(
+                              radius: 35.r,
+                              backgroundImage: CachedNetworkImageProvider(
+                                userData['profilePicture'] ?? '',
+                              ),
                             ),
-                          );
-                        },
-                      )
-                    : isFollowing
-                        ? FollowButton(
-                            text: 'Unfollow',
-                            backgroundColor: Colors.red,
-                            textColor: Colors.black,
-                            borderColor: Colors.grey,
-                            function: () async {
-                              FireStoreMethods().unfollowUser(
-                                FirebaseAuth.instance.currentUser!.uid,
-                                userData['userId'],
-                              );
-                            },
-                          )
-                        : FollowButton(
-                            text: 'Follow',
-                            backgroundColor: Colors.blue,
-                            textColor: Colors.white,
-                            borderColor: Colors.blue,
-                            function: () async {
-                              FireStoreMethods().followUser(
-                                FirebaseAuth.instance.currentUser!.uid,
-                                userData['userId'],
-                              );
-                            },
-                          ),
+                            Text(
+                              "${userData['name'] ?? ''}",
+                              style: GoogleFonts.inter(
+                                  fontSize: 17.sp, fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            buildStatColumn(postLen, "Posts"),
+                            SizedBox(
+                              width: 20.w,
+                            ),
+                            GestureDetector(
+                                onTap: () =>
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return FollowFollowing1(
+                                            uid: userData['userId']);
+                                      },
+                                    )),
+                                child: buildStatColumn(followers, "Followers")),
+                            SizedBox(
+                              width: 20.w,
+                            ),
+                            GestureDetector(
+                                onTap: () =>
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return FollowFollowing(
+                                            uid: userData['userId']);
+                                      },
+                                    )),
+                                child: buildStatColumn(following, "Following")),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
 
                 // Bio and Additional Information Section
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Bio:",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
                     SizedBox(height: 8),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          color: Colors.grey[300],
-                          child: Text(
-                            userData['bio'] ?? '',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                            maxLines: 2,
+                        Text(
+                          userData['bio'] ?? '',
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                          maxLines: 15,
+                        ),
+                        SizedBox(height: 8.h),
+                        if (userData['showEmail'] == true)
+                          Text(
+                            "Email: ${userData['email'] ?? ''}",
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
                           ),
-                        ),
-                        SizedBox(height: 8),
-                        if(userData['showEmail']==true)      Row(
-                          children: [
-                            Icon(Icons.email, color: Colors.blue),
-                            SizedBox(width: 8),
-
-                            Text(
-                              "Email: ${userData['email'] ?? ''}",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 16),
-                        if(userData['showLinkedin']==true) Row(
-                          children: [
-                            Icon(FontAwesomeIcons.linkedin,
-                                color: Colors.blue),
-                            SizedBox(width: 5),
-
-                            LinkText1(
-                              description:
-                                  "${userData['linkedinLink'] ?? 'LinkedIn :'}",
-                              IsShowingDes: true,
-                            ),
-                          ],
-                        ) ,
-                        SizedBox(height: 16),
-
-                        if(userData['showPhone']==true)  Row(
-                          children: [
-                            Icon(FontAwesomeIcons.phone,
-                                color: Colors.blue),
-                            SizedBox(width: 5),
-                            LinkText1(
-                              description:
-                                  "${userData['phoneNumber'] ?? 'phoneNumber :'}",
-                              IsShowingDes: true,
-                            ),
-                          ],
+                        SizedBox(height: 10.h),
+                        if (userData['showLinkedin'] == true)
+                          LinkText1(
+                            description:
+                                "${userData['linkedinLink'] ?? 'LinkedIn :'}",
+                            IsShowingDes: true,
+                          ),
+                        SizedBox(height: 10.h),
+                        if (userData['showPhone'] == true)
+                          LinkText1(
+                            description:
+                                "${userData['phoneNumber'] ?? 'phoneNumber :'}",
+                            IsShowingDes: true,
+                          ),
+                        SizedBox(height: 10.h),
+                        if (userData['instagramLink'] == true)
+                          LinkText1(
+                            description:
+                                "${userData['phoneNumber'] ?? 'phoneNumber :'}",
+                            IsShowingDes: true,
+                          ),
+                        SizedBox(height: 10.h),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              MyButton1(
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return EditProfilePage();
+                                    }));
+                                  },
+                                  text: 'Edit Profile',
+                                  color: Colors.red),
+                              MyButton1(
+                                  onTap: () {
+                                    Share.share('${userData['name']}');
+                                  },
+                                  text: 'Share Profile',
+                                  color: Colors.red)
+                            ],
+                          ),
                         )
                       ],
                     ),
@@ -261,6 +236,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     }
 
                     return GridView.builder(
+                      padding: EdgeInsets.all(10),
                       shrinkWrap: true,
                       itemCount: snapshot.data!.docs.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -314,7 +290,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   },
                 ),
 
-                SizedBox(height: 24),
+                SizedBox(height: 24.h),
 
                 // Message Button
                 buildMessageButton(),
@@ -353,7 +329,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               createChatRoom();
             },
             text: "Message",
-            color: Colors.blue,
+            color: Colors.red,
           )
         : SizedBox();
   }
@@ -393,7 +369,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         FirebaseFirestore.instance.collection('chatRooms').doc(chatRoomId).set({
           'users': [currentUserUid, targetUserUid],
           'createdAt': FieldValue.serverTimestamp(),
-          'recentMessage': ""
+          'recentMessage': "tap to chat"
         }).then((_) {
           Navigator.push(
             context,

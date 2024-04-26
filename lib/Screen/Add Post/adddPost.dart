@@ -50,7 +50,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
     final usersnapshot = await FirebaseFirestore.instance.collection('users').doc(widget.uid).get();
     setState(() {
       userName = usersnapshot['name'];
-      userProfile = usersnapshot['profilePhotoUrl'];
+      userProfile = usersnapshot['profilePicture'];
     });
   }
 

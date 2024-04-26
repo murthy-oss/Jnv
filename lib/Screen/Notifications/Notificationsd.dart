@@ -15,8 +15,14 @@ class Notifications extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF888BF4),
-        title: Text('Notifications',),
+        centerTitle: true,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Notifications',style: GoogleFonts.inter(fontSize: 19.sp),),
+          Divider()],
+        ),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -92,27 +98,32 @@ class Notifications extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(uid: UserId),));
             },
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 ListTile(
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage(userProfilePicture),
+                    radius: 21.r,backgroundColor: Colors.red,
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(userProfilePicture),
+                    ),
                   ),
                  title: Row(
                    children: [
                      Text(
-                      "@${notification['notification'].toString().split(' ')[0]}", // Get the first part before the first space
-                      style: GoogleFonts.nunitoSans(
-                        color: Colors.blue,
+                      "${notification['notification'].toString().split(' ')[0]}", // Get the first part before the first space
+                      style: GoogleFonts.inter(
+                        color: Colors.black,
                       fontSize: MediaQuery.of(context).size.width * 0.04,
                       fontWeight: FontWeight.bold,
                       ),
                       ),
                      SizedBox(width: 5.w,),
                       Text(
-                       "@${notification['notification'].toString().split(' ').skip(1).join(' ')}", // Join parts starting from the second part
-                       style: GoogleFonts.nunitoSans(
+                       "${notification['notification'].toString().split(' ').skip(1).join(' ')}", // Join parts starting from the second part
+                       style: GoogleFonts.inter(
                          fontSize: MediaQuery.of(context).size.width * 0.04,
-                         fontWeight: FontWeight.bold,
+                         color: Colors.grey[800]
                        ),
                      ),
 

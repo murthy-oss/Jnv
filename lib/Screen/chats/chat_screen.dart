@@ -6,9 +6,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import '../../Widgets/TextLinkWidget.dart';
 import '../profile/profilePage.dart';
@@ -164,12 +169,19 @@ class _ChatScreenState extends State<ChatScreen> {
               CircleAvatar(
                 backgroundImage: CachedNetworkImageProvider(widget.ProfilePicture),
               ),
-              SizedBox(width: 8),
-              Text(widget.UserName),
+              SizedBox(width: 8.w),
+              Text(widget.UserName,style: GoogleFonts.inter(fontSize: 20.sp,fontWeight: FontWeight.w700,color: Colors.black),),
             ],
           ),
         ),
-        backgroundColor: Color(0xFF888BF4),
+actions: [
+  IconButton(onPressed: () {
+
+  }, icon: FaIcon(Icons.videocam_outlined,size: 30,)) ,
+  IconButton(onPressed: () {
+
+  }, icon: FaIcon(Icons.local_phone_outlined,size: 30,))
+],
       ),
       body: Column(
         children: [
@@ -241,28 +253,32 @@ class _ChatScreenState extends State<ChatScreen> {
       child: Row(
         children: [
           IconButton(
-            icon: Icon(Icons.photo_camera),
+            icon: FaIcon(Iconsax.sticker_outline),
             onPressed: () async {
               await _getImage(ImageSource.camera);
             },
           ),
-          IconButton(
-            icon: Icon(Icons.photo),
-            onPressed: () async {
-              await _getImage(ImageSource.gallery);
-            },
-          ),
+
           Expanded(
             child: TextField(
               controller: _messageController,
-              decoration: InputDecoration.collapsed(hintText: 'Type a message...'),
+              decoration: InputDecoration.collapsed(hintText: 'Type your message here'),
             ),
           ),
-          IconButton(
-            icon: Icon(Icons.send),
-            onPressed: () {
-              _sendMessage(_messageController.text.trim(), null); // Send only text message
-            },
+          Row(
+            children: [
+              IconButton(
+                icon: FaIcon(FontAwesome.paperclip_solid),
+                onPressed: () async {
+                  await _getImage(ImageSource.gallery);
+                },
+              ), IconButton(
+                icon: Icon(Icons.send),
+                onPressed: () {
+                  _sendMessage(_messageController.text.trim(), null); // Send only text message
+                },
+              ),
+            ],
           ),
         ],
       ),
@@ -300,15 +316,11 @@ class BubbleMessage extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 2),
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(7)),
-          color: isCurrentUser ? Colors.green[200] : Colors.grey[300],
+          color: isCurrentUser ? Colors.red : Colors.grey[200],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              isCurrentUser ? 'You' : targetUserName, // Show targetUserName instead of 'Other User'
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-            ),
             if (imageUrl != null && imageUrl!.isNotEmpty) // Check if imageUrl is not null and not empty
               GestureDetector(
                 onTap: () {
@@ -324,11 +336,11 @@ class BubbleMessage extends StatelessWidget {
                 ),
               ),
             if (text.isNotEmpty)
-              LinkText(description: text, IsShowingDes: true),
+            Text(text,style: TextStyle(color:  isCurrentUser==true?  Colors.white:Colors.black,fontSize: 15.sp),),
             const SizedBox(height: 4),
             Text(
               formattedTime,
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 10, color: Colors.black54),
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 10, color: Colors.white),
             ),
           ],
         ),
