@@ -3,10 +3,8 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  file_picker_pro
   file_selector_linux
   flutter_secure_storage_linux
-  open_share_plus
   smart_auth
   url_launcher_linux
 )

@@ -340,7 +340,7 @@ class _SignUpMailState extends State<SignUpMail>
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return AdhaarPage1();
+                          return SetUpNavodhya();
                         },
                       ),
                     );

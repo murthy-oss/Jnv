@@ -297,22 +297,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
-  file_picker:
-    dependency: transitive
-    description:
-      name: file_picker
-      sha256: be325344c1f3070354a1d84a231a1ba75ea85d413774ec4bdf444c023342e030
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.5.0"
-  file_picker_pro:
-    dependency: "direct main"
-    description:
-      name: file_picker_pro
-      sha256: "42a5eec0c3f6f027b00e5ee369e37fab697db149c3a412009e6b3da91e46239a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.0"
   file_selector_linux:
     dependency: transitive
     description:
@@ -864,30 +848,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.1"
-  image_cropper:
-    dependency: transitive
-    description:
-      name: image_cropper
-      sha256: f4bad5ed2dfff5a7ce0dfbad545b46a945c702bb6182a921488ef01ba7693111
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.1"
-  image_cropper_for_web:
-    dependency: transitive
-    description:
-      name: image_cropper_for_web
-      sha256: "865d798b5c9d826f1185b32e5d0018c4183ddb77b7b82a931e1a06aa3b74974e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
-  image_cropper_platform_interface:
-    dependency: transitive
-    description:
-      name: image_cropper_platform_interface
-      sha256: ee160d686422272aa306125f3b6fb1c1894d9b87a5e20ed33fa008e7285da11e
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.0"
   image_picker:
     dependency: "direct main"
     description:
@@ -1064,22 +1024,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.9"
-  open_filex:
-    dependency: transitive
-    description:
-      name: open_filex
-      sha256: "74e2280754cf8161e860746c3181db2c996d6c1909c7057b738ede4a469816b8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.4.0"
-  open_share_plus:
-    dependency: transitive
-    description:
-      name: open_share_plus
-      sha256: "89f42f1afc29c1835c2e0ae01a43e5364879dd91d811984063b498cb21a32676"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.0"
   path:
     dependency: transitive
     description:
