@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jnvapp/AuthScreens/AadharPage.dart';
 import 'package:jnvapp/Screen/SetUpNavodhya/Navodhya.dart';
 import 'package:jnvapp/Screen/onboardingProfile/onboardingProfilePage.dart';
 
@@ -339,7 +340,7 @@ class _SignUpMailState extends State<SignUpMail>
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return SetUpNavodhya();
+                          return AdhaarPage1();
                         },
                       ),
                     );
@@ -519,7 +520,7 @@ Future<void> checkUserSignInStatus() async {
     print('User is signed in: ${user.uid}');
     Navigator.push(
   context,
-  MaterialPageRoute(builder: (context) =>  SetUpNavodhya()),
+  MaterialPageRoute(builder: (context) =>  AdhaarPage1()),
 );
 
   } else {

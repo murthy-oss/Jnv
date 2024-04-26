@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jnvapp/AuthScreens/AadharPage.dart';
 import 'package:jnvapp/Screen/SetUpNavodhya/Navodhya.dart';
 import 'package:jnvapp/components/myButton.dart';
 import 'package:jnvapp/components/myTextfield.dart';
@@ -76,7 +77,7 @@ class _IdAuthPagStateState extends State<IdAuthPagState> {
                         
                           Navigator.push(
   context,
-  MaterialPageRoute(builder: (context) =>  SetUpNavodhya()),
+  MaterialPageRoute(builder: (context) =>  AdhaarPage1()),
 );
                       },
                      
