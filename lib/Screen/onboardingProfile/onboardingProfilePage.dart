@@ -120,7 +120,7 @@ class _SetUpProfileState extends State<SetUpProfile> {
                       backgroundImage: _file != null
                           ? MemoryImage(_file!)
                       as ImageProvider // Cast MemoryImage to ImageProvider
-                          : AssetImage('Assets/images/Avatar.png')
+                          : AssetImage('assets/images/Avatar.png')
                       as ImageProvider, // Cast AssetImage to ImageProvider
                       radius: 60,
                     ),
