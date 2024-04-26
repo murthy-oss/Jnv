@@ -39,10 +39,11 @@ class _JobPostingPageState extends State<JobPostingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF888BF4),
+        backgroundColor: Colors.red,
+        foregroundColor: Colors.white,
         title: Text(
           'Post a Job',
-          style: GoogleFonts.aladin(fontSize: 25),
+          style: GoogleFonts.inter(color:Colors.white,fontSize: 25),
         ),
       ),
       body: SingleChildScrollView(

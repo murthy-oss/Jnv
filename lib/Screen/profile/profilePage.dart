@@ -18,7 +18,7 @@ import '../../utils/utils.dart';
 import '../chats/chat_screen.dart';
 import 'FollowerFollowingPage.dart';
 import 'editProfile.dart';
-
+import 'package:jnvapp/other/Settings.dart';
 class ProfileScreen extends StatefulWidget {
   final String uid;
 
@@ -79,12 +79,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: [
           if (FirebaseAuth.instance.currentUser!.uid == userData['userId'])
             IconButton(
-                onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditProfilePage(),
-                    )),
-                icon: FaIcon(Bootstrap.gear))
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Settings1(Image: userData['profilePicture'], email: userData['email'], name: userData['name'],),
+                  ),
+                );
+              },
+              icon: FaIcon(FontAwesomeIcons.cog),
+            ),
         ],
         title: Text(
           "J.N.V",
@@ -199,15 +203,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              MyButton1(
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return EditProfilePage();
-                                    }));
-                                  },
-                                  text: 'Edit Profile',
-                                  color: Colors.red),
+                              FirebaseAuth.instance.currentUser!.uid == widget.uid
+                                  ? MyButton1(
+                                text: 'Edit Profile',
+
+                                onTap: () {      Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditProfilePage(),
+                                  ),
+                                ); }, color: Colors.red,
+                              )
+                                  : isFollowing
+                                  ? MyButton1(
+                                text: 'Unfollow',
+
+                                onTap: () =>      FireStoreMethods().unfollowUser(
+                                  FirebaseAuth.instance.currentUser!.uid,
+                                  userData['uuid'],
+                                ),color: Colors.red,
+                              )
+                                  : MyButton1(
+                                text: 'Follow',
+                            onTap: () =>   FireStoreMethods().followUser(
+                              FirebaseAuth.instance.currentUser!.uid,
+                              userData['uuid'],
+                            ),color: Colors.red,
+                              ),
                               MyButton1(
                                   onTap: () {
                                     Share.share('${userData['name']}');

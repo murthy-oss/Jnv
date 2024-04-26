@@ -124,8 +124,8 @@ class Onboarding extends StatelessWidget {
                           ),
                         );
                       },
-                      text:contents[i].image=="assets/images/onboard1.svg"? "Get Started":
-                     contents[i].image=="assets/images/onboard2.svg" ?"Next":"Start",
+                      text:contents[i].image=="Assets/images/onboard1.svg"? "Get Started":
+                     contents[i].image=="Assets/images/onboard2.svg" ?"Next":"Start",
                       color: const Color.fromARGB(255, 244, 66, 66)),
                 ),
                         ],

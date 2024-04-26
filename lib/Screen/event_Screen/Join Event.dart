@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Adjust the import path for your constants file
 import 'package:google_fonts/google_fonts.dart';
 import '../../components/myButton.dart';
@@ -117,116 +118,115 @@ print(widget.userId);
 print(_currentUser!.phoneNumber);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Event Details'),
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.red,
+        title: Text('Event Details',style: GoogleFonts.inter(fontSize: 25.sp,color: Colors.white),),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                height: 200,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(widget.imageUrl),
-                    fit: BoxFit.cover,
-                  ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              height: 200,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(widget.imageUrl),
+                  fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(height: 10.0),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      widget.eventName,
-                      style: GoogleFonts.abrilFatface(),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
-                    SizedBox(height: 5.0),
-                    Row(
-                      children: <Widget>[
-                        FaIcon(FontAwesomeIcons.locationCrosshairs),
-                        SizedBox(width: 8.0),
-                        Text(widget.location),
-                      ],
-                    ),
-                    SizedBox(height: 13.0),
-                    Row(
-                      children: <Widget>[
-                        FaIcon(
-                          FontAwesomeIcons.meetup,
+            ),
+            SizedBox(height: 10.0),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    widget.eventName,
+                    style: GoogleFonts.abrilFatface(),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
+                  SizedBox(height: 5.0),
+                  Row(
+                    children: <Widget>[
+                      FaIcon(FontAwesomeIcons.locationCrosshairs),
+                      SizedBox(width: 8.0),
+                      Text(widget.location),
+                    ],
+                  ),
+                  SizedBox(height: 13.0),
+                  Row(
+                    children: <Widget>[
+                      FaIcon(
+                        FontAwesomeIcons.meetup,
+                        color: Colors.red,
+                      ),
+                      SizedBox(
+                        width: 8.0,
+                      ),
+                      Text(
+                        widget.eventType,
+                        style: TextStyle(
+                          color: widget.eventType == 'Physical Event'
+                              ? Colors.red
+                              : Colors.green,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 13.0),
+                  Row(
+                    children: <Widget>[
+                      FaIcon(FontAwesomeIcons.clock),
+                      SizedBox(width: 8.0),
+                      Text(widget.time),
+                    ],
+                  ),
+                  SizedBox(height: 12.0),
+                  Text(
+                    widget.description,
+                  ),
+                  SizedBox(height: 12.0),
+                  Divider(),
+                  Column(
+                    children: [
+                      Text(
+                        createdByCurrentUser ? "" : (_userJoinedEvent ? "Leave Event" : "Join Event"),
+                      ),
+                      if (createdByCurrentUser)
+                        MyButton(
+                          onTap: _deleteEvent,
+                          text: "Delete Event",
+                          color: Colors.red,
+                        )
+                      else if (_userJoinedEvent)
+                        MyButton(
+                          onTap: () => _leaveEvent(),
+                          text: "Leave Event",
+                          color: Colors.red,
+                        )
+                      else
+                        MyButton(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EventForm(eventId: widget.eventId),
+                              ),
+                            );
+                          },
+                          text: "Fill Form to Join Event",
                           color: Colors.red,
                         ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        Text(
-                          widget.eventType,
-                          style: TextStyle(
-                            color: widget.eventType == 'Physical Event'
-                                ? Colors.red
-                                : Colors.green,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 13.0),
-                    Row(
-                      children: <Widget>[
-                        FaIcon(FontAwesomeIcons.clock),
-                        SizedBox(width: 8.0),
-                        Text(widget.time),
-                      ],
-                    ),
-                    SizedBox(height: 12.0),
-                    Text(
-                      widget.description,
-                    ),
-                    SizedBox(height: 12.0),
-                    Divider(),
-                    Column(
-                      children: [
-                        Text(
-                          createdByCurrentUser ? "" : (_userJoinedEvent ? "Leave Event" : "Join Event"),
-                        ),
-                        if (createdByCurrentUser)
-                          MyButton(
-                            onTap: _deleteEvent,
-                            text: "Delete Event",
-                            color: Colors.red,
-                          )
-                        else if (_userJoinedEvent)
-                          MyButton(
-                            onTap: () => _leaveEvent(),
-                            text: "Leave Event",
-                            color: Colors.red,
-                          )
-                        else
-                          MyButton(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EventForm(eventId: widget.eventId),
-                                ),
-                              );
-                            },
-                            text: "Fill Form to Join Event",
-                            color: Colors.blue,
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

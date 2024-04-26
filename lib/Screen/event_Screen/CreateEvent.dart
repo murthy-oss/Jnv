@@ -159,11 +159,11 @@ class _CreateEventPageState extends State<CreateEventPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF888BF4),
+      appBar: AppBar(foregroundColor: Colors.white,
+        backgroundColor: Colors.red,
         title: Text(
           'Event Details',
-          style: GoogleFonts.aladin(fontSize: 20, fontWeight: FontWeight.bold),
+          style: GoogleFonts.aladin(color: Colors.white,fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
       body: SingleChildScrollView(
@@ -211,7 +211,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                   ),
                   SizedBox(width: 8.0),
                   ElevatedButton(
-                    style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color(0xFF888BF4))),
+                    style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.red)),
                     onPressed: () => _selectDate(context),
                     child: Text(
                       'Select Date',
@@ -239,7 +239,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                   ),
                   SizedBox(width: 8.0),
                   ElevatedButton(
-                    style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color(0xFF888BF4))),
+                    style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.red)),
                     onPressed: () => _selectTime(context),
                     child: Text(
                       'Select Time',
@@ -280,7 +280,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
-                    style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color(0xFF888BF4))),
+                    style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.red)),
                     onPressed: () async {
                       final imagePicker = ImagePicker();
                       final pickedImage = await imagePicker.getImage(source: ImageSource.gallery);
@@ -317,7 +317,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
               ),
               SizedBox(height: 16),
               MyButton(
-                color: Color(0xFF888BF4),
+                color: Colors.red,
                 onTap: () => _uploadEvent(),
                 text: "Upload Event",
               )

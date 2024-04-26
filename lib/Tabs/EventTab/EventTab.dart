@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:velocity_x/velocity_x.dart';
 import '../../Screen/event_Screen/CreateEvent.dart';
 import '../../Screen/event_Screen/Joined_Event.dart';
 import '../../Screen/event_Screen/myEvents.dart';
@@ -13,7 +15,7 @@ class EventTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xFF888BF4),
+        backgroundColor: Colors.red,
         elevation: 4,
         onPressed: () {
           Navigator.push(
@@ -51,11 +53,13 @@ class EventTab extends StatelessWidget {
                       context,
                       PageRouteBuilder(
                         transitionDuration: Duration(milliseconds: 250),
-                        pageBuilder: (BuildContext context, Animation<double> animation,
+                        pageBuilder: (BuildContext context,
+                            Animation<double> animation,
                             Animation<double> secondaryAnimation) {
                           return SlideTransition(
                             position: Tween<Offset>(
-                              begin: Offset(1.0, 0.0), // Slide from right to left
+                              begin:
+                                  Offset(1.0, 0.0), // Slide from right to left
                               end: Offset.zero,
                             ).animate(animation),
                             child: MyParticipatedEventsPage(),
@@ -66,46 +70,52 @@ class EventTab extends StatelessWidget {
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.35,
-                    height: MediaQuery.of(context).size.width * 0.13,
+                    height: 40.h,
                     child: Center(
                         child: Text(
-                          'Participated Events',
-                          style: GoogleFonts.poppins(
-                              fontSize:  MediaQuery.of(context).size.width * 0.03, fontWeight: FontWeight.w500),
-                        )),
+                      'Participated Events',
+                      style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: MediaQuery.of(context).size.width * 0.03,
+                          fontWeight: FontWeight.w500),
+                    )),
                     decoration: BoxDecoration(
-                        color: Color(0xFF888BF4),
-                        borderRadius: BorderRadius.circular(20)),
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(15)),
                   ),
                 ),
-                GestureDetector(onTap: () =>     Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    transitionDuration: Duration(milliseconds: 200),
-                    pageBuilder: (BuildContext context, Animation<double> animation,
-                        Animation<double> secondaryAnimation) {
-                      return SlideTransition(
-                        position: Tween<Offset>(
-                          begin: Offset(1.0, 0.0), // Slide from right to left
-                          end: Offset.zero,
-                        ).animate(animation),
-                        child: My_events(),
-                      );
-                    },
+                GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      transitionDuration: Duration(milliseconds: 200),
+                      pageBuilder: (BuildContext context,
+                          Animation<double> animation,
+                          Animation<double> secondaryAnimation) {
+                        return SlideTransition(
+                          position: Tween<Offset>(
+                            begin: Offset(1.0, 0.0), // Slide from right to left
+                            end: Offset.zero,
+                          ).animate(animation),
+                          child: My_events(),
+                        );
+                      },
+                    ),
                   ),
-                ) ,
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.35,
-                    height: MediaQuery.of(context).size.width * 0.13,
+                    height: 40.h,
                     child: Center(
                         child: Text(
-                          'Created Events',
-                          style: GoogleFonts.poppins(
-                              fontSize:  MediaQuery.of(context).size.width * 0.03, fontWeight: FontWeight.w500),
-                        )),
+                      'Created Events',
+                      style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: MediaQuery.of(context).size.width * 0.03,
+                          fontWeight: FontWeight.w500),
+                    )),
                     decoration: BoxDecoration(
-                        color: Color(0xFF888BF4),
-                        borderRadius: BorderRadius.circular(20)),
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(14)),
                   ),
                 ),
               ],
@@ -144,7 +154,7 @@ class EventTab extends StatelessWidget {
                           EventStatus: eventData['EventStatus'],
                         );
                       } else {
-                       return Container();
+                        return Container();
                       }
                     },
                   );

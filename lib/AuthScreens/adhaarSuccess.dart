@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jnvapp/AuthScreens/NavodhyaPAge.dart';
+import 'package:jnvapp/Screen/SetUpNavodhya/Navodhya.dart';
 
 import '../Screen/onboardingProfile/onboardingProfilePage.dart';
 import '../components/myButton.dart';
@@ -50,7 +52,7 @@ class _OTPScreenState extends State<AdhaarSucess> {
               child: Center(
                 child: SvgPicture.asset(
                   width:150.w,
-                  "assets/images/Successmark.svg",
+                  "Assets/images/Successmark.svg",
                   
                   fit: BoxFit.contain,
                 ),
@@ -91,7 +93,7 @@ class _OTPScreenState extends State<AdhaarSucess> {
                         500), // Adjust duration as needed
                     pageBuilder:
                         (context, animation, secondaryAnimation) =>
-                        SetUpProfile(),
+                        SetUpNavodhya(),
                     transitionsBuilder: (context, animation,
                         secondaryAnimation, child) {
                       var begin = Offset(0.0, 1.0);

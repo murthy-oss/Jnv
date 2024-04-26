@@ -40,8 +40,9 @@ class _EventsPageState extends State<My_events> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF888BF4),
-        title: Text('Hosted Events',style: GoogleFonts.aladin(fontSize: MediaQuery.of(context).size.width*0.06),),
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.red,
+        title: Text('Hosted Events',style: GoogleFonts.inter(color:Colors.white,fontSize: MediaQuery.of(context).size.width*0.06),),
 
       ),
       body: StreamBuilder<QuerySnapshot>(

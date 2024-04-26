@@ -28,7 +28,7 @@ class _IdAuthPagStateState extends State<IdAuthPagState> {
           children: [ 
             Padding(
               padding:  EdgeInsets.symmetric(vertical: 36.h),
-              child: Image.asset('assets/images/idAuthpng.png'),
+              child: Image.asset('Assets/images/idAuthpng.png'),
             ),
             MyTextField(
                   controller: _idcontroller,

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 
 import '../../UI-Models/Job Detail model.dart';
@@ -18,8 +19,9 @@ class JobDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF888BF4),
-        title: Text('Job Details'),
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.red,
+        title: Text('Job Details',style: TextStyle(color: Colors.white),),
       ),
       body: FutureBuilder<QuerySnapshot>(
         future: FirebaseFirestore.instance

@@ -40,8 +40,9 @@ class _MyParticipatedEventsPageState extends State<MyParticipatedEventsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF888BF4),
-        title: Text('Participated Events',style: GoogleFonts.aladin(fontSize: MediaQuery.of(context).size.width*0.06),),
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.red,
+        title: Text('Participated Events',style: GoogleFonts.inter(color:Colors.white,fontSize: MediaQuery.of(context).size.width*0.06),),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _participatedEventsStream,

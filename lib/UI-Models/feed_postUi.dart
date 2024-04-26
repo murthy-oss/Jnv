@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:jnvapp/components/MyToast.dart';
 import 'package:share/share.dart';
 import '../Screen/profile/profilePage.dart';
 import 'Comment.dart';
@@ -60,7 +61,89 @@ class _PostCardState extends State<PostCard> {
     descriptionController.dispose();
     super.dispose();
   }
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  leading: Icon(Bootstrap.save),
+                  title: Text('Save'),
+                  onTap: () async {
+                    Navigator.pop(context);
 
+                  },
+                ),
+              ),
+              ListTile(
+                leading: Icon(Bootstrap.person),
+                title: Text('follow'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  // await FireStoreMethods().unfollowUser(currentUserUid, targetUserUid)
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.delete),
+                title: Text('Add to Favorites'),
+                onTap: () async {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.hide_image_outlined),
+                title: Text('Hide'),
+                onTap: () async {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.edit),
+                title: Text('Edit'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  postController.toggleEditing(widget.postId, true);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.report,color: Colors.red,),
+                title: Text('Report'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ReportPostScreen(
+                        uid: widget.uid,
+                        postId: widget.postId,
+                      ),
+                    ),
+                  );
+                },
+              ),
+
+              if(widget.uid==FirebaseAuth.instance.currentUser!.uid)
+              ListTile(
+                leading: Icon(Icons.delete,color: Colors.red,),
+                title: Text('Delete'),
+                onTap: () async {
+
+                  await FirebaseFirestore.instance.collection('posts').doc(widget.postId).delete();
+ToastUtil.showToastMessage('Post deleted successfully');
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
   void _openImageFullScreen(BuildContext context, String imageUrl) {
     showDialog(
       context: context,
@@ -147,43 +230,10 @@ class _PostCardState extends State<PostCard> {
                             ),
                           ],
                         ),
-                        DropdownButton<String>(
-                          icon: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.more_horiz,
-                              color: Colors.black,
-                            ),
-                          ),
-                          items: currentUser != null &&
-                                  currentUser!.uid == widget.uid
-                              ? <DropdownMenuItem<String>>[
-                                  DropdownMenuItem(
-                                      value: 'Delete', child: Text('Delete')),
-                                  DropdownMenuItem(
-                                      value: 'Edit', child: Text('Edit')),
-                                ]
-                              : <DropdownMenuItem<String>>[
-                                  DropdownMenuItem(
-                                      value: 'Report', child: Text('Report')),
-                                ],
-                          onChanged: (String? newValue) async {
-                            if (newValue == 'Delete') {
-                              await FireStoreMethods()
-                                  .deletePost(widget.postId);
-                            } else if (newValue == 'Report') {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ReportPostScreen(
-                                    uid: widget.uid,
-                                    postId: widget.postId,
-                                  ),
-                                ),
-                              );
-                            } else if (newValue == 'Edit') {
-                              postController.toggleEditing(widget.postId, true);
-                            }
+                        IconButton(
+                          icon: Icon(Icons.more_horiz),
+                          onPressed: () {
+                            _showBottomSheet(context);
                           },
                         ),
                       ],

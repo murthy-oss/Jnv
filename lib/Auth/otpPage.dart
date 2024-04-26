@@ -10,6 +10,7 @@ import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../FetchDataProvider/fetchData.dart';
+import '../Services/FireStoreMethod.dart';
 import '../components/myButton.dart';
 import 'OTP SUCESS.dart';
 
@@ -40,8 +41,9 @@ class _OTPScreenState extends State<OTPScreen> {
             Center(
               child: Image.asset(
                 //height:200.h,
-               "Assets/images/image 5.png",
-              fit: BoxFit.fill, // Maintain aspect ratio while covering the container
+                "Assets/images/verification2.png",
+                fit: BoxFit
+                    .fill, // Maintain aspect ratio while covering the container
               ),
             ),
             Padding(
@@ -49,37 +51,33 @@ class _OTPScreenState extends State<OTPScreen> {
               child: Center(
                 child: Text(
                   "OTP Verificaton",
-                  style:
-    TextStyle(
+                  style: TextStyle(
                       fontFamily: 'InterRegular',
                       color: Colors.black,
                       fontSize: 24.sp,
                       fontWeight: FontWeight.w700),
-                  
                 ),
               ),
-            ),  Padding(
-              padding: const EdgeInsets.only(left: 28.0,top: 15),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 28.0, top: 15),
               child: Row(
                 children: [
                   Text(
                     "Enter The OTP sent to ",
-                    style:
-                        TextStyle(
-                      fontFamily: 'InterRegular',
-                      color: Color.fromARGB(255, 65, 65, 65),
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w700),
-                  
-                  ),Text(
+                    style: TextStyle(
+                        fontFamily: 'InterRegular',
+                        color: Color.fromARGB(255, 65, 65, 65),
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  Text(
                     "+91${widget.phone} ",
-                    style:
-                        TextStyle(
-                      fontFamily: 'InterRegular',
-                      color: Color.fromARGB(255, 65, 65, 65),
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w700),
-                  
+                    style: TextStyle(
+                        fontFamily: 'InterRegular',
+                        color: Color.fromARGB(255, 65, 65, 65),
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w700),
                   ),
                 ],
               ),
@@ -93,7 +91,8 @@ class _OTPScreenState extends State<OTPScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                         border: Border.all(width: 1))),
-                androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsRetrieverApi,
+                androidSmsAutofillMethod:
+                    AndroidSmsAutofillMethod.smsRetrieverApi,
                 length: 6,
                 controller: _pinPutController,
               ),
@@ -104,25 +103,24 @@ class _OTPScreenState extends State<OTPScreen> {
                 children: [
                   Text(
                     "Didn't you recived the OTP?   ",
-                    style:
-                   TextStyle(
-                      fontFamily: 'InterRegular',
-                      color: Color.fromARGB(255, 65, 65, 65),
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w700),
-                  
+                    style: TextStyle(
+                        fontFamily: 'InterRegular',
+                        color: Color.fromARGB(255, 65, 65, 65),
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w700),
                   ),
                   TextButton(
-                    onPressed: () {  _resendOTP();},
+                    onPressed: () {
+                      _resendOTP();
+                    },
                     child: Text(
-                    "Resend OTP",
-                    style:
-                    TextStyle(
-                      fontFamily: 'InterRegular',
-                      color: Color.fromARGB(255, 244, 66, 66),
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w700),
-                  ),
+                      "Resend OTP",
+                      style: TextStyle(
+                          fontFamily: 'InterRegular',
+                          color: Color.fromARGB(255, 244, 66, 66),
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w700),
+                    ),
                   )
                 ],
               ),
@@ -132,9 +130,10 @@ class _OTPScreenState extends State<OTPScreen> {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: MyButton(
-                    onTap: () => _verifyOTP(),
-                    text: "Verify",
-                    color:Color.fromARGB(255, 244, 66, 66),),
+                  onTap: () => _verifyOTP(),
+                  text: "Verify",
+                  color: Color.fromARGB(255, 244, 66, 66),
+                ),
               ),
             ),
           ],
@@ -170,12 +169,38 @@ class _OTPScreenState extends State<OTPScreen> {
               await isPhoneNumberAlreadyRegistered(phoneNumber);
           if (isPhoneNumberRegistered) {
             // Phone number is registered, navigate to home page
-            Provider.of<UserFetchController>(context, listen: false).fetchUserData();
+            Provider.of<UserFetchController>(context, listen: false)
+                .fetchUserData();
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => HomeScreen()),
             );
           } else {
+            FireStoreMethods().createUser(
+                userId: FirebaseAuth.instance.currentUser!.uid,
+                name: '',
+                dateOfBirth: '',
+                gender: '',
+                email: '',
+                phoneNumber: '${FirebaseAuth.instance.currentUser!.phoneNumber}',
+                aadharCardNumber: '',
+                maritalStatus: '',
+                occupation: '',
+                section: '',
+                state: '',
+                district: '',
+                schoolCampus: '',
+                entryYear: '',
+                entryClass: '',
+                passOutYear: '',
+                house: '',
+                profilePicture: '',
+                bio: '',
+                achievements: '',
+                instagramLink: '',
+                linkedinLink: '',
+                IsVerified: false,
+                context: context);
             // Phone number is not registered, navigate to setup profile page
             Navigator.pushReplacement(
               context,
@@ -215,6 +240,7 @@ class _OTPScreenState extends State<OTPScreen> {
       return false;
     }
   }
+
   void _resendOTP() async {
     try {
       // Send OTP to the user's phone number again
@@ -239,7 +265,8 @@ class _OTPScreenState extends State<OTPScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => OTPScreen(phone: widget.phone, verificationId: verificationId),
+              builder: (context) => OTPScreen(
+                  phone: widget.phone, verificationId: verificationId),
             ),
           );
         },
@@ -255,6 +282,4 @@ class _OTPScreenState extends State<OTPScreen> {
       );
     }
   }
-
-
 }

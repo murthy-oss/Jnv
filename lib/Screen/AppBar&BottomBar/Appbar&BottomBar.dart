@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _pages = [
     HomeTab(),
     SearchPage(),
-    AddPostScreen(uid:FirebaseAuth.instance.currentUser!.uid),
+     AddPostScreen(uid:FirebaseAuth.instance.currentUser!.uid),
 JobTab(),
     EventTab(),
   ];

@@ -2,22 +2,29 @@
 import 'dart:io';
 
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:jnvapp/Auth/OTP%20SUCESS.dart';
 import 'package:jnvapp/Auth/otpPage.dart';
+import 'package:jnvapp/AuthScreens/NavodhyaSuccess.dart';
 
 import 'package:jnvapp/Screen/Add%20Post/adddPost.dart';
 import 'package:jnvapp/Screen/AppBar&BottomBar/Appbar&BottomBar.dart';
 import 'package:jnvapp/Screen/SetUpNavodhya/Navodhya.dart';
+import 'package:jnvapp/Screen/SetUpNavodhya/Navodhya3.dart';
+import 'package:jnvapp/Screen/SetUpNavodhya/SetUpNavodhya1.dart';
 import 'package:jnvapp/firebase_options.dart';
 import 'package:jnvapp/Screen/ONboardingScreens/Onboarding.dart';
 import 'package:jnvapp/firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import 'FetchDataProvider/fetchData.dart';
+import 'components/Notifications.dart';
 
 
 
@@ -30,6 +37,12 @@ import 'FetchDataProvider/fetchData.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  @pragma('vm:entry-point')
+  Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+    await Firebase.initializeApp();
+  }
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
  /* try {
  
 
@@ -68,8 +81,38 @@ class MyApp extends StatefulWidget {
 
 
 class _MyAppState extends State<MyApp> {
-  
 
+  var isLoggedIn = false;
+  var auth = FirebaseAuth.instance;
+  NotificationServices notificationServices = NotificationServices();
+  @override
+  void initState() {
+    super.initState();
+    notificationServices.requestNotificationPermission();
+    notificationServices.foregroundMessage();
+    notificationServices.firebaseInit(context);
+    notificationServices.setupInteractMessage(context);
+    notificationServices.isTokenRefresh();
+    notificationServices.getDeviceToken().then((value) {
+      if (kDebugMode) {
+        print('device token');
+        print(value);
+      }
+
+      UserFetchController();
+      checkIfLoggedIn();
+    });
+  }
+
+  void checkIfLoggedIn() {
+    auth.authStateChanges().listen((User? user) {
+      if (user != null && mounted) {
+        setState(() {
+          isLoggedIn = true;
+        });
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
   //FirebaseAuth auth = FirebaseAuth.instance;
@@ -79,6 +122,7 @@ class _MyAppState extends State<MyApp> {
   print(height);
   // Get the current user
   //User? user = auth.currentUser;
+
   return ScreenUtilInit(designSize: Size(width,height), 
 minTextAdapt: true,
 splitScreenMode: true,
@@ -89,7 +133,7 @@ builder: (context, child) => MaterialApp(
   
 ),
 
-    child: /*(user!= null)?HomeScreen():*/Onboarding(),
+    child:  isLoggedIn ? HomeScreen() : Onboarding(),
   );
     
   }

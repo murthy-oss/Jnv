@@ -1,9 +1,19 @@
+
+
+import 'dart:io';
+
 import 'package:csc_picker/csc_picker.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:jnvapp/AuthScreens/NavodhyaSuccess.dart';
 import 'package:jnvapp/Screen/AppBar&BottomBar/Appbar&BottomBar.dart';
+import 'package:jnvapp/Screen/SetUpNavodhya/SetUpNavodhya1.dart';
+import 'package:jnvapp/Screen/onboardingProfile/onboardingProfilePage.dart';
 import 'package:jnvapp/Widgets/PatternGenerate.dart';
 import 'package:jnvapp/components/MyToast.dart';
 import 'package:uuid/uuid.dart';
@@ -29,7 +39,7 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
   final TextEditingController _entryClassController = TextEditingController();
   final TextEditingController _selectSectionController = TextEditingController();
   final TextEditingController _houseColorController = TextEditingController();
-
+  // File? _image;
   Uuid uuid = Uuid();
 
   Future<void> _selectDate(BuildContext context) async {
@@ -73,38 +83,18 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+
+          centerTitle: true,
+          title: Text('Navodayan Verification',style: GoogleFonts.inter(fontSize: 18.sp),)),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 85.0, horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Add your",
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              Text(
-                "Information and",
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              Text(
-                "Navodhya Details",
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              SizedBox(height: 15),
+              
               CSCPicker(
                 defaultCountry:
                 CscCountry.India, // Set default country to India
@@ -142,16 +132,6 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
                   fontSize: 14,
                 ),
               ),
-              MyTextField(
-                controller: _schoolCampusController,
-                hint: "Selection - School Campus",
-                obscure: false,
-                selection: true,
-                ////preIcon: Icons.school,
-                keyboardtype: TextInputType.text,
-                validator: (value) =>
-                    _validateInput(value, fieldName: 'School Campus'),
-              ),
               GestureDetector(
                 onTap: () async {
                   await _selectDate(context);
@@ -178,33 +158,15 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
                 keyboardtype: TextInputType.number,
                 validator: (value) =>
                     _validateInput(value, fieldName: 'Entry Class'),
-              ),
-              GestureDetector(
-                onTap: () async {
-                  await _selectDate1(context);
-                },
-                child: AbsorbPointer(
-                  child: MyTextField(
-                    controller: _passOutYearController,
-                    hint: "Pass Out Year",
-                    obscure: false,
-                    selection: true,
-                    ////preIcon: Icons.calendar_today,
-                    keyboardtype: TextInputType.datetime,
-                    validator: (value) =>
-                        _validateInput(value, fieldName: 'Pass Out Year'),
-                  ),
-                ),
-              ),
-              MyTextField(
+              ),  MyTextField(
                 controller: _rollNumberController,
-                hint: "Roll Number",
+                hint: "Roll No",
                 obscure: false,
                 selection: true,
                 ////preIcon: Icons.class_,
                 keyboardtype: TextInputType.number,
                 validator: (value) =>
-                    _validateInput(value, fieldName: 'Roll Number'),
+                    _validateInput(value, fieldName: 'Entry Class'),
               ),
               MyTextField(
                 controller: _houseColorController,
@@ -223,16 +185,13 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
                 keyboardtype: TextInputType.name,
               ),
               SizedBox(height: 15),
-              MyButton(
+              MyButton3(
                 onTap: () async {
                   String? stateError =
                   _validateInput(_stateController.text, fieldName: 'State');
                   String? districtError = _validateInput(
                       _districtController.text,
                       fieldName: 'District');
-                  String? campusError = _validateInput(
-                      _schoolCampusController.text,
-                      fieldName: 'School Campus');
                   String? yearError = _validateInput(_entryYearController.text,
                       fieldName: 'Entry Year');
                   String? classError = _validateInput(
@@ -241,7 +200,6 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
 
                   if (stateError == null &&
                       districtError == null &&
-                      campusError == null &&
                       yearError == null &&
                       classError == null) {
 
@@ -266,8 +224,8 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
                                 _rollNumberController.text);
                             pattern = "N-" +
                                 row[currentIndex - 1] +
-                                _passOutYearController.text +
-                                _rollNumberController.text;
+                                _entryYearController.text+'7' +
+                                '2';
                             // print(currentIndex-1 );
                           } else {
                             print("No previous column exists.");
@@ -286,14 +244,14 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
                             _stateController.text.trim(),
                             _districtController.text.trim(),
                             _selectSectionController.text.trim(),
-                            _schoolCampusController.text.trim(),
-                            _passOutYearController.text.trim(),
+                           '',
+                            _rollNumberController.text,
                             _entryClassController.text.trim(),
                             _entryYearController.text,
                             _houseColorController.text.trim(),
                             pattern,
                           );
-                          return HomeScreen();
+                          return SetUpNAvodhya1();
                         },
                       ),
                     );
@@ -307,8 +265,8 @@ class _SetUpProfileState extends State<SetUpNavodhya> {
                     );
                   }
                 },
-                text: "Select And Continue",
-                color: Color(0xFF888BF4),
+                text: " Continue",
+                color: Colors.white, textcolor: Colors.red,
               ),
             ],
           ),

@@ -10,9 +10,9 @@ class PostedJobsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(backgroundColor: Color(0xFF888BF4), title:   Text(
+      appBar:AppBar(backgroundColor: Colors.red, title:   Text(
         'Posted Jobs',
-        style: GoogleFonts.aladin(fontSize: 20, fontWeight: FontWeight.bold),
+        style: GoogleFonts.inter(color:Colors.red,fontSize: 20, fontWeight: FontWeight.bold),
       ),),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance

@@ -55,57 +55,43 @@ class SearchPage extends StatelessWidget {
                   return ListView.builder(
                     itemCount: _controller.searchResults.length,
                     itemBuilder: (context, index) {
-                      return Card(
-                        color: Colors.grey[100],
-                        elevation: 3,
-                        margin: EdgeInsets.symmetric(vertical: 8),
-                        child: ListTile(
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return ProfileScreen(uid: _controller.searchResults[index]['userId']);
-                            },));
-                          },
-                          title: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 25,
-                                backgroundImage: _controller.searchResults[index]['profilePicture'] != null
-                                    ? CachedNetworkImageProvider(_controller.searchResults[index]['profilePicture']) // Assuming profilePicture is of type String
-                                    : AssetImage('Assets/images/Avatar.png') as ImageProvider<Object>? ,
-                              ),
-                              SizedBox(width: 10.w),
+                      return ListTile(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return ProfileScreen(uid: _controller.searchResults[index]['userId']);
+                          },));
+                        },
+                        title: Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 25,
+                              backgroundImage: _controller.searchResults[index]['profilePicture'] != null
+                                  ? CachedNetworkImageProvider(_controller.searchResults[index]['profilePicture']) // Assuming profilePicture is of type String
+                                  : AssetImage('Assets/images/Avatar.png') as ImageProvider<Object>? ,
+                            ),
+                            SizedBox(width: 10.w),
 
-                              Expanded(
-                                child: Text(
-                                  _controller.searchResults[index]['name'],
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.sp,
+                            Expanded(
+                              child: Column(
+                                // mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    _controller.searchResults[index]['name'],
+                                    style: GoogleFonts.inter(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16.sp,
+                                    ),
+
                                   ),
-                                ),
+                                  Text(_controller.searchResults[index]['NavodhyaId']??"N-***** ", style: GoogleFonts.inter(fontWeight: FontWeight.w500,color:Colors.grey)),
+                                ],
                               ),
-                            ],
-                          ),
-                          subtitle: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                "Followers: ${_controller.searchResults[index]['followers'].length.toString()}",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                              Text(
-                                "Following: ${_controller.searchResults[index]['following'].length.toString()}",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+
+                          ],
                         ),
+
                       );
                     },
                   );

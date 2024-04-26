@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../Screen/job_Screen/CreateJob.dart';
@@ -13,7 +14,7 @@ class JobTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xFF888BF4),
+        backgroundColor: Colors.red,
         elevation: 4,
         onPressed: () {
           Navigator.push(
@@ -66,15 +67,15 @@ class JobTab extends StatelessWidget {
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.35,
-                    height: MediaQuery.of(context).size.width * 0.13,
+                    height: 40.h,
                     child: Center(
                         child: Text(
                           'Applied Jobs',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.poppins(color: Colors.white,
                               fontSize: 15, fontWeight: FontWeight.w500),
                         )),
                     decoration: BoxDecoration(
-                        color: Color(0xFF888BF4),
+                        color: Colors.red,
                         borderRadius: BorderRadius.circular(20)),
                   ),
                 ),
@@ -96,15 +97,15 @@ class JobTab extends StatelessWidget {
                 ) ,
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.35,
-                    height: MediaQuery.of(context).size.width * 0.13,
+                    height: 40.h,
                     child: Center(
                         child: Text(
                           'Posted Jobs',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.poppins(color: Colors.white,
                               fontSize: 15, fontWeight: FontWeight.w500),
                         )),
                     decoration: BoxDecoration(
-                        color: Color(0xFF888BF4),
+                        color: Colors.red,
                         borderRadius: BorderRadius.circular(20)),
                   ),
                 ),

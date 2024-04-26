@@ -1,9 +1,13 @@
 import 'dart:typed_data';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jnvapp/Screen/AppBar&BottomBar/Appbar&BottomBar.dart';
 
 import 'package:provider/provider.dart';
+import 'package:shimmer/main.dart';
 import 'package:uuid/uuid.dart';
 import '../../FetchDataProvider/fetchData.dart';
 import '../../Services/FireStoreMethod.dart';
@@ -28,11 +32,22 @@ class _SetUpProfileState extends State<SetUpProfile> {
   String? _selectedOccupation; // Corrected variable name
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _aadhaarController = TextEditingController();
-  final TextEditingController _maritalStatusController = TextEditingController();
-  final TextEditingController _occupationController = TextEditingController(); // Defined _occupationController
+  final TextEditingController _maritalStatusController =
+      TextEditingController();
+  // final TextEditingController _occupationController = TextEditingController(); // Defined _occupationController
 
   Uint8List? _file;
   Uuid uuid = Uuid();
+
+  Future<String> _uploadImageToFirebaseStorage() async {
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference storageReference =
+        storage.ref().child('profile_images/${uuid.v4()}.jpg');
+    UploadTask uploadTask = storageReference.putData(_file!);
+    TaskSnapshot taskSnapshot = await uploadTask;
+    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+    return downloadUrl;
+  }
 
   Future<void> _selectImage(BuildContext parentContext) async {
     ImagePicker picker = ImagePicker();
@@ -55,7 +70,8 @@ class _SetUpProfileState extends State<SetUpProfile> {
 
     if (pickedDate != null) {
       setState(() {
-        _dobController.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+        _dobController.text =
+            "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
       });
     }
   }
@@ -119,18 +135,17 @@ class _SetUpProfileState extends State<SetUpProfile> {
                     CircleAvatar(
                       backgroundImage: _file != null
                           ? MemoryImage(_file!)
-                      as ImageProvider // Cast MemoryImage to ImageProvider
-                          : AssetImage('assets/images/Avatar.png')
-                      as ImageProvider, // Cast AssetImage to ImageProvider
+                              as ImageProvider // Cast MemoryImage to ImageProvider
+                          : AssetImage('Assets/images/Avatar.png')
+                              as ImageProvider, // Cast AssetImage to ImageProvider
                       radius: 60,
                     ),
-
                     MyButton1(
                       onTap: () async {
                         await _selectImage(context);
                       },
                       text: "Upload Photo",
-                      color: Color(0xFF888BF4),
+                      color: Colors.red,
                     ),
                   ],
                 ),
@@ -141,7 +156,7 @@ class _SetUpProfileState extends State<SetUpProfile> {
                 hint: "Name",
                 obscure: false,
                 selection: true,
-              //  preIcon: Icons.drive_file_rename_outline,
+                //  preIcon: Icons.drive_file_rename_outline,
                 keyboardtype: TextInputType.name,
                 validator: (value) => _validateInput(value, fieldName: 'Name'),
               ),
@@ -155,9 +170,10 @@ class _SetUpProfileState extends State<SetUpProfile> {
                     hint: "Date of Birth",
                     obscure: false,
                     selection: true,
-                  //  preIcon: Icons.calendar_today,
+                    //  preIcon: Icons.calendar_today,
                     keyboardtype: TextInputType.datetime,
-                    validator: (value) => _validateInput(value, fieldName: 'Date of Birth'),
+                    validator: (value) =>
+                        _validateInput(value, fieldName: 'Date of Birth'),
                   ),
                 ),
               ),
@@ -171,31 +187,14 @@ class _SetUpProfileState extends State<SetUpProfile> {
                 validator: (value) => _validateInput(value, fieldName: 'Email'),
               ),
               MyTextField(
-                controller: _mobileController,
-                hint: "Mobile",
-                obscure: false,
-                selection: true,
-                //preIcon: Icons.phone,
-                keyboardtype: TextInputType.phone,
-                validator: (value) => _validateInput(value, fieldName: 'Mobile'),
-              ),
-              MyTextField(
-                controller: _aadhaarController,
-                hint: "Aadhaar",
-                obscure: false,
-                selection: true,
-              //  preIcon: Icons.credit_card,
-                keyboardtype: TextInputType.number,
-                validator: (value) => _validateInput(value, fieldName: 'Aadhaar'),
-              ),
-              MyTextField(
                 controller: _maritalStatusController,
                 hint: "Marital Status",
                 obscure: false,
                 selection: true,
-             //   preIcon: Icons.favorite,
+                //   preIcon: Icons.favorite,
                 keyboardtype: TextInputType.text,
-                validator: (value) => _validateInput(value, fieldName: 'Marital Status'),
+                validator: (value) =>
+                    _validateInput(value, fieldName: 'Marital Status'),
               ),
               DropdownButtonFormField<String>(
                 value: _selectedGender,
@@ -214,7 +213,8 @@ class _SetUpProfileState extends State<SetUpProfile> {
                   hintText: 'Select Gender',
                   prefixIcon: Icon(Icons.people),
                 ),
-                validator: (value) => _validateInput(value, fieldName: 'Gender'),
+                validator: (value) =>
+                    _validateInput(value, fieldName: 'Gender'),
               ),
               SizedBox(height: 15),
               DropdownButtonFormField<String>(
@@ -234,62 +234,52 @@ class _SetUpProfileState extends State<SetUpProfile> {
                   hintText: 'Select Occupation',
                   prefixIcon: Icon(Icons.work),
                 ),
-                validator: (value) => _validateInput(value, fieldName: 'Occupation'),
+                validator: (value) =>
+                    _validateInput(value, fieldName: 'Occupation'),
               ),
               SizedBox(height: 15),
               MyButton(
-                onTap: () {
+                onTap: () async {
                   String? nameError =
-                  _validateInput(_nameController.text, fieldName: 'Name');
+                      _validateInput(_nameController.text, fieldName: 'Name');
                   String? emailError =
-                  _validateInput(_emailController.text, fieldName: 'Email');
-                  if (nameError == null && emailError == null) {
-                    FireStoreMethods().createUser(
-                      userId: FirebaseAuth.instance.currentUser!.uid,
-                      name: _nameController.text.toLowerCase(),
-                      dateOfBirth: _dobController.text,
-                      gender: _selectedGender!,
-                      email: _emailController.text.trim(),
-                      phoneNumber: "+91${_mobileController.text}",
-                      aadharCardNumber: _aadhaarController.text,
-                      maritalStatus: _maritalStatusController.text,
-                      occupation: _selectedOccupation!,
-                      section: '',
-                      state: '',
-                      district: '',
-                      schoolCampus: '',
-                      entryYear: '',
-                      entryClass: '',
-                      passOutYear: '',
-                      house: '',
-                      profilePicture: '',
-                      bio: '',
-                      achievements: '',
-                      instagramLink: '',
-                      linkedinLink: '',
-                      IsVerified: false,
-                      context: context,
-                    );
+                      _validateInput(_emailController.text, fieldName: 'Email');
+                    if (_file != null) {
+                      String downloadUrl =
+                          await _uploadImageToFirebaseStorage();
+                      DocumentReference userDocRef = FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(FirebaseAuth.instance.currentUser!.uid);
+                      await userDocRef.update({
+                        'userId': FirebaseAuth.instance.currentUser!.uid,
+                        'name': _nameController.text.toLowerCase(),
+                        'dateOfBirth': _dobController.text,
+                        'gender': _selectedGender!,
+                        'email': _emailController.text.trim(),
+                        'maritalStatus': _maritalStatusController.text,
+                        'occupation': _selectedOccupation!,
+                        'profilePicture': downloadUrl
+                      });
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Please upload a profile photo.'),
+                        ),
+                      );
+                    }
+
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return SetUpNavodhya();
+                          return HomeScreen();
                         },
                       ),
                     );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'Please fill all the fields correctly',
-                        ),
-                      ),
-                    );
-                  }
+
                 },
                 text: "Select And Continue",
-                color: Color(0xFF888BF4),
+                color: Colors.red,
               ),
             ],
           ),

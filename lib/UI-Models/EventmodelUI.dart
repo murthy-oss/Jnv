@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Screen/event_Screen/Join Event.dart';
@@ -41,121 +43,63 @@ class _EventUICardState extends State<EventUICard> {
     // Check if the EventStatus is 'Accepted'
     print(widget.eventID);
     // if (widget.EventStatus == 'Accepted') {
-      return Card(
-        elevation: 4.0,
-        margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    widget.eventName,
-                    style: GoogleFonts.poppins(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ), Text(
-                    "Price 0\$",
-                    style: GoogleFonts.poppins(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 8.0),
-              Text(
-                widget.description,
-                style: TextStyle(
-                  overflow: TextOverflow.ellipsis,
-                  fontSize: 16.0,
-                  color: Colors.grey[800],
+      return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+               Container(height: 90.h,width: 90.w,decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),image: DecorationImage(image: CachedNetworkImageProvider(widget.imageUrl))),)
+                ,SizedBox(width: 50.w,),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(widget.eventName,style: GoogleFonts.inter(fontWeight: FontWeight.w600,fontSize: 20.sp),),
+                    Text(widget.eventType,style: GoogleFonts.inter(fontWeight: FontWeight.w600,fontSize: 12.sp)),
+                    Text("${widget.eventTime} PM",style: GoogleFonts.inter(fontWeight: FontWeight.w400,fontSize: 14.sp)),
+                  ],
                 ),
-              ),
-              SizedBox(height: 12.0),
-              Row(
-                children: <Widget>[
-                  Icon(Icons.location_on, color: Colors.blue),
-                  SizedBox(width: 4.0),
-                  Text(
-                    widget.location,
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      color: Colors.blue,
-                    ),
+              ],
+            ),
+
+            SizedBox(height: 12.0),
+
+
+            SizedBox(height: 8.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: MyButton1(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return JoinEvent(
+                              eventName: widget.eventName,
+                              location: widget.location,
+                              time: widget.eventTime,
+                              description: widget.description,
+                              imageUrl: widget.imageUrl,
+                              eventType: widget.eventType,
+                              eventId: widget.eventID,
+                              userId: widget.userId,
+                            );
+                          },
+                        ),
+                      );
+                    },
+                    text: "View Details",
+                    color:Colors.red,
                   ),
-                ],
-              ),
-              SizedBox(height: 8.0),
-              Row(
-                children: <Widget>[
-                  Icon(Icons.calendar_today, color: Colors.green),
-                  SizedBox(width: 4.0),
-                  Text(
-                    '${widget.eventDate}',
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      color: Colors.green,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 8.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: MyButton1(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return JoinEvent(
-                                eventName: widget.eventName,
-                                location: widget.location,
-                                time: widget.eventTime,
-                                description: widget.description,
-                                imageUrl: widget.imageUrl,
-                                eventType: widget.eventType,
-                                eventId: widget.eventID,
-                                userId: widget.userId,
-                              );
-                            },
-                          ),
-                        );
-                      },
-                      text: "View Details",
-                      color:Color(0xFF888BF4),
-                    ),
-                  ),
-                  SizedBox(width: 12.0),
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      widget.eventType,
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        color: widget.eventType == "Virtual Event"
-                            ? Colors.green
-                            : Colors.purple,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                ),
+
+              ],
+            ),
+          ],
         ),
       );
     // }

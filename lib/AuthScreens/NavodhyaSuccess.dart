@@ -3,14 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:jnvapp/AuthScreens/AadharPage.dart';
 import 'package:jnvapp/Screen/SetUpNavodhya/Navodhya.dart';
 
 import '../Screen/onboardingProfile/onboardingProfilePage.dart';
 import '../components/myButton.dart';
 
 
-class OTPSUCCESS extends StatefulWidget {
+class NAvodhyaSuccess extends StatefulWidget {
 
 
 
@@ -19,7 +18,7 @@ class OTPSUCCESS extends StatefulWidget {
   _OTPScreenState createState() => _OTPScreenState();
 }
 
-class _OTPScreenState extends State<OTPSUCCESS> {
+class _OTPScreenState extends State<NAvodhyaSuccess> {
 
   @override
   Widget build(BuildContext context) {
@@ -53,40 +52,37 @@ class _OTPScreenState extends State<OTPSUCCESS> {
                 child: SvgPicture.asset(
                   width:150.w,
                   "Assets/images/Successmark.svg",
-                  
+
                   fit: BoxFit.contain,
                 ),
               ),
             ),
-    Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                child: Text(
-                  "Success!",
-                  style:
-                  TextStyle(
-                      fontFamily: 'InterRegular',
-                      color: Color.fromARGB(255, 65, 65, 65),
-                      fontSize: 22.sp,
-                      fontWeight: FontWeight.w700),
-                ),
+            Center(
+              child: Text(
+                "Navodhya Verified!",
+                style:
+                TextStyle(
+                    fontFamily: 'InterRegular',
+                    color: Color.fromARGB(255, 65, 65, 65),
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.w700),
               ),
             ),Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: Text(
-                  "Congratulations! You have been \n   successfully authenticated!",
+                  "Thanks for submitting your document we’ll verify it\n and complete your KYC as soon as possible",
                   style:
-                   TextStyle(
+                  TextStyle(
                       fontFamily: 'InterRegular',
-                      color: Colors.grey,
-                      fontSize: 20.sp,
+                      color: const Color.fromARGB(255, 23, 23, 22),
+                      fontSize: 12.sp,
                       fontWeight: FontWeight.w700),
                 ),
               ),
             ),
             Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 14.h,vertical: 10.h),
+              padding:  EdgeInsets.symmetric(horizontal: 70.h,vertical: 10.h),
               child: MyButton(onTap: () {
                 Navigator.pushReplacement(
                   context,
@@ -96,7 +92,7 @@ class _OTPScreenState extends State<OTPSUCCESS> {
                         500), // Adjust duration as needed
                     pageBuilder:
                         (context, animation, secondaryAnimation) =>
-                        AdhaarPage1(),
+                        SetUpProfile(),
                     transitionsBuilder: (context, animation,
                         secondaryAnimation, child) {
                       var begin = Offset(0.0, 1.0);

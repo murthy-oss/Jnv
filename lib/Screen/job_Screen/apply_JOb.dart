@@ -94,9 +94,9 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text('Apply for Job'),
+      appBar: AppBar(foregroundColor: Colors.white,
+        backgroundColor: Colors.red,
+        title: Text('Apply for Job',style: TextStyle(color: Colors.white),),
       ),
       body: SingleChildScrollView(
         child: Padding(

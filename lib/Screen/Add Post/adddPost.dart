@@ -1,11 +1,18 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:image_picker/image_picker.dart';
+// import 'package:insta_assets_picker/insta_assets_picker.dart';
+import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import '../../Services/FireStoreMethod.dart';
 import '../../utils/colors.dart';
 import '../../utils/utils.dart';
@@ -41,13 +48,17 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   Future<void> _initializeCamera() async {
     final cameras = await availableCameras();
-    final frontCamera = cameras.firstWhere((camera) => camera.lensDirection == CameraLensDirection.front);
+    final frontCamera = cameras.firstWhere(
+            (camera) => camera.lensDirection == CameraLensDirection.front);
     _controller = CameraController(frontCamera, ResolutionPreset.medium);
     _initializeControllerFuture = _controller.initialize();
   }
 
   Future<void> setUp() async {
-    final usersnapshot = await FirebaseFirestore.instance.collection('users').doc(widget.uid).get();
+    final usersnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.uid)
+        .get();
     setState(() {
       userName = usersnapshot['name'];
       userProfile = usersnapshot['profilePicture'];
@@ -89,30 +100,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
     return Stack(
       children: [
         _buildCameraPreview(),
-        GestureDetector(
-          onTap: () => _selectImage(ImageSource.gallery), // Open gallery directly
-          child: Container(
-            color: Colors.black.withOpacity(0.3),
-            child: Center(
-              child: Text(
-                'Tap to add an image',
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 20,
-          right: 20,
-          child: IconButton(
-            onPressed: () {
-              // Add logic to flip camera here
-            },
-            icon: Icon(Icons.flip_camera_ios),
-            color: Colors.white,
-            iconSize: 30,
-          ),
-        ),
       ],
     );
   }
@@ -121,8 +108,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
-        height: MediaQuery.of(context).size.width,
-        width: MediaQuery.of(context).size.width,
+        height: 450.h,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         child: Stack(
           children: [
             Container(
@@ -160,6 +150,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             ),
           ),
           SizedBox(
+            height: 100.h,
             width: 300,
             child: TextField(
               enableSuggestions: true,
@@ -222,6 +213,51 @@ class _AddPostScreenState extends State<AddPostScreen> {
       _descriptionController.clear();
     });
   }
+  Future<void> _captureImage() async {
+    try {
+      // Ensure the camera is initialized
+      await _initializeControllerFuture;
+
+      // Take the picture
+      final XFile? file = await _controller.takePicture();
+
+      if (file != null) {
+        // Convert the XFile to Uint8List
+        final Uint8List? imageData = await file.readAsBytes();
+
+        if (imageData != null) {
+          // Update the state with the new image
+          setState(() {
+            _file = imageData;
+          });
+        }
+      }
+    } catch (e) {
+      // Handle any errors
+      print('Error capturing image: $e');
+    }
+  }
+
+  Future<void> _toggleCameraLensDirection() async {
+    // Check if the current camera is the front camera
+    if (_controller.value.description.lensDirection == CameraLensDirection.front) {
+      // Switch to the back camera
+      final cameras = await availableCameras();
+      final backCamera = cameras.firstWhere(
+              (camera) => camera.lensDirection == CameraLensDirection.back);
+      _controller = CameraController(backCamera, ResolutionPreset.medium);
+    } else {
+      // Switch to the front camera
+      final cameras = await availableCameras();
+      final frontCamera = cameras.firstWhere(
+              (camera) => camera.lensDirection == CameraLensDirection.front);
+      _controller = CameraController(frontCamera, ResolutionPreset.medium);
+    }
+
+    // Reinitialize the camera controller
+    _initializeControllerFuture = _controller.initialize();
+    setState(() {}); // Trigger a rebuild to update the UI
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -231,27 +267,27 @@ class _AddPostScreenState extends State<AddPostScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
+          leading: SizedBox(),
           backgroundColor: Colors.white,
-          title: const Text(
-            'Post to',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
+          centerTitle: true,
+          title: Text(
+            'post',
+            style: GoogleFonts.inter(color: Colors.black, fontSize: 25.sp),
           ),
-          centerTitle: false,
           actions: <Widget>[
-            TextButton(
-              onPressed: _postImage,
-              child: const Text(
-                "Post",
-                style: TextStyle(
-                  color: Colors.blueAccent,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
-                ),
-              ),
-            ),
+            if (_file == null) IconButton(
+                onPressed: _postImage,
+                icon: FaIcon(
+                  Bootstrap.lightning_charge,
+                  color: Colors.black,
+                )),
+              if (_file != null) IconButton(
+                onPressed: _postImage,
+                icon: FaIcon(
+                 Bootstrap.arrow_right,
+                  color: Colors.red,
+                )),
+            
           ],
         ),
         body: SingleChildScrollView(
@@ -261,13 +297,77 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 children: <Widget>[
                   if (isLoading) const LinearProgressIndicator(),
                   const Divider(),
-                  const SizedBox(height: 10),
                   _buildImagePreview(),
-                  _buildCaptionInput(),
-                  const Divider(),
+                  if (_file == null)Container(height: 100.h,),
+                  if (_file != null)_buildCaptionInput()
                 ],
               ),
               if (_file == null) _buildAddImagePlaceholder(),
+              if (_file == null)   Positioned(
+                bottom:
+                0, // This positions the container at the bottom of the stack
+                left: 0, // Optional: Aligns the container to the left
+                right: 0, // Optional: Centers the container horizontally
+                child: Container(
+                  height: 10,
+                  width: 100.w,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        width: 50.w,
+                        height: 50.w,
+
+                        child: GestureDetector(
+                          child:   FaIcon(Iconsax.gallery_add_bold,color: Colors.black,size: 35.r,),
+
+                          onTap: () async {
+                            // Open the WeChat asset picker
+                            final List<AssetEntity>? result = await AssetPicker
+                                .pickAssets(
+                              context,
+                              permissionRequestOption: PermissionRequestOption(
+                                  androidPermission: AndroidPermission(
+                                      type: RequestType.all,
+                                      mediaLocation: true)), // Limit the selection to one asset// Specify the type of assets to pick
+                            );
+
+                            if (result != null && result.isNotEmpty) {
+                              // Handle the selected asset
+                              final AssetEntity asset = result.first;
+                              File? file = await asset.file;
+                              if (file != null) {
+                                // Read the file into a Uint8List
+                                Uint8List? fileData = await file.readAsBytes();
+                                _file = fileData;
+                                setState(() {
+
+                                });
+                              }
+                            }
+                          }
+                        ),),
+                      GestureDetector(
+                        onTap: _captureImage,
+                        child: FaIcon(Icons.camera,
+                          size: 40.r,
+
+                        ),
+                      ),
+                      GestureDetector(onTap: () => _toggleCameraLensDirection,
+                        child: Container(
+                          width: 50.w,
+                          height: 50.w,
+                         child: IconButton(onPressed: () {
+
+                         }, icon: FaIcon(Icons.flip_camera_android,color: Colors.black,size: 35.r,)),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+
             ],
           ),
         ),
@@ -275,3 +375,4 @@ class _AddPostScreenState extends State<AddPostScreen> {
     );
   }
 }
+

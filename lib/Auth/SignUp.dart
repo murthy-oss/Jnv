@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:jnvapp/AuthScreens/AadharPage.dart';
 
 import 'package:jnvapp/AuthScreens/SignUpMail.dart';
 import 'package:jnvapp/AuthScreens/idAuthPage.dart';
@@ -330,7 +329,7 @@ class _SignUpPageState extends State<SignUpPage> {
       print('User is signed in: ${user.uid}');
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => AdhaarPage1()),
+        MaterialPageRoute(builder: (context) => SetUpProfile()),
       );
     } else {
       // The user is not signed in
