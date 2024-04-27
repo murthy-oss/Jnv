@@ -19,6 +19,7 @@ import '../chats/chat_screen.dart';
 import 'FollowerFollowingPage.dart';
 import 'editProfile.dart';
 import 'package:jnvapp/other/Settings.dart';
+
 class ProfileScreen extends StatefulWidget {
   final String uid;
 
@@ -83,7 +84,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Settings1(Image: userData['profilePicture'], email: userData['email'], name: userData['name'],),
+                    builder: (context) => Settings1(
+                      Image: userData['profilePicture'],
+                      email: userData['email'],
+                      name: userData['name'],
+                    ),
                   ),
                 );
               },
@@ -203,33 +208,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              FirebaseAuth.instance.currentUser!.uid == widget.uid
+                              FirebaseAuth.instance.currentUser!.uid ==
+                                      widget.uid
                                   ? MyButton1(
-                                text: 'Edit Profile',
-
-                                onTap: () {      Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => EditProfilePage(),
-                                  ),
-                                ); }, color: Colors.red,
-                              )
+                                      text: 'Edit Profile',
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditProfilePage(),
+                                          ),
+                                        );
+                                      },
+                                      color: Colors.red,
+                                    )
                                   : isFollowing
-                                  ? MyButton1(
-                                text: 'Unfollow',
-
-                                onTap: () =>      FireStoreMethods().unfollowUser(
-                                  FirebaseAuth.instance.currentUser!.uid,
-                                  userData['uuid'],
-                                ),color: Colors.red,
-                              )
-                                  : MyButton1(
-                                text: 'Follow',
-                            onTap: () =>   FireStoreMethods().followUser(
-                              FirebaseAuth.instance.currentUser!.uid,
-                              userData['uuid'],
-                            ),color: Colors.red,
-                              ),
+                                      ? MyButton1(
+                                          text: 'Unfollow',
+                                          onTap: () =>
+                                              FireStoreMethods().unfollowUser(
+                                            FirebaseAuth
+                                                .instance.currentUser!.uid,
+                                            userData['userId'],
+                                          ),
+                                          color: Colors.red,
+                                        )
+                                      : MyButton1(
+                                          text: 'Follow',
+                                          onTap: () =>
+                                              FireStoreMethods().followUser(
+                                            FirebaseAuth
+                                                .instance.currentUser!.uid,
+                                            userData['userId'],
+                                          ),
+                                          color: Colors.red,
+                                        ),
                               MyButton1(
                                   onTap: () {
                                     Share.share('${userData['name']}');

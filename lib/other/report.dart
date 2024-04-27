@@ -12,7 +12,7 @@ class ReportPostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Color(0xFF888BF4),
+      appBar: AppBar(backgroundColor: Colors.red,
         title: Text('Report Post',),
       ),
       body: Padding(
@@ -49,7 +49,7 @@ class ReportPostScreen extends StatelessWidget {
                 'postID':postId,
               });
               _reportController.clear();
-            }, text: 'Submit Report', color: Color(0xFF888BF4))
+            }, text: 'Submit Report', color: Colors.red)
           ],
         ),
       ),

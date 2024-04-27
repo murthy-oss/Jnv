@@ -217,7 +217,7 @@ class _JobPostingPageState extends State<JobPostingPage> {
                   _submitForm();
                 },
                 text: "Submit",
-                color: Color(0xFF888BF4),
+                color: Colors.red,
               ),
             ],
           ),

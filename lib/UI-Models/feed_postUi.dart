@@ -84,6 +84,11 @@ class _PostCardState extends State<PostCard> {
                 leading: Icon(Bootstrap.person),
                 title: Text('follow'),
                 onTap: () async {
+                  FireStoreMethods().followUser(
+                    FirebaseAuth
+                        .instance.currentUser!.uid,
+                    widget.uid,
+                  );
                   Navigator.pop(context);
                   // await FireStoreMethods().unfollowUser(currentUserUid, targetUserUid)
                 },

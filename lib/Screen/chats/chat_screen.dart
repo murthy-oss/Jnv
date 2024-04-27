@@ -13,9 +13,6 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:velocity_x/velocity_x.dart';
-
-import '../../Widgets/TextLinkWidget.dart';
 import '../profile/profilePage.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -340,7 +337,7 @@ class BubbleMessage extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               formattedTime,
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 10, color: Colors.white),
+              style:  TextStyle(fontWeight: FontWeight.w600, fontSize: 10.sp, color:  isCurrentUser==true?  Colors.white:Colors.black,),
             ),
           ],
         ),

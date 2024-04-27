@@ -30,8 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _pages = [
     HomeTab(),
     SearchPage(),
-     AddPostScreen(uid:FirebaseAuth.instance.currentUser!.uid),
-JobTab(),
+    AddPostScreen(uid: FirebaseAuth.instance.currentUser!.uid),
+    JobTab(),
     EventTab(),
   ];
 
@@ -57,23 +57,26 @@ JobTab(),
     return Scaffold(
       drawer: CustomDrawer(),
       appBar: AppBar(
-        leading:Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-                  icon: CircleAvatar(
-                    radius: 20.r,
-                    backgroundImage: myUser != null && myUser.profilePicture != ''
-                        ? CachedNetworkImageProvider(myUser.profilePicture!)
-                        : AssetImage('Assets/images/Avatar.png') as ImageProvider<Object>?,
-                  ),
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-                );
-          }
+        leading: Builder(builder: (BuildContext context) {
+          return IconButton(
+            icon: CircleAvatar(
+              radius: 20.r,
+              backgroundImage: myUser != null && myUser.profilePicture != ''
+                  ? CachedNetworkImageProvider(myUser.profilePicture!)
+                  : AssetImage('Assets/images/Avatar.png')
+                      as ImageProvider<Object>?,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          );
+        }),
+        title: Text(
+          "J.N.V",
+          style:
+              GoogleFonts.inter(fontSize: 16.sp, fontWeight: FontWeight.w700),
         ),
-    title:  Text("J.N.V",style: GoogleFonts.inter(fontSize: 16.sp,fontWeight: FontWeight.w700),),
         actions: [
           Consumer<UserFetchController>(
             builder: (context, userController, _) {
@@ -81,13 +84,13 @@ JobTab(),
                 // User data is fetched, you can access it here
                 var myUser = userController.myUser;
                 return IconButton(
-                  icon:  FaIcon(Bootstrap.chat,color: Colors.black,size: 20.r),
+                  icon: FaIcon(Bootstrap.chat, color: Colors.black, size: 20.r),
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return  RecentChatsPage();
+                          return RecentChatsPage();
                         },
                       ),
                     );
@@ -98,9 +101,12 @@ JobTab(),
               }
             },
           ),
-
           IconButton(
-            icon:  FaIcon(FontAwesomeIcons.bell,color: Colors.black,size:20.r,),
+            icon: FaIcon(
+              FontAwesomeIcons.bell,
+              color: Colors.black,
+              size: 20.r,
+            ),
             onPressed: () {
               Navigator.push(
                 context,
@@ -116,14 +122,14 @@ JobTab(),
       ),
       body: _pages[_selectedIndex], // Use directly from the list
       bottomNavigationBar: BottomNavigationBar(
-        type:BottomNavigationBarType.fixed ,
+        type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         backgroundColor: Colors.white,
         selectedItemColor: Color(0xFFF44242),
         unselectedItemColor: Colors.black,
         showSelectedLabels: true,
-showUnselectedLabels: false,
+        showUnselectedLabels: false,
         iconSize: 20,
         elevation: 1,
         items: [
@@ -136,14 +142,16 @@ showUnselectedLabels: false,
             label: 'Search',
           ),
           const BottomNavigationBarItem(
-            icon: FaIcon(Icons.add_circle_outline,),
+            icon: FaIcon(
+              Icons.add_circle_outline,
+            ),
             label: 'Post',
           ),
-
           const BottomNavigationBarItem(
             icon: FaIcon(Bootstrap.people),
             label: 'Jobs',
-          ),   const BottomNavigationBarItem(
+          ),
+          const BottomNavigationBarItem(
             icon: FaIcon(Clarity.event_outline_badged),
             label: 'Events',
           ),

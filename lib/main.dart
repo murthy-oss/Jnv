@@ -21,6 +21,7 @@ import 'package:jnvapp/Screen/SetUpNavodhya/SetUpNavodhya1.dart';
 import 'package:jnvapp/firebase_options.dart';
 import 'package:jnvapp/Screen/ONboardingScreens/Onboarding.dart';
 import 'package:jnvapp/firebase_options.dart';
+import 'package:jnvapp/other/InvitePage.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import 'FetchDataProvider/fetchData.dart';

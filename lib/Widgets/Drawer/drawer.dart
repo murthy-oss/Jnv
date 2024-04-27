@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:jnvapp/other/InvitePage.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
@@ -123,7 +124,33 @@ class CustomDrawer extends StatelessWidget {
                       ],
                     ),
                     onTap: () {
-                      Share.share('Check out this cool app!');
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          transitionDuration: const Duration(
+                              milliseconds:
+                              500), // Adjust duration as needed
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                              const InvitePage(),
+                          transitionsBuilder: (context, animation,
+                              secondaryAnimation, child) {
+                            var begin = Offset(0.0, 1.0);
+                            var end = Offset.zero;
+                            var curve = Curves.ease;
+
+                            var tween =
+                            Tween(begin: begin, end: end).chain(
+                              CurveTween(curve: curve),
+                            );
+
+                            return SlideTransition(
+                              position: animation.drive(tween),
+                              child: child,
+                            );
+                          },
+                        ),
+                      );
                     },
                   ),
                   SizedBox(height: 5.h,),
